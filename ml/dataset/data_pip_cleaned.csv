@@ -19,7 +19,6 @@ Dekat,Pedagang,Rendah,2.0,Tidak,Ya,Tidak
 Jauh,Wiraswasta,Rendah,1.0,Tidak,Tidak,Ya
 Jauh,Wiraswasta,Sedang,2.0,Tidak,Tidak,Ya
 Dekat,Petani,Tinggi,1.0,Tidak,Ya,Ya
-Dekat,Petani,Rendah,2.0,Tidak,Tidak,Ya
 Dekat,PNS,Tinggi,2.0,Tidak,Tidak,Tidak
 Dekat,Petani,Sedang,2.0,Tidak,Ya,Tidak
 Dekat,Wiraswasta,Tinggi,3.0,Tidak,Ya,Ya
@@ -42,9 +41,7 @@ Jauh,Petani,Sedang,4.0,Terima,Tidak,Tidak
 Jauh,PNS,Tinggi,3.0,Tidak,Tidak,Ya
 Dekat,Wiraswasta,Sedang,3.0,Tidak,Ya,Ya
 Jauh,Wiraswasta,Rendah,3.0,Tidak,Tidak,Ya
-Dekat,Petani,Rendah,3.0,Tidak,Ya,Ya
 Dekat,Wiraswasta,Sedang,3.0,Tidak,Ya,Tidak
-Dekat,Wiraswasta,Sedang,3.0,Tidak,Tidak,Ya
 Dekat,Wiraswasta,Rendah,3.0,Tidak,Ya,Ya
 Dekat,Wiraswasta,Sedang,1.0,Tidak,Ya,Tidak
 Dekat,Petani,Rendah,3.0,Terima,Tidak,Tidak
@@ -52,28 +49,22 @@ Jauh,PNS,Tinggi,2.0,Tidak,Ya,Ya
 Dekat,PNS,Tinggi,2.0,Tidak,Tidak,Ya
 Dekat,Petani,Sedang,2.0,Tidak,Tidak,Tidak
 Dekat,PNS,Sedang,1.0,Tidak,Tidak,Ya
-Dekat,Buruh,Rendah,2.0,Tidak,Ya,Ya
 Jauh,Wiraswasta,Tinggi,2.0,Tidak,Ya,Ya
 Dekat,Wiraswasta,Sedang,1.0,Tidak,Tidak,Ya
 Jauh,Buruh,Rendah,2.0,Tidak,Ya,Ya
 Dekat,Wiraswasta,Sedang,1.0,Tidak,Ya,Ya
 Jauh,Wiraswasta,Rendah,2.0,Tidak,Ya,Ya
-Dekat,Wiraswasta,Tinggi,3.0,Tidak,Ya,Ya
 Dekat,Buruh,Tinggi,2.0,Tidak,Ya,Tidak
 Dekat,PNS,Sedang,3.0,Tidak,Ya,Ya
 Jauh,Petani,Rendah,2.0,Tidak,Tidak,Ya
 Jauh,Petani,Sedang,3.0,Tidak,Tidak,Ya
-Dekat,Petani,Sedang,2.0,Tidak,Tidak,Tidak
 Jauh,Petani,Rendah,1.0,Tidak,Tidak,Tidak
 Jauh,Petani,Sedang,1.0,Terima,Tidak,Ya
 Dekat,PNS,Sedang,3.0,Tidak,Tidak,Ya
 Jauh,PNS,Tinggi,1.0,Tidak,Tidak,Ya
-Dekat,Wiraswasta,Sedang,2.0,Tidak,Ya,Ya
 Dekat,Wiraswasta,Tinggi,2.0,Tidak,Ya,Ya
 Dekat,Karyawan Swasta,Tinggi,2.0,Tidak,Ya,Tidak
 Dekat,Buruh,Rendah,2.0,Terima,Ya,Ya
-Dekat,Wiraswasta,Sedang,1.0,Tidak,Ya,Tidak
-Dekat,Wiraswasta,Tinggi,2.0,Tidak,Ya,Tidak
 Jauh,PNS,Sedang,2.0,Tidak,Tidak,Tidak
 Dekat,PNS,Rendah,4.0,Tidak,Ya,Ya
 Dekat,Karyawan Swasta,Sedang,3.0,Terima,Tidak,Ya
@@ -87,7 +78,6 @@ Jauh,Buruh,Sedang,3.0,Tidak,Ya,Ya
 Jauh,Wiraswasta,Rendah,1.0,Tidak,Ya,Ya
 Dekat,Petani,Tinggi,2.0,Tidak,Tidak,Ya
 Dekat,Petani,Rendah,2.0,Tidak,Ya,Tidak
-Dekat,Petani,Tinggi,2.0,Tidak,Tidak,Tidak
 Dekat,Wiraswasta,Rendah,2.0,Tidak,Tidak,Ya
 Dekat,Buruh,Tinggi,1.0,Tidak,Ya,Tidak
 Dekat,Wiraswasta,Sedang,2.0,Tidak,Ya,Tidak
@@ -95,44 +85,26 @@ Dekat,Wiraswasta,Sedang,2.0,Tidak,Tidak,Tidak
 Dekat,Petani,Sedang,2.0,Terima,Ya,Ya
 Jauh,Wiraswasta,Sedang,2.0,Tidak,Ya,Ya
 Dekat,Wiraswasta,Rendah,1.0,Tidak,Ya,Tidak
-Dekat,Wiraswasta,Rendah,2.0,Tidak,Ya,Tidak
 Dekat,Wiraswasta,Rendah,3.0,Tidak,Tidak,Ya
 Dekat,Wiraswasta,Rendah,2.0,Tidak,Ya,Ya
 Jauh,Petani,Sedang,3.0,Tidak,Tidak,Tidak
-Dekat,Wiraswasta,Sedang,2.0,Tidak,Tidak,Tidak
 Dekat,PNS,Sedang,1.0,Tidak,Ya,Tidak
 Dekat,PNS,Rendah,4.0,Terima,Ya,Ya
 Jauh,Petani,Tinggi,1.0,Tidak,Tidak,Ya
-Jauh,Petani,Tinggi,1.0,Tidak,Tidak,Ya
-Dekat,Wiraswasta,Tinggi,3.0,Tidak,Ya,Ya
-Dekat,Petani,Sedang,2.0,Tidak,Ya,Tidak
-Dekat,Wiraswasta,Sedang,2.0,Tidak,Ya,Ya
-Dekat,Buruh,Tinggi,2.0,Tidak,Ya,Tidak
 Jauh,Karyawan Swasta,Sedang,2.0,Tidak,Tidak,Ya
-Dekat,Petani,Rendah,2.0,Tidak,Ya,Ya
 Dekat,Petani,Rendah,1.0,Tidak,Tidak,Tidak
-Dekat,Petani,Rendah,2.0,Tidak,Ya,Ya
-Dekat,Petani,Rendah,2.0,Tidak,Tidak,Ya
 Dekat,Wiraswasta,Sedang,4.0,Tidak,Ya,Ya
 Jauh,PNS,Tinggi,3.0,Tidak,Ya,Tidak
 Dekat,Petani,Tinggi,3.0,Tidak,Tidak,Ya
 Dekat,Buruh,Tinggi,3.0,Tidak,Tidak,Ya
 Jauh,PNS,Sedang,3.0,Tidak,Tidak,Ya
 Jauh,Petani,Tinggi,3.0,Tidak,Ya,Ya
-Dekat,Wiraswasta,Tinggi,3.0,Tidak,Ya,Tidak
 Dekat,PNS,Tinggi,3.0,Tidak,Ya,Tidak
 Dekat,Karyawan Swasta,Rendah,3.0,Tidak,Ya,Ya
-Dekat,PNS,Tinggi,1.0,Tidak,Tidak,Ya
-Dekat,PNS,Tinggi,2.0,Tidak,Tidak,Tidak
 Dekat,PNS,Sedang,2.0,Tidak,Tidak,Ya
 Dekat,Petani,Tinggi,2.0,Tidak,Ya,Ya
-Dekat,Petani,Sedang,2.0,Tidak,Tidak,Tidak
 Dekat,Petani,Rendah,1.0,Tidak,Tidak,Ya
 Dekat,Nelayan,Rendah,3.0,Terima,Tidak,Ya
-Dekat,Wiraswasta,Sedang,2.0,Tidak,Tidak,Tidak
-Dekat,Wiraswasta,Sedang,1.0,Tidak,Ya,Tidak
-Dekat,Wiraswasta,Tinggi,2.0,Tidak,Ya,Ya
-Dekat,Wiraswasta,Tinggi,1.0,Tidak,Tidak,Tidak
 Jauh,Wiraswasta,Rendah,2.0,Tidak,Tidak,Tidak
 Jauh,PNS,Tinggi,3.0,Tidak,Tidak,Tidak
 Dekat,Petani,Sedang,2.0,Tidak,Tidak,Ya
@@ -140,78 +112,42 @@ Dekat,Petani,Rendah,3.0,Tidak,Tidak,Tidak
 Jauh,Petani,Tinggi,2.0,Tidak,Ya,Ya
 Dekat,Petani,Rendah,3.0,Terima,Ya,Tidak
 Dekat,Wiraswasta,Tinggi,2.0,Tidak,Tidak,Ya
-Dekat,Wiraswasta,Sedang,1.0,Tidak,Ya,Ya
 Dekat,Wiraswasta,Tinggi,1.0,Tidak,Ya,Tidak
 Jauh,PNS,Sedang,3.0,Tidak,Ya,Tidak
-Dekat,PNS,Sedang,2.0,Tidak,Tidak,Ya
 Dekat,PNS,Sedang,2.0,Tidak,Tidak,Tidak
-Dekat,PNS,Tinggi,2.0,Tidak,Tidak,Ya
-Jauh,PNS,Tinggi,2.0,Tidak,Tidak,Ya
-Dekat,PNS,Tinggi,2.0,Tidak,Ya,Tidak
 Jauh,PNS,Tinggi,1.0,Tidak,Tidak,Tidak
 Dekat,Wiraswasta,Sedang,2.0,Tidak,Tidak,Ya
-Dekat,Wiraswasta,Sedang,2.0,Tidak,Ya,Ya
 Dekat,Wiraswasta,Rendah,4.0,Terima,Ya,Ya
-Dekat,Wiraswasta,Rendah,3.0,Tidak,Ya,Ya
 Jauh,Karyawan Swasta,Sedang,3.0,Tidak,Ya,Tidak
 Dekat,Karyawan Swasta,Rendah,3.0,Tidak,Tidak,Ya
 Dekat,Pedagang,Tinggi,3.0,Tidak,Tidak,Tidak
 Jauh,Petani,Rendah,3.0,Tidak,Tidak,Ya
 Jauh,Petani,Rendah,3.0,Tidak,Ya,Tidak
-Dekat,Petani,Sedang,3.0,Tidak,Ya,Tidak
 Jauh,Petani,Rendah,3.0,Tidak,Ya,Ya
-Dekat,Wiraswasta,Tinggi,1.0,Tidak,Tidak,Ya
 Dekat,Wiraswasta,Rendah,2.0,Tidak,Tidak,Tidak
-Jauh,Buruh,Rendah,2.0,Tidak,Ya,Ya
 Jauh,PNS,Sedang,2.0,Tidak,Tidak,Ya
-Jauh,Wiraswasta,Rendah,2.0,Tidak,Tidak,Tidak
-Dekat,Wiraswasta,Sedang,1.0,Tidak,Tidak,Ya
 Dekat,PNS,Sedang,2.0,Tidak,Ya,Ya
-Dekat,Wiraswasta,Sedang,2.0,Tidak,Tidak,Ya
 Dekat,Wiraswasta,Rendah,1.0,Tidak,Ya,Ya
-Dekat,PNS,Tinggi,2.0,Tidak,Tidak,Tidak
 Dekat,PNS,Tinggi,1.0,Tidak,Ya,Tidak
 Dekat,Petani,Rendah,2.0,Terima,Tidak,Tidak
-Dekat,Petani,Rendah,3.0,Terima,Tidak,Tidak
-Dekat,Petani,Tinggi,2.0,Tidak,Ya,Ya
 Dekat,Petani,Rendah,3.0,Terima,Tidak,Ya
 Dekat,Karyawan Swasta,Tinggi,2.0,Tidak,Tidak,Ya
 Dekat,Karyawan Swasta,Tinggi,3.0,Tidak,Tidak,Tidak
-Dekat,Karyawan Swasta,Tinggi,2.0,Tidak,Tidak,Ya
-Dekat,Petani,Tinggi,1.0,Tidak,Ya,Ya
 Dekat,PNS,Tinggi,1.0,Tidak,Ya,Ya
-Dekat,Wiraswasta,Sedang,3.0,Tidak,Ya,Tidak
-Dekat,Wiraswasta,Sedang,2.0,Tidak,Ya,Tidak
-Dekat,Petani,Tinggi,2.0,Tidak,Ya,Ya
 Dekat,Karyawan Swasta,Rendah,2.0,Tidak,Tidak,Tidak
-Dekat,Petani,Rendah,2.0,Tidak,Ya,Tidak
 Jauh,PNS,Tinggi,2.0,Tidak,Tidak,Tidak
-Jauh,Petani,Rendah,1.0,Tidak,Tidak,Tidak
 Dekat,PNS,Tinggi,2.0,Tidak,Ya,Ya
-Dekat,PNS,Tinggi,2.0,Tidak,Ya,Tidak
 Jauh,PNS,Tinggi,4.0,Tidak,Ya,Tidak
-Jauh,PNS,Tinggi,3.0,Tidak,Ya,Tidak
 Jauh,Karyawan Swasta,Tinggi,3.0,Tidak,Tidak,Tidak
 Jauh,Wiraswasta,Sedang,3.0,Tidak,Ya,Ya
 Dekat,Wiraswasta,Rendah,3.0,Tidak,Tidak,Tidak
-Dekat,PNS,Tinggi,3.0,Tidak,Ya,Tidak
-Dekat,Wiraswasta,Sedang,3.0,Tidak,Tidak,Ya
-Dekat,PNS,Tinggi,3.0,Tidak,Tidak,Tidak
-Dekat,Petani,Rendah,3.0,Terima,Tidak,Tidak
-Dekat,Petani,Rendah,1.0,Tidak,Tidak,Ya
-Jauh,Petani,Rendah,2.0,Tidak,Tidak,Ya
 Jauh,Petani,Sedang,2.0,Tidak,Ya,Tidak
-Jauh,Wiraswasta,Sedang,2.0,Tidak,Tidak,Ya
 Dekat,Petani,Rendah,3.0,Terima,Ya,Ya
 Dekat,Petani,Rendah,1.0,Terima,Ya,Tidak
 Jauh,Wiraswasta,Rendah,2.0,Tidak,Tidak,Ya
-Dekat,Wiraswasta,Sedang,2.0,Tidak,Ya,Tidak
 Dekat,Pensiunan,Sedang,1.0,Tidak,Tidak,Tidak
-Dekat,Wiraswasta,Sedang,2.0,Tidak,Tidak,Tidak
-Dekat,Wiraswasta,Tinggi,1.0,Tidak,Tidak,Tidak
 Jauh,Karyawan Swasta,Sedang,2.0,Tidak,Ya,Tidak
 Dekat,Karyawan Swasta,Tinggi,3.0,Tidak,Tidak,Ya
-Jauh,PNS,Tinggi,2.0,Tidak,Tidak,Ya
 Dekat,Wiraswasta,Tinggi,3.0,Tidak,Tidak,Tidak
 Dekat,Petani,Sedang,2.0,Tidak,Ya,Ya
 Dekat,PNS,Tinggi,3.0,Tidak,Tidak,Ya
@@ -219,66 +155,33 @@ Dekat,Buruh,Sedang,3.0,Terima,Ya,Ya
 Dekat,Pedagang,Sedang,1.0,Tidak,Ya,Tidak
 Dekat,Pensiunan,Sedang,1.0,Tidak,Ya,Tidak
 Jauh,Wiraswasta,Tinggi,3.0,Tidak,Ya,Ya
-Dekat,PNS,Tinggi,2.0,Tidak,Ya,Ya
-Dekat,PNS,Tinggi,2.0,Tidak,Tidak,Tidak
-Dekat,PNS,Tinggi,2.0,Tidak,Ya,Ya
-Dekat,PNS,Tinggi,2.0,Tidak,Ya,Tidak
-Dekat,PNS,Tinggi,2.0,Tidak,Tidak,Ya
 Dekat,PNS,Tinggi,1.0,Tidak,Tidak,Tidak
-Dekat,PNS,Tinggi,2.0,Tidak,Tidak,Ya
-Jauh,PNS,Tinggi,2.0,Tidak,Ya,Ya
 Jauh,Wiraswasta,Sedang,4.0,Terima,Ya,Tidak
-Jauh,Wiraswasta,Tinggi,3.0,Tidak,Ya,Ya
 Dekat,Petani,Sedang,3.0,Tidak,Tidak,Ya
 Jauh,Wirausaha,Sedang,3.0,Tidak,Tidak,Tidak
 Dekat,Sudah Meninggal,Rendah,3.0,Terima,Ya,Tidak
 Jauh,Pensiunan,Sedang,3.0,Tidak,Tidak,Ya
 Dekat,Sudah Meninggal,Rendah,3.0,Terima,Ya,Ya
-Dekat,Petani,Rendah,3.0,Terima,Tidak,Ya
-Dekat,Wiraswasta,Tinggi,3.0,Tidak,Ya,Ya
 Jauh,Petani,Rendah,1.0,Tidak,Ya,Tidak
 Jauh,Wiraswasta,Sedang,2.0,Tidak,Tidak,Tidak
 Jauh,Wiraswasta,Sedang,3.0,Terima,Ya,Ya
 Jauh,PNS,Rendah,2.0,Tidak,Ya,Ya
 Jauh,Pensiunan,Tinggi,2.0,Tidak,Ya,Tidak
-Jauh,Petani,Tinggi,1.0,Tidak,Tidak,Ya
-Jauh,Wiraswasta,Sedang,2.0,Tidak,Tidak,Tidak
 Jauh,Karyawan Swasta,Sedang,2.0,Tidak,Ya,Ya
-Jauh,PNS,Tinggi,1.0,Tidak,Tidak,Tidak
-Dekat,Wiraswasta,Tinggi,2.0,Tidak,Ya,Tidak
-Dekat,Wiraswasta,Sedang,1.0,Tidak,Tidak,Ya
-Dekat,Wiraswasta,Rendah,2.0,Tidak,Tidak,Ya
 Jauh,Wiraswasta,Tinggi,3.0,Tidak,Ya,Tidak
-Dekat,Wiraswasta,Sedang,2.0,Tidak,Ya,Tidak
-Jauh,Wiraswasta,Sedang,3.0,Tidak,Ya,Ya
-Dekat,Wiraswasta,Rendah,2.0,Tidak,Ya,Tidak
 Dekat,Wiraswasta,Rendah,3.0,Terima,Ya,Ya
-Dekat,Wiraswasta,Sedang,2.0,Tidak,Ya,Ya
 Dekat,Wiraswasta,Sedang,1.0,Tidak,Tidak,Tidak
 Jauh,Wiraswasta,Sedang,1.0,Tidak,Ya,Ya
 Dekat,Wiraswasta,Tinggi,3.0,Tidak,Tidak,Ya
 Dekat,Wiraswasta,Tinggi,2.0,Tidak,Tidak,Tidak
-Dekat,Wiraswasta,Rendah,2.0,Tidak,Ya,Tidak
 Jauh,Wiraswasta,Tinggi,2.0,Tidak,Ya,Tidak
-Dekat,Wiraswasta,Rendah,2.0,Tidak,Tidak,Ya
-Dekat,Wiraswasta,Tinggi,2.0,Tidak,Ya,Tidak
 Dekat,PNS,Sedang,1.0,Tidak,Ya,Ya
-Dekat,PNS,Sedang,2.0,Tidak,Ya,Ya
-Dekat,PNS,Tinggi,2.0,Tidak,Tidak,Tidak
 Dekat,PNS,Rendah,4.0,Tidak,Ya,Tidak
 Dekat,Petani,Sedang,3.0,Tidak,Ya,Ya
 Dekat,Petani,Rendah,3.0,Tidak,Tidak,Ya
-Dekat,Petani,Sedang,3.0,Tidak,Tidak,Ya
-Jauh,Petani,Sedang,3.0,Tidak,Tidak,Ya
 Dekat,Petani,Sedang,3.0,Terima,Ya,Ya
 Dekat,Petani,Sedang,3.0,Tidak,Tidak,Tidak
-Dekat,Petani,Sedang,3.0,Tidak,Tidak,Ya
-Dekat,PNS,Tinggi,3.0,Tidak,Tidak,Tidak
-Dekat,PNS,Sedang,1.0,Tidak,Ya,Ya
-Dekat,PNS,Tinggi,2.0,Tidak,Tidak,Tidak
 Jauh,PNS,Tinggi,2.0,Tidak,Ya,Tidak
-Jauh,PNS,Rendah,2.0,Tidak,Ya,Ya
-Dekat,PNS,Sedang,2.0,Tidak,Tidak,Tidak
 Jauh,PNS,Sedang,1.0,Tidak,Tidak,Tidak
 Dekat,PNS,Rendah,2.0,Tidak,Ya,Ya
 Jauh,PNS,Sedang,2.0,Tidak,Ya,Ya
@@ -286,260 +189,89 @@ Dekat,Petani,Tinggi,1.0,Tidak,Tidak,Ya
 Jauh,Petani,Tinggi,2.0,Tidak,Tidak,Ya
 Dekat,Petani,Tinggi,1.0,Tidak,Ya,Tidak
 Jauh,Petani,Rendah,2.0,Tidak,Ya,Tidak
-Dekat,Petani,Rendah,3.0,Terima,Tidak,Tidak
-Dekat,Petani,Tinggi,2.0,Tidak,Tidak,Ya
-Dekat,Petani,Tinggi,3.0,Tidak,Tidak,Tidak
-Dekat,Petani,Tinggi,2.0,Tidak,Tidak,Ya
 Dekat,Petani,Rendah,3.0,Tidak,Ya,Tidak
-Jauh,Petani,Tinggi,2.0,Tidak,Ya,Ya
 Dekat,Pensiunan,Tinggi,1.0,Tidak,Tidak,Ya
-Dekat,PNS,Tinggi,1.0,Tidak,Ya,Ya
-Dekat,Wiraswasta,Sedang,3.0,Tidak,Ya,Tidak
-Dekat,Wiraswasta,Tinggi,2.0,Tidak,Tidak,Tidak
-Dekat,Petani,Sedang,2.0,Tidak,Tidak,Tidak
 Dekat,Wirausaha,Tinggi,2.0,Tidak,Ya,Ya
 Jauh,Sudah Meninggal,Sedang,2.0,Tidak,Tidak,Ya
 Dekat,Pensiunan,Sedang,2.0,Tidak,Tidak,Ya
 Dekat,Sudah Meninggal,Tinggi,1.0,Tidak,Tidak,Ya
-Dekat,Petani,Sedang,2.0,Tidak,Tidak,Tidak
-Dekat,Wiraswasta,Sedang,2.0,Tidak,Tidak,Tidak
 Dekat,Petani,Tinggi,4.0,Tidak,Ya,Tidak
-Dekat,Wiraswasta,Tinggi,2.0,Tidak,Ya,Ya
 Jauh,Wiraswasta,Sedang,3.0,Tidak,Ya,Tidak
-Dekat,PNS,Sedang,3.0,Tidak,Ya,Ya
 Dekat,Pensiunan,Tinggi,3.0,Tidak,Tidak,Ya
-Dekat,Petani,Sedang,3.0,Tidak,Ya,Ya
-Dekat,Wiraswasta,Tinggi,3.0,Tidak,Ya,Ya
 Dekat,Karyawan Swasta,Rendah,3.0,Tidak,Ya,Tidak
-Dekat,PNS,Tinggi,3.0,Tidak,Ya,Tidak
-Dekat,Wiraswasta,Sedang,1.0,Tidak,Tidak,Tidak
-Dekat,Wiraswasta,Sedang,2.0,Tidak,Tidak,Tidak
-Dekat,Wiraswasta,Sedang,2.0,Tidak,Tidak,Tidak
-Dekat,Wiraswasta,Sedang,2.0,Tidak,Ya,Tidak
-Dekat,Wiraswasta,Sedang,2.0,Tidak,Tidak,Ya
-Dekat,Wiraswasta,Sedang,1.0,Tidak,Ya,Tidak
-Dekat,Wiraswasta,Sedang,2.0,Tidak,Tidak,Ya
-Dekat,Wiraswasta,Sedang,2.0,Tidak,Tidak,Ya
-Dekat,Wiraswasta,Sedang,1.0,Tidak,Ya,Tidak
-Dekat,Wiraswasta,Sedang,2.0,Tidak,Ya,Ya
-Dekat,Wiraswasta,Sedang,1.0,Tidak,Tidak,Tidak
-Dekat,PNS,Tinggi,2.0,Tidak,Tidak,Ya
 Jauh,Wiraswasta,Sedang,3.0,Tidak,Tidak,Ya
-Dekat,Wiraswasta,Sedang,2.0,Tidak,Ya,Ya
-Dekat,Petani,Sedang,3.0,Tidak,Tidak,Tidak
 Dekat,Wirausaha,Sedang,2.0,Tidak,Tidak,Tidak
 Dekat,Sudah Meninggal,Sedang,3.0,Tidak,Ya,Ya
 Dekat,Pensiunan,Sedang,2.0,Tidak,Ya,Ya
 Dekat,Sudah Meninggal,Sedang,1.0,Tidak,Ya,Ya
 Dekat,Petani,Sedang,1.0,Tidak,Ya,Tidak
 Dekat,Wiraswasta,Sedang,3.0,Terima,Ya,Tidak
-Dekat,Petani,Sedang,2.0,Tidak,Ya,Ya
-Dekat,Wiraswasta,Sedang,2.0,Tidak,Tidak,Tidak
-Dekat,Wiraswasta,Sedang,2.0,Tidak,Tidak,Ya
-Jauh,PNS,Sedang,2.0,Tidak,Tidak,Tidak
 Jauh,Pensiunan,Sedang,2.0,Tidak,Tidak,Tidak
 Jauh,Petani,Sedang,1.0,Tidak,Tidak,Tidak
-Dekat,Wiraswasta,Sedang,1.0,Tidak,Tidak,Tidak
 Dekat,Karyawan Swasta,Sedang,1.0,Tidak,Tidak,Ya
-Dekat,PNS,Sedang,1.0,Tidak,Tidak,Ya
-Dekat,Wiraswasta,Sedang,2.0,Tidak,Tidak,Tidak
-Dekat,Wiraswasta,Sedang,2.0,Tidak,Tidak,Ya
-Dekat,Wiraswasta,Tinggi,3.0,Tidak,Ya,Tidak
-Jauh,Wiraswasta,Sedang,3.0,Tidak,Tidak,Ya
-Dekat,Wiraswasta,Tinggi,3.0,Tidak,Ya,Tidak
 Jauh,Wiraswasta,Tinggi,3.0,Tidak,Tidak,Tidak
-Jauh,Wiraswasta,Sedang,3.0,Tidak,Ya,Ya
 Dekat,Wiraswasta,Sedang,3.0,Tidak,Tidak,Tidak
 Jauh,Wiraswasta,Sedang,1.0,Tidak,Ya,Tidak
-Jauh,Wiraswasta,Sedang,2.0,Tidak,Tidak,Tidak
-Dekat,Wiraswasta,Sedang,2.0,Tidak,Tidak,Ya
 Jauh,PNS,Sedang,2.0,Tidak,Ya,Tidak
-Jauh,Wiraswasta,Sedang,2.0,Tidak,Tidak,Tidak
 Jauh,Wiraswasta,Sedang,1.0,Tidak,Tidak,Tidak
-Jauh,Petani,Sedang,2.0,Tidak,Ya,Tidak
 Jauh,Wirausaha,Sedang,2.0,Tidak,Tidak,Tidak
 Dekat,Sudah Meninggal,Sedang,1.0,Tidak,Tidak,Tidak
-Jauh,Pensiunan,Sedang,2.0,Tidak,Tidak,Tidak
 Jauh,Sudah Meninggal,Sedang,1.0,Tidak,Tidak,Ya
-Jauh,Petani,Sedang,2.0,Tidak,Ya,Tidak
-Jauh,Wiraswasta,Sedang,3.0,Tidak,Ya,Tidak
 Jauh,Petani,Sedang,2.0,Tidak,Ya,Ya
-Jauh,Wiraswasta,Sedang,3.0,Tidak,Tidak,Ya
-Jauh,Wiraswasta,Sedang,2.0,Tidak,Tidak,Ya
-Jauh,PNS,Sedang,3.0,Tidak,Ya,Tidak
 Jauh,Pensiunan,Sedang,2.0,Tidak,Tidak,Ya
 Jauh,Petani,Sedang,1.0,Tidak,Tidak,Ya
-Dekat,Wiraswasta,Sedang,1.0,Tidak,Tidak,Ya
 Jauh,Karyawan Swasta,Sedang,3.0,Tidak,Tidak,Ya
-Jauh,PNS,Sedang,2.0,Tidak,Ya,Tidak
-Dekat,Wiraswasta,Sedang,2.0,Tidak,Tidak,Tidak
-Dekat,Wiraswasta,Sedang,2.0,Tidak,Tidak,Ya
-Jauh,Wiraswasta,Sedang,2.0,Tidak,Ya,Ya
-Jauh,Wiraswasta,Sedang,2.0,Tidak,Ya,Ya
-Jauh,Wiraswasta,Sedang,1.0,Tidak,Ya,Tidak
-Jauh,Wiraswasta,Sedang,2.0,Tidak,Ya,Tidak
-Dekat,Wiraswasta,Sedang,2.0,Tidak,Ya,Tidak
 Jauh,Wiraswasta,Sedang,4.0,Tidak,Ya,Tidak
-Dekat,Wiraswasta,Sedang,3.0,Tidak,Tidak,Tidak
-Jauh,Wiraswasta,Sedang,3.0,Tidak,Tidak,Ya
-Dekat,Wiraswasta,Sedang,3.0,Tidak,Ya,Tidak
-Jauh,PNS,Sedang,3.0,Tidak,Tidak,Ya
 Jauh,Wiraswasta,Sedang,3.0,Tidak,Tidak,Tidak
-Jauh,Wiraswasta,Sedang,3.0,Tidak,Tidak,Tidak
-Dekat,Petani,Sedang,3.0,Tidak,Ya,Tidak
 Dekat,Wirausaha,Sedang,3.0,Tidak,Ya,Ya
 Jauh,Sudah Meninggal,Sedang,1.0,Tidak,Ya,Ya
 Jauh,Pensiunan,Sedang,2.0,Tidak,Ya,Ya
 Dekat,Sudah Meninggal,Sedang,2.0,Tidak,Ya,Tidak
-Dekat,Petani,Sedang,2.0,Tidak,Tidak,Tidak
-Jauh,Wiraswasta,Sedang,2.0,Tidak,Tidak,Tidak
 Dekat,Petani,Sedang,1.0,Tidak,Ya,Ya
-Jauh,Wiraswasta,Sedang,2.0,Tidak,Tidak,Tidak
-Dekat,Wiraswasta,Sedang,2.0,Tidak,Ya,Tidak
-Jauh,PNS,Sedang,1.0,Tidak,Tidak,Tidak
-Dekat,Pensiunan,Sedang,2.0,Tidak,Ya,Ya
 Jauh,Petani,Sedang,1.0,Tidak,Ya,Tidak
-Jauh,Wiraswasta,Sedang,2.0,Tidak,Ya,Ya
 Dekat,Karyawan Swasta,Sedang,3.0,Tidak,Ya,Ya
-Dekat,PNS,Sedang,2.0,Tidak,Tidak,Ya
-Dekat,Wiraswasta,Sedang,3.0,Tidak,Tidak,Ya
-Jauh,Wiraswasta,Sedang,2.0,Tidak,Tidak,Ya
-Jauh,Wiraswasta,Sedang,3.0,Tidak,Ya,Ya
-Jauh,Wiraswasta,Sedang,2.0,Tidak,Tidak,Ya
-Dekat,Wiraswasta,Sedang,1.0,Tidak,Tidak,Tidak
-Jauh,Wiraswasta,Sedang,1.0,Tidak,Ya,Ya
-Dekat,Wiraswasta,Tinggi,3.0,Tidak,Ya,Tidak
-Dekat,Wiraswasta,Sedang,2.0,Tidak,Ya,Tidak
-Dekat,Wiraswasta,Rendah,2.0,Tidak,Ya,Tidak
-Dekat,Wiraswasta,Sedang,2.0,Tidak,Tidak,Tidak
-Dekat,Wiraswasta,Sedang,2.0,Tidak,Tidak,Ya
 Jauh,PNS,Rendah,2.0,Tidak,Tidak,Tidak
 Dekat,Wiraswasta,Tinggi,1.0,Tidak,Ya,Ya
-Jauh,Wiraswasta,Tinggi,2.0,Tidak,Ya,Tidak
-Dekat,Petani,Sedang,2.0,Tidak,Ya,Tidak
 Dekat,Wirausaha,Tinggi,4.0,Tidak,Tidak,Ya
 Dekat,Sudah Meninggal,Sedang,3.0,Tidak,Tidak,Tidak
 Jauh,Pensiunan,Sedang,3.0,Tidak,Ya,Ya
 Dekat,Sudah Meninggal,Sedang,3.0,Terima,Tidak,Ya
 Jauh,Petani,Tinggi,3.0,Tidak,Tidak,Ya
-Jauh,Wiraswasta,Tinggi,3.0,Tidak,Ya,Ya
-Jauh,Petani,Tinggi,3.0,Tidak,Tidak,Ya
-Dekat,Wiraswasta,Tinggi,3.0,Tidak,Tidak,Tidak
-Dekat,Wiraswasta,Tinggi,3.0,Tidak,Ya,Ya
-Dekat,PNS,Tinggi,1.0,Tidak,Ya,Ya
 Dekat,Pensiunan,Tinggi,2.0,Tidak,Ya,Tidak
-Dekat,Petani,Tinggi,2.0,Tidak,Tidak,Tidak
 Jauh,Wiraswasta,Tinggi,2.0,Tidak,Tidak,Ya
-Jauh,Karyawan Swasta,Sedang,2.0,Tidak,Ya,Ya
-Jauh,PNS,Tinggi,1.0,Tidak,Tidak,Ya
-Jauh,Wiraswasta,Sedang,2.0,Tidak,Ya,Tidak
-Dekat,Wiraswasta,Sedang,2.0,Tidak,Ya,Ya
-Dekat,Wiraswasta,Rendah,1.0,Tidak,Ya,Ya
-Dekat,Wiraswasta,Sedang,2.0,Tidak,Tidak,Tidak
-Jauh,Wiraswasta,Rendah,1.0,Tidak,Tidak,Ya
-Dekat,Wiraswasta,Rendah,2.0,Tidak,Ya,Tidak
-Jauh,Wiraswasta,Tinggi,3.0,Tidak,Tidak,Tidak
-Dekat,Wiraswasta,Rendah,2.0,Tidak,Ya,Ya
-Dekat,Wiraswasta,Sedang,3.0,Tidak,Tidak,Ya
-Dekat,Wiraswasta,Sedang,2.0,Tidak,Tidak,Tidak
 Jauh,Wiraswasta,Rendah,3.0,Tidak,Ya,Tidak
-Jauh,PNS,Tinggi,2.0,Tidak,Tidak,Tidak
-Dekat,Wiraswasta,Tinggi,1.0,Tidak,Ya,Ya
-Dekat,Wiraswasta,Sedang,1.0,Tidak,Ya,Tidak
-Dekat,Petani,Sedang,3.0,Tidak,Tidak,Ya
-Dekat,Wirausaha,Tinggi,2.0,Tidak,Ya,Ya
 Jauh,Sudah Meninggal,Tinggi,2.0,Tidak,Tidak,Tidak
 Dekat,Pensiunan,Tinggi,2.0,Tidak,Ya,Ya
 Jauh,Sudah Meninggal,Sedang,2.0,Tidak,Ya,Ya
-Jauh,Petani,Tinggi,2.0,Tidak,Ya,Ya
-Dekat,Wiraswasta,Sedang,4.0,Terima,Ya,Tidak
-Jauh,Petani,Sedang,2.0,Tidak,Ya,Tidak
-Dekat,Wiraswasta,Sedang,2.0,Tidak,Tidak,Ya
 Jauh,Wiraswasta,Tinggi,4.0,Tidak,Ya,Ya
-Jauh,PNS,Tinggi,3.0,Tidak,Tidak,Tidak
 Dekat,Pensiunan,Tinggi,3.0,Tidak,Ya,Ya
 Jauh,Petani,Tinggi,3.0,Tidak,Ya,Tidak
-Jauh,Wiraswasta,Tinggi,3.0,Tidak,Ya,Ya
 Dekat,Karyawan Swasta,Tinggi,3.0,Tidak,Ya,Ya
-Dekat,PNS,Tinggi,3.0,Tidak,Ya,Tidak
-Jauh,Wiraswasta,Tinggi,3.0,Tidak,Tidak,Tidak
-Jauh,Wiraswasta,Tinggi,3.0,Tidak,Ya,Ya
 Jauh,Wiraswasta,Sedang,1.0,Tidak,Tidak,Ya
-Jauh,Wiraswasta,Tinggi,2.0,Tidak,Tidak,Ya
-Dekat,Wiraswasta,Sedang,2.0,Tidak,Tidak,Ya
-Jauh,Wiraswasta,Sedang,2.0,Tidak,Ya,Tidak
-Dekat,Wiraswasta,Rendah,2.0,Tidak,Tidak,Ya
-Jauh,Wiraswasta,Sedang,1.0,Tidak,Tidak,Ya
-Dekat,Wiraswasta,Rendah,2.0,Tidak,Tidak,Tidak
 Jauh,Wiraswasta,Rendah,2.0,Tidak,Ya,Tidak
-Jauh,Wiraswasta,Tinggi,1.0,Tidak,Tidak,Tidak
-Jauh,PNS,Rendah,2.0,Tidak,Tidak,Tidak
-Dekat,Wiraswasta,Sedang,1.0,Tidak,Tidak,Tidak
-Jauh,Wiraswasta,Sedang,2.0,Tidak,Tidak,Tidak
 Jauh,Petani,Rendah,3.0,Tidak,Tidak,Tidak
 Jauh,Wirausaha,Tinggi,2.0,Tidak,Ya,Tidak
 Dekat,Sudah Meninggal,Tinggi,3.0,Tidak,Ya,Ya
 Dekat,Pensiunan,Sedang,2.0,Tidak,Ya,Tidak
 Jauh,Sudah Meninggal,Sedang,3.0,Tidak,Ya,Ya
-Dekat,Petani,Tinggi,2.0,Tidak,Tidak,Tidak
 Jauh,Wiraswasta,Tinggi,1.0,Tidak,Tidak,Ya
 Dekat,Petani,Tinggi,1.0,Tidak,Tidak,Tidak
-Jauh,Wiraswasta,Sedang,3.0,Tidak,Ya,Tidak
-Dekat,Wiraswasta,Tinggi,2.0,Tidak,Tidak,Ya
-Dekat,PNS,Sedang,2.0,Tidak,Tidak,Ya
-Dekat,Pensiunan,Sedang,2.0,Tidak,Tidak,Ya
-Dekat,Petani,Sedang,2.0,Tidak,Ya,Ya
-Dekat,Wiraswasta,Tinggi,2.0,Tidak,Ya,Ya
 Dekat,Karyawan Swasta,Tinggi,1.0,Tidak,Ya,Ya
-Jauh,PNS,Tinggi,2.0,Tidak,Tidak,Ya
-Jauh,Wiraswasta,Tinggi,2.0,Tidak,Ya,Tidak
 Jauh,Wiraswasta,Tinggi,2.0,Tidak,Tidak,Tidak
-Dekat,Wiraswasta,Tinggi,2.0,Tidak,Ya,Ya
-Jauh,Wiraswasta,Tinggi,2.0,Tidak,Ya,Tidak
-Dekat,Wiraswasta,Tinggi,2.0,Tidak,Ya,Ya
-Dekat,Wiraswasta,Tinggi,3.0,Tidak,Tidak,Tidak
-Dekat,Wiraswasta,Sedang,1.0,Tidak,Ya,Tidak
-Dekat,Wiraswasta,Tinggi,3.0,Tidak,Ya,Tidak
-Dekat,Wiraswasta,Sedang,3.0,Tidak,Ya,Ya
-Jauh,Wiraswasta,Sedang,3.0,Tidak,Tidak,Ya
-Dekat,Wiraswasta,Rendah,2.0,Tidak,Ya,Tidak
-Jauh,Petani,Sedang,3.0,Tidak,Tidak,Tidak
-Dekat,Wiraswasta,Rendah,3.0,Tidak,Tidak,Ya
 Dekat,Wiraswasta,Rendah,4.0,Terima,Ya,Tidak
 Dekat,PNS,Tinggi,4.0,Tidak,Ya,Ya
 Jauh,Pensiunan,Rendah,4.0,Tidak,Ya,Tidak
-Dekat,Petani,Sedang,2.0,Tidak,Tidak,Ya
-Jauh,Wiraswasta,Sedang,3.0,Tidak,Ya,Ya
 Jauh,Karyawan Swasta,Rendah,1.0,Tidak,Tidak,Tidak
-Jauh,PNS,Tinggi,2.0,Tidak,Tidak,Tidak
 Dekat,Karyawan Swasta,Tinggi,2.0,Tidak,Tidak,Tidak
-Dekat,Wiraswasta,Tinggi,3.0,Tidak,Ya,Tidak
-Dekat,Wiraswasta,Sedang,2.0,Tidak,Tidak,Ya
-Dekat,Wiraswasta,Tinggi,2.0,Tidak,Ya,Ya
-Jauh,Karyawan Swasta,Tinggi,2.0,Tidak,Ya,Tidak
-Jauh,Wiraswasta,Sedang,2.0,Tidak,Ya,Ya
 Jauh,Karyawan Swasta,Tinggi,2.0,Tidak,Ya,Tidak
 Jauh,Pedagang,Sedang,4.0,Terima,Tidak,Tidak
 Jauh,Wiraswasta,Rendah,3.0,Tidak,Ya,Ya
-Dekat,Wiraswasta,Rendah,3.0,Tidak,Tidak,Ya
-Dekat,Wiraswasta,Tinggi,3.0,Tidak,Ya,Tidak
-Dekat,PNS,Tinggi,2.0,Tidak,Ya,Ya
-Jauh,Wiraswasta,Sedang,2.0,Tidak,Tidak,Tidak
 Jauh,Wiraswasta,Sedang,4.0,Tidak,Tidak,Ya
-Dekat,Petani,Rendah,2.0,Tidak,Ya,Ya
 Jauh,Wirausaha,Tinggi,1.0,Tidak,Ya,Ya
 Dekat,Sudah Meninggal,Tinggi,2.0,Tidak,Ya,Tidak
 Dekat,Pensiunan,Sedang,2.0,Tidak,Tidak,Tidak
-Dekat,Sudah Meninggal,Sedang,2.0,Tidak,Ya,Tidak
-Dekat,Petani,Rendah,3.0,Terima,Tidak,Tidak
 Jauh,Wiraswasta,Sedang,3.0,Terima,Ya,Tidak
 Jauh,Petani,Tinggi,2.0,Tidak,Tidak,Tidak
-Jauh,Wiraswasta,Sedang,2.0,Tidak,Tidak,Tidak
-Jauh,Wiraswasta,Tinggi,2.0,Tidak,Tidak,Ya
-Jauh,PNS,Tinggi,2.0,Tidak,Ya,Ya
-Dekat,Pensiunan,Sedang,2.0,Tidak,Tidak,Tidak
-Dekat,Petani,Sedang,2.0,Tidak,Tidak,Ya
-Dekat,Wiraswasta,Tinggi,2.0,Tidak,Tidak,Ya
 Jauh,Karyawan Swasta,Tinggi,2.0,Tidak,Tidak,Ya
 Dekat,Sales Associate,Sedang,1.0,Tidak,Tidak,Ya
 Jauh,Assistant Media Planner,Rendah,1.0,Tidak,Ya,Ya
@@ -838,7 +570,6 @@ Dekat,Health Coach IV,Sedang,4.0,Tidak,Ya,Ya
 Dekat,Payment Adjustment Coordinator,Tinggi,1.0,Tidak,Ya,Tidak
 Dekat,Accounting Assistant III,Sedang,1.0,Tidak,Tidak,Ya
 Dekat,VP Accounting,Sedang,1.0,Tidak,Ya,Ya
-Dekat,Tax Accountant,Tinggi,2.0,Terima,Ya,Tidak
 Jauh,Director of Sales,Rendah,5.0,Tidak,Ya,Tidak
 Jauh,Help Desk Technician,Sedang,5.0,Tidak,Ya,Tidak
 Dekat,Senior Cost Accountant,Sedang,4.0,Tidak,Tidak,Ya
@@ -855,7 +586,6 @@ Jauh,Information Systems Manager,Rendah,5.0,Terima,Tidak,Tidak
 Dekat,Computer Systems Analyst I,Rendah,5.0,Terima,Ya,Ya
 Jauh,Accounting Assistant II,Rendah,1.0,Terima,Ya,Tidak
 Jauh,Help Desk Technician,Sedang,1.0,Terima,Ya,Ya
-Dekat,Staff Scientist,Rendah,4.0,Tidak,Tidak,Tidak
 Dekat,Marketing Assistant,Sedang,4.0,Terima,Tidak,Ya
 Dekat,Senior Editor,Rendah,5.0,Terima,Ya,Tidak
 Jauh,Software Test Engineer I,Tinggi,5.0,Terima,Tidak,Tidak
