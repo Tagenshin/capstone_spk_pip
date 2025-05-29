@@ -9,9 +9,15 @@ module.exports = [
             auth: 'jwt',
             validate: {
                 payload: Joi.object({
-                    namaSiswa: Joi.string().required(),
-                    nomorIdentitas: Joi.string().required(),
-                    tanggal: Joi.date().required()
+                    namaSiswa: Joi.string() . required(),
+                    jenisKelamin: Joi.string() . required(),
+                    agama : Joi.string() . required(),
+                    alatTransportasi: Joi.string(). required(),
+                    pekerjaanOrtu: Joi.string(). required(),
+                    penghasilan: Joi.number(). required(),
+                    tanggungan: Joi.string(). required(),
+                    statusKIP: Joi.string(). required(),
+                    statusPKH: Joi.string(). required()
                 })
             }
         },
