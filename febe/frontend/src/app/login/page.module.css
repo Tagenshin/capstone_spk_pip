@@ -1,0 +1,181 @@
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 48px 24px;
+  min-height: 80vh;
+  background: #f8fafc;
+}
+
+.loginContainer,
+.registerContainer {
+  background: white;
+  padding: 32px 24px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
+  width: 100%;
+  max-width: 420px;
+  text-align: center;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #2563eb;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.icon {
+  font-size: 28px;
+}
+
+.subtitle {
+  font-size: 24px;
+  margin-bottom: 16px;
+  font-weight: 700;
+  color:rgb(0, 0, 0);
+}
+
+.description {
+  font-size: 14px;
+  margin-bottom: 24px;
+  color: #475569;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-align: left;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: semi-bold;
+  color:rgb(0, 0, 0);
+  margin-bottom: 4px;
+}
+
+.input {
+  padding: 10px 12px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background-color: white;
+  color: black;
+  outline-offset: 2px;
+  transition: outline-color 0.2s ease;
+}
+
+.input:focus {
+  outline-color: #1d4ed8;
+}
+
+.forgotRemember {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  color: #475569;
+  background-color: white;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  color: #475569;
+}
+
+.checkboxLabel input[type="checkbox"] {
+  accent-color: #2563eb; /* Warna untuk checkbox ketika di klik */
+  border: 1px solid #ddd;
+  background-color: white;
+}
+
+.forgotLink {
+  font-size: 13px;
+  color: #2563eb;
+  text-decoration: none;
+}
+
+.forgotLink:hover {
+  text-decoration: underline;
+}
+
+.btnPrimary {
+  background: #2563eb;
+  color: white;
+  padding: 12px;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.2s ease;
+}
+
+.btnPrimary:hover {
+  background-color: #1d4ed8;
+}
+
+/* Animasi Loading */
+.loading {
+  pointer-events: none; /* Menonaktifkan klik saat sedang loading */
+  background-color: #1d4ed8; /* Mengubah warna saat loading */
+  cursor: not-allowed; /* Cursor berubah saat loading */
+  position: relative;
+}
+
+.loading:after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 20px;
+  height: 20px;
+  border: 3px solid #fff;
+  border-top: 3px solid transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite; /* Animasi berputar */
+  transform: translate(-50%, -50%);
+}
+
+@keyframes spin {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+
+.bottomText {
+  margin-top: 16px;
+  font-size: 14px;
+  color: #475569;
+  text-align: center;
+}
+
+.link {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.backHome {
+  margin-top: 12px;
+  font-size: 14px;
+  color: #475569;
+  text-align: center;
+}
