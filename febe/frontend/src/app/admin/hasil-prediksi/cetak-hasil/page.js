@@ -34,11 +34,11 @@ export default function CetakHasilPage() {
 
   // Dummy data
   const data = [
-    { id: 1, name: "Ahmad Fauzi", nisn: "1234567890", class: "XII IPA 1", score: 92, status: "Layak" },
-    { id: 2, name: "Siti Nurhaliza", nisn: "0987654321", class: "XI IPS 2", score: 85, status: "Layak" },
-    { id: 3, name: "Budi Santoso", nisn: "2345678901", class: "X IPA 3", score: 45, status: "Tidak Layak" },
-    { id: 4, name: "Dewi Lestari", nisn: "3456789012", class: "XII IPS 1", score: 78, status: "Layak" },
-    { id: 5, name: "Eko Prasetyo", nisn: "4567890123", class: "XI IPA 2", score: 32, status: "Tidak Layak" },
+    { id: 1, name: "Ahmad Fauzi", nisn: "1234567890", class: "XII IPA 1", score: 92, status: "Layak", date: "2023-06-01" },
+    { id: 2, name: "Siti Nurhaliza", nisn: "0987654321", class: "XI IPS 2", score: 85, status: "Layak", date: "2023-06-02" },
+    { id: 3, name: "Budi Santoso", nisn: "2345678901", class: "X IPA 3", score: 45, status: "Tidak Layak", date: "2023-06-03" },
+    { id: 4, name: "Dewi Lestari", nisn: "3456789012", class: "XII IPS 1", score: 78, status: "Layak", date: "2023-06-04" },
+    { id: 5, name: "Eko Prasetyo", nisn: "4567890123", class: "XI IPA 2", score: 32, status: "Tidak Layak", date: "2023-06-05" },
   ];
 
   // Filter data berdasarkan nama dan status
@@ -69,10 +69,6 @@ export default function CetakHasilPage() {
           bgcolor: "#f9fafb",
         }}
       >
-        {/* Breadcrumb */}
-        <Typography variant="body2" color="text.secondary" gutterBottom>
-          Dashboard &gt; Hasil Prediksi &gt; Cetak Hasil
-        </Typography>
 
         {/* Header */}
         <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 3, flexWrap: "wrap", gap: 2 }}>
@@ -147,11 +143,9 @@ export default function CetakHasilPage() {
                     <Checkbox disabled />
                   </TableCell>
                   <TableCell>Nama</TableCell>
-                  <TableCell>NISN</TableCell>
-                  <TableCell>Kelas</TableCell>
                   <TableCell>Skor</TableCell>
                   <TableCell>Status</TableCell>
-                  <TableCell>Aksi</TableCell>
+                  <TableCell>Tanggal</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -162,22 +156,16 @@ export default function CetakHasilPage() {
                         <Checkbox />
                       </TableCell>
                       <TableCell sx={{ fontWeight: "bold" }}>{row.name}</TableCell>
-                      <TableCell>{row.nisn}</TableCell>
-                      <TableCell>{row.class}</TableCell>
                       <TableCell>{row.score}%</TableCell>
                       <TableCell>
                         <Chip label={row.status} color={statusColor(row.status)} size="small" />
                       </TableCell>
-                      <TableCell>
-                        <Button variant="text" size="small" startIcon={<FileText />}>
-                          Detail
-                        </Button>
-                      </TableCell>
+                      <TableCell>{row.date}</TableCell>
                     </TableRow>
                   ))
                 ) : (
                   <TableRow>
-                    <TableCell colSpan={7} align="center">
+                    <TableCell colSpan={5} align="center">
                       Tidak ada data yang cocok
                     </TableCell>
                   </TableRow>
