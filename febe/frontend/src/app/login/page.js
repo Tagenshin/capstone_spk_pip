@@ -1,23 +1,78 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Link from "next/link";
+import Cookies from 'js-cookie';
 
 export default function Login() {
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [rememberMe, setRememberMe] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const router = useRouter();
 
-  const handleSubmit = (e) => {
+  useEffect(() => {
+    const savedEmail = Cookies.get('rememberedEmail');
+    const savedPassword = Cookies.get('rememberedPassword');
+    
+    if (savedEmail) setEmail(savedEmail);
+    if (savedPassword) setPassword(savedPassword);
+    if (savedEmail || savedPassword) setRememberMe(true);
+  }, []);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setError("");
+    
+    try {
+      const res = await fetch("http://localhost:5000/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
 
-    setTimeout(() => {
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.message || "Gagal login. Coba lagi.");
+      }
+
+      // Simpan token
+      if (data.token) {
+        localStorage.setItem("token", data.token);
+      }
+
+      // Handle remember me
+      if (rememberMe) {
+        Cookies.set('rememberedEmail', email, { expires: 30 });
+        Cookies.set('rememberedPassword', password, { expires: 30 });
+      } else {
+        Cookies.remove('rememberedEmail');
+        Cookies.remove('rememberedPassword');
+      }
+       
       router.push("/admin");
-    }, 2000);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
   };
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-purple-500"></div>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -33,6 +88,12 @@ export default function Login() {
             Masukkan email dan password untuk mengakses sistem
           </p>
 
+          {error && (
+            <div className="mb-4 text-sm text-red-600 text-center">
+              {error}
+            </div>
+          )}
+
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
               <label htmlFor="email" className="block mb-1 text-sm font-medium text-gray-700">
@@ -42,6 +103,8 @@ export default function Login() {
                 id="email"
                 name="email"
                 type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 placeholder="nama@sekolah.ac.id"
                 required
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
@@ -59,6 +122,8 @@ export default function Login() {
                 id="password"
                 name="password"
                 type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 required
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
               />
@@ -69,6 +134,8 @@ export default function Login() {
                 id="remember"
                 name="remember"
                 type="checkbox"
+                checked={rememberMe}
+                onChange={(e) => setRememberMe(e.target.checked)}
                 className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
               />
               <label htmlFor="remember" className="text-sm text-gray-700 select-none">

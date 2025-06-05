@@ -15,17 +15,18 @@ datasource db {
 }
 
 model User {
-  id        String      @id @default(uuid())
-  email     String      @unique
-  password  String
-  nama      String
-  noHp      String
-  alamat    String
-  logo      String? // opsional
-  role      String // 'sekolah' atau 'superadmin'
-  hasil     Hasil[]
-  rekap     RekapHasil?
-  createdAt DateTime    @default(now())
+  id          String      @id @default(uuid())
+  email       String      @unique
+  password    String
+  namaSekolah String
+  tingkat     String
+  noHp        String?
+  alamat      String?
+  logo        String?
+  role        String
+  hasil       Hasil[]
+  rekap       RekapHasil?
+  createdAt   DateTime    @default(now())
 }
 
 model Hasil {
@@ -39,7 +40,7 @@ model Hasil {
   tanggungan       String
   statusKIP        String
   statusPKH        String
-  status           String // layak / tidak
+  status           String? //layak atau tidak
   tanggal          DateTime @default(now())
   user             User     @relation(fields: [userId], references: [id])
   userId           String

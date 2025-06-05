@@ -7,11 +7,14 @@ const siswaRoutes = require('./routes/siswa.route');
 
 const init = async () => {
     const server = Hapi.server({
-        port: process.env.PORT || 3000,
+        port: process.env.PORT || 5000,
         host: 'localhost',
         routes: {
             cors: {
-                origin: ['*'] // aktifkan CORS
+                origin: ['*'],
+                headers: ['Accept', 'Content-Type', 'Authorization'],
+                additionalHeaders: ['X-Requested-With'],
+                credentials: true
             }
         }
     });
@@ -46,20 +49,36 @@ const init = async () => {
 
     server.route([
         ...authRoutes,
-        ...siswaRoutes
-    ]);
-    
-    // TODO: Tambahkan route di sini nanti
-    server.route({
-        method: 'GET',
-        path: '/',
-        options: {
-            auth: false
-        },
-        handler: (request, h) => {
-            return { status: 'API is ready mathafaka ✅' };
+        ...siswaRoutes,
+        {
+            method: 'OPTIONS',
+            path: '/{any*}',
+            options: {
+                auth: false,
+                cors: true
+            },
+            handler: (request, h) => {
+                return h.response().code(200);
+            }
         }
+    ]);
+
+    server.ext('onPreResponse', (request, h) => {
+        const response = request.response;
+        
+        if (response.isBoom) {
+            response.output.headers['Access-Control-Allow-Origin'] = '*';
+            response.output.headers['Access-Control-Allow-Headers'] = 'Accept, Content-Type, Authorization';
+            response.output.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, PATCH, DELETE, OPTIONS';
+        } else if (response.header) {
+            response.header('Access-Control-Allow-Origin', '*');
+            response.header('Access-Control-Allow-Headers', 'Accept, Content-Type, Authorization');
+            response.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
+        }
+
+        return h.continue;
     });
+
 
     await server.start();
     console.log('🚀 Server running at:', server.info.uri);

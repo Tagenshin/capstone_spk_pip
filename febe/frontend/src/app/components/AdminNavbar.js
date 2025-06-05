@@ -15,6 +15,7 @@ import {
   ChevronDownIcon,
   ChevronUpIcon,
 } from "@heroicons/react/24/outline";
+import { useRouter } from "next/navigation";
 
 const menuItems = [
   {
@@ -63,10 +64,30 @@ const menuItems = [
 
 export default function AdminNavbar({ isOpen, toggleSidebar }) {
   const pathname = usePathname();
-
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
   // State untuk submenu yang terbuka (key: label menu utama)
   const [openSubmenus, setOpenSubmenus] = useState({});
 
+  const handleLogout = async () => {
+    setLoading(true);
+    const token = localStorage.getItem("token");
+    try {
+      const response = await fetch("http://localhost:5000/auth/logout", {
+        Authorization: `Bearer ${token}`,
+        method: "POST",
+      })
+
+      if (response.ok) {
+        localStorage.removeItem("token");
+        router.push("/login");
+      }
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
+  }
   const toggleSubmenu = (label) => {
     setOpenSubmenus((prev) => ({
       ...prev,
@@ -217,14 +238,15 @@ export default function AdminNavbar({ isOpen, toggleSidebar }) {
 
       {/* Logout Button */}
       <div className="border-t border-gray-200 p-4">
-        <Link
-          href="/login"
-          className={`flex items-center gap-3 px-4 py-3 rounded-md
-            text-red-600 hover:bg-red-50 transition-colors select-none truncate`}
+        <Link 
+          href="/login" // atau path yang sesuai
+          className={`flex items-center gap-3 px-4 py-3 rounded-md text-red-600 hover:bg-red-50 transition-colors select-none truncate`}
           title="Keluar"
         >
-          <ArrowLeftOnRectangleIcon className="h-6 w-6 flex-shrink-0" />
-          {isOpen && <span className="font-medium">Keluar</span>}
+          <span onClick={handleLogout}>
+            {/* Konten di sini */}
+            {isOpen && <span className="font-medium">Keluar</span>}
+          </span>
         </Link>
       </div>
     </aside>

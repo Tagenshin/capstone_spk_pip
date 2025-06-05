@@ -18,4 +18,13 @@ module.exports = {
             return h.response({ status: 'fail', message: err.message }).code(401);
         }
     },
+
+    logoutHandler: async (request, h) => {
+        try {
+            await authService.logout(request.auth?.credentials?.id);
+            return h.response({ status: 'success' }).code(200);
+        } catch (err) {
+            return h.response({ status: 'fail', message: err.message }).code(401);
+        }
+    },
 };
