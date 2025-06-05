@@ -58,6 +58,8 @@ export default function DataSiswaPage() {
       transportation: "Sepeda Motor",
       fatherOccupation: "PNS",
       siblings: 2,
+      kip: "Ya",
+      kps: "Ya",
     },
     {
       id: 2,
@@ -70,6 +72,8 @@ export default function DataSiswaPage() {
       transportation: "Angkutan Umum",
       fatherOccupation: "Petani",
       siblings: 1,
+      kip: "Tidak",
+      kps: "Tidak",
     },
     {
       id: 3,
@@ -82,6 +86,8 @@ export default function DataSiswaPage() {
       transportation: "Mobil Pribadi",
       fatherOccupation: "Karyawan Swasta",
       siblings: 3,
+      kip: "Ya",
+      kps: "Tidak",
     },
     {
       id: 4,
@@ -94,6 +100,8 @@ export default function DataSiswaPage() {
       transportation: "Sepeda",
       fatherOccupation: "Wiraswasta",
       siblings: 2,
+      kip: "Ya",
+      kps: "Ya",
     },
     {
       id: 5,
@@ -106,6 +114,8 @@ export default function DataSiswaPage() {
       transportation: "Jalan Kaki",
       fatherOccupation: "Buruh",
       siblings: 4,
+      kip: "Tidak",
+      kps: "Ya",
     },
     {
       id: 6,
@@ -118,6 +128,8 @@ export default function DataSiswaPage() {
       transportation: "Sepeda Motor",
       fatherOccupation: "Tidak Bekerja",
       siblings: 1,
+      kip: "Ya",
+      kps: "Tidak",
     },
     {
       id: 7,
@@ -130,6 +142,8 @@ export default function DataSiswaPage() {
       transportation: "Angkutan Umum",
       fatherOccupation: "PNS",
       siblings: 2,
+      kip: "Ya",
+      kps: "Ya",
     },
     {
       id: 8,
@@ -142,6 +156,8 @@ export default function DataSiswaPage() {
       transportation: "Mobil Pribadi",
       fatherOccupation: "Karyawan Swasta",
       siblings: 3,
+      kip: "Tidak",
+      kps: "Tidak",
     },
   ];
 
@@ -358,7 +374,6 @@ export default function DataSiswaPage() {
                     sx={{ minWidth: 40 }}
                     align="center"
                   >
-                    {/* Checkbox header to select all */}
                     <Checkbox
                       indeterminate={selectedIds.size > 0 && selectedIds.size < filteredStudents.length}
                       checked={filteredStudents.length > 0 && selectedIds.size === filteredStudents.length}
@@ -378,6 +393,8 @@ export default function DataSiswaPage() {
                 <TableCell sx={{ fontWeight: "bold", minWidth: 140, textAlign: "center" }}>Alat Transportasi</TableCell>
                 <TableCell sx={{ fontWeight: "bold", minWidth: 150, textAlign: "center" }}>Jumlah Tanggungan</TableCell>
                 <TableCell sx={{ fontWeight: "bold", minWidth: 140, textAlign: "center" }}>Pekerjaan Orang Tua</TableCell>
+                <TableCell sx={{ fontWeight: "bold", minWidth: 140, textAlign: "center" }}>Status Memiliki KIP</TableCell>
+                <TableCell sx={{ fontWeight: "bold", minWidth: 140, textAlign: "center" }}>Status Memiliki KPS</TableCell>
                 <TableCell sx={{ fontWeight: "bold", minWidth: 70, textAlign: "center" }}>Aksi</TableCell>
               </TableRow>
             </TableHead>
@@ -404,6 +421,8 @@ export default function DataSiswaPage() {
                   <TableCell sx={{ textAlign: "center" }}>{student.transportation}</TableCell>
                   <TableCell sx={{ textAlign: "center" }}>{student.siblings}</TableCell>
                   <TableCell sx={{ textAlign: "center" }}>{student.fatherOccupation}</TableCell>
+                  <TableCell sx={{ textAlign: "center" }}>{student.kip}</TableCell>
+                  <TableCell sx={{ textAlign: "center" }}>{student.kps}</TableCell>
                   <TableCell sx={{ textAlign: "center" }}>
                     {!predictMode && (
                       <>
@@ -457,7 +476,7 @@ export default function DataSiswaPage() {
               ))}
               {filteredStudents.length === 0 && (
                 <TableRow>
-                  <TableCell colSpan={predictMode ? 7 : 6} align="center" sx={{ py: 4 }}>
+                  <TableCell colSpan={predictMode ? 9 : 8} align="center" sx={{ py: 4 }}>
                     Tidak ada data siswa ditemukan.
                   </TableCell>
                 </TableRow>

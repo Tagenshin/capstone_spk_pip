@@ -82,9 +82,6 @@ export default function HasilPrediksiPage() {
         }}
       >
         {/* Breadcrumb */}
-        <Typography variant="body2" color="text.secondary" gutterBottom>
-          Dashboard &gt; Hasil Prediksi
-        </Typography>
         <Typography variant="h4" fontWeight="bold" gutterBottom>
           Hasil Prediksi
         </Typography>

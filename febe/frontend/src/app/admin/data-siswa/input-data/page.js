@@ -5,6 +5,7 @@ import Link from "next/link";
 import {
   Box,
   Typography,
+  Paper,
   Card,
   CardContent,
   TextField,
@@ -12,8 +13,6 @@ import {
   MenuItem,
   InputLabel,
   FormControl,
-  Checkbox,
-  FormControlLabel,
   Button,
 } from "@mui/material";
 import { ArrowLeft, Save } from "lucide-react";
@@ -26,41 +25,39 @@ export default function StudentInputPage() {
 
   // Dummy options
   const incomeOptions = [
-    "< Rp 1.000.000",
-    "Rp 1.000.000 - Rp 2.000.000",
-    "Rp 2.000.000 - Rp 3.000.000",
-    "Rp 3.000.000 - Rp 4.000.000",
-    "> Rp 4.000.000",
+    "Rp. 500.000 - Rp. 1.500.000",
+    "Rp. 1.500.000 - Rp. 3.000.000",
+    "Rp. 3.000.000 - Rp. 5.000.000",
+    "> Rp. 5.000.000",
   ];
 
   const occupationOptions = [
-    "PNS",
-    "Karyawan Swasta",
-    "Wiraswasta",
+    "Wirausaha",
+    "Peternak",
     "Petani",
     "Buruh",
-    "Tidak Bekerja",
-    "Lainnya",
+    "Lainnya"
   ];
 
   const transportationOptions = [
-    "Jalan Kaki",
-    "Sepeda",
-    "Sepeda Motor",
-    "Angkutan Umum",
-    "Mobil Pribadi",
-    "Lainnya",
+    "Jalan kaki",
+    "Sepeda motor",
   ];
 
   const [statusKIP, setStatusKIP] = useState("");
-  const [statusPKH, setStatusPKH] = useState("");
+  const [statusKPS, setStatusKPS] = useState("");
+  const [tanggungan, setTanggungan] = useState("");
 
   const handleStatusKIPChange = (event) => {
     setStatusKIP(event.target.value);
   };
 
-  const handleStatusPKHChange = (event) => {
-    setStatusPKH(event.target.value);
+  const handleStatusKPSChange = (event) => {
+    setStatusKPS(event.target.value);
+  };
+
+  const handleTanggunganChange = (event) => {
+    setTanggungan(event.target.value);
   };
 
   return (
@@ -141,44 +138,34 @@ export default function StudentInputPage() {
               {/* Status KIP */}
               <FormControl fullWidth required>
                 <InputLabel>Status KIP</InputLabel>
-                <Select
-                  value={statusKIP}
-                  onChange={handleStatusKIPChange}
-                  label="Status KIP"
-                  name="status_kip"
-                >
-                  <MenuItem value="">Pilih Status KIP</MenuItem>
-                  <MenuItem value="memiliki_kip">Memiliki KIP</MenuItem>
-                  <MenuItem value="tidak_memiliki_kip">Tidak Memiliki KIP</MenuItem>
+                <Select value={statusKIP} onChange={handleStatusKIPChange} label="Status KIP" name="status_kip">
+                  <MenuItem value="">Pilih Status Memiliki KIP</MenuItem>
+                  <MenuItem value="memiliki_kip">Ya</MenuItem>
+                  <MenuItem value="tidak_memiliki_kip">Tidak</MenuItem>
                 </Select>
               </FormControl>
 
-              {/* Status PKH */}
+              {/* Status KPS */}
               <FormControl fullWidth required>
-                <InputLabel>Status PKH</InputLabel>
-                <Select
-                  value={statusPKH}
-                  onChange={handleStatusPKHChange}
-                  label="Status PKH"
-                  name="status_pkh"
-                >
-                  <MenuItem value="">Pilih Status PKH</MenuItem>
-                  <MenuItem value="memiliki_pkh">Memiliki PKH</MenuItem>
-                  <MenuItem value="tidak_memiliki_pkh">Tidak Memiliki PKH</MenuItem>
+                <InputLabel>Status KPS</InputLabel>
+                <Select value={statusKPS} onChange={handleStatusKPSChange} label="Status KPS" name="status_kps">
+                  <MenuItem value="">Pilih Status Memiliki KPS</MenuItem>
+                  <MenuItem value="memiliki_kps">Ya</MenuItem>
+                  <MenuItem value="tidak_memiliki_kps">Tidak</MenuItem>
                 </Select>
               </FormControl>
 
-              {/* Jumlah Tanggungan */}
-              <TextField
-                label="Jumlah Tanggungan (Saudara Kandung)"
-                required
-                fullWidth
-                name="siblings"
-                type="number"
-                inputProps={{ min: 0 }}
-                placeholder="Masukkan jumlah tanggungan"
-                helperText="Jumlah saudara kandung (misalnya: 1, 2, 3)"
-              />
+              {/* Jumlah Tanggungan (Dropdown) */}
+              <FormControl fullWidth required>
+                <InputLabel>Jumlah Tanggungan</InputLabel>
+                <Select value={tanggungan} onChange={handleTanggunganChange} label="Jumlah Tanggungan" name="siblings">
+                  <MenuItem value="">Pilih Jumlah Tanggungan</MenuItem>
+                  <MenuItem value="1">1</MenuItem>
+                  <MenuItem value="2">2</MenuItem>
+                  <MenuItem value="3">3</MenuItem>
+                  <MenuItem value="lebih_dari_3">Lebih dari 3</MenuItem>
+                </Select>
+              </FormControl>
             </Box>
           </CardContent>
 
