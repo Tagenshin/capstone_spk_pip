@@ -20,7 +20,7 @@ import {
   TableBody,
   Chip,
 } from "@mui/material";
-import { Printer, Download, MoreHorizontal } from "lucide-react";
+import { Printer, Download, MoreHorizontal, Delete } from "lucide-react";
 import AdminNavbar from "../../../components/AdminNavbar";
 
 export default function HasilPrediksiPage() {
@@ -63,6 +63,10 @@ export default function HasilPrediksiPage() {
     return "error.main";
   };
 
+  const handleDelete = (name) => {
+    alert(`Hapus data untuk siswa: ${name}`);
+  };
+
   return (
     <Box sx={{ display: "flex" }}>
       <AdminNavbar isOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
@@ -78,9 +82,6 @@ export default function HasilPrediksiPage() {
         }}
       >
         {/* Breadcrumb */}
-        <Typography variant="body2" color="text.secondary" gutterBottom>
-          Dashboard &gt; Hasil Prediksi
-        </Typography>
         <Typography variant="h4" fontWeight="bold" gutterBottom>
           Hasil Prediksi
         </Typography>
@@ -122,23 +123,6 @@ export default function HasilPrediksiPage() {
               sx={{ minWidth: 150 }}
               InputLabelProps={{ shrink: true }}
             />
-
-            <Box sx={{ ml: "auto", display: "flex", gap: 1 }}>
-              <Button
-                variant="outlined"
-                startIcon={<Printer />}
-                onClick={() => alert("Fitur cetak belum tersedia")}
-              >
-                Cetak
-              </Button>
-              <Button
-                variant="outlined"
-                startIcon={<Download />}
-                onClick={() => alert("Fitur ekspor belum tersedia")}
-              >
-                Ekspor
-              </Button>
-            </Box>
           </CardContent>
         </Card>
 
@@ -149,8 +133,6 @@ export default function HasilPrediksiPage() {
               <TableHead>
                 <TableRow>
                   <TableCell>Nama</TableCell>
-                  <TableCell>NISN</TableCell>
-                  <TableCell>Kelas</TableCell>
                   <TableCell>Skor</TableCell>
                   <TableCell>Status</TableCell>
                   <TableCell>Tanggal</TableCell>
@@ -161,8 +143,6 @@ export default function HasilPrediksiPage() {
                 {filteredData.map((row, idx) => (
                   <TableRow key={idx}>
                     <TableCell sx={{ fontWeight: "bold" }}>{row.name}</TableCell>
-                    <TableCell>{row.nisn}</TableCell>
-                    <TableCell>{row.class}</TableCell>
                     <TableCell>
                       <Box
                         sx={{
@@ -200,8 +180,13 @@ export default function HasilPrediksiPage() {
                     </TableCell>
                     <TableCell>{row.date}</TableCell>
                     <TableCell>
-                      <Button variant="text" size="small" endIcon={<MoreHorizontal />}>
-                        ...
+                      <Button
+                        variant="text"
+                        size="small"
+                        startIcon={<Delete />}
+                        onClick={() => handleDelete(row.name)}
+                      >
+                        Hapus
                       </Button>
                     </TableCell>
                   </TableRow>

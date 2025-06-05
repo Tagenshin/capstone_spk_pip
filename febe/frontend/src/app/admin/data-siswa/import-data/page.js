@@ -11,7 +11,6 @@ import {
   Card,
   CardContent,
   CardHeader,
-  // CardFooter, // Hapus import ini
   Typography,
   Box,
 } from "@mui/material";
@@ -21,8 +20,6 @@ import {
   FileUp,
   Download,
   Loader2,
-  CheckCircle2,
-  AlertCircle,
 } from "lucide-react";
 
 export default function ImportStudentsPage() {
@@ -34,37 +31,11 @@ export default function ImportStudentsPage() {
   const [file, setFile] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
   const [uploadStatus, setUploadStatus] = useState("idle"); // idle, success, error
-  const [previewData, setPreviewData] = useState([]);
 
   function handleFileChange(e) {
     const selectedFile = e.target.files?.[0];
     if (selectedFile) {
       setFile(selectedFile);
-      setTimeout(() => {
-        setPreviewData([
-          {
-            name: "Ahmad Fauzi",
-            nisn: "1234567890",
-            class: "XII IPA 1",
-            gender: "Laki-laki",
-            status: "Aktif",
-          },
-          {
-            name: "Siti Nurhaliza",
-            nisn: "0987654321",
-            class: "XI IPS 2",
-            gender: "Perempuan",
-            status: "Aktif",
-          },
-          {
-            name: "Budi Santoso",
-            nisn: "2345678901",
-            class: "X IPA 3",
-            gender: "Laki-laki",
-            status: "Aktif",
-          },
-        ]);
-      }, 500);
     }
   }
 
@@ -119,13 +90,13 @@ export default function ImportStudentsPage() {
               htmlFor="fileInput"
               style={{ fontWeight: "600", display: "block", marginBottom: 8 }}
             >
-              File CSV/Excel
+              Pilih File CSV/Excel
             </label>
             <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
               <input
                 id="fileInput"
                 type="file"
-                accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                accept=".csv, .xls, .xlsx"
                 onChange={handleFileChange}
                 style={{
                   flexGrow: 1,
@@ -134,9 +105,6 @@ export default function ImportStudentsPage() {
                   border: "1px solid #ccc",
                 }}
               />
-              <Button variant="outlined" size="small" startIcon={<Download />}>
-                Template
-              </Button>
             </div>
             <p style={{ fontSize: "0.75rem", color: "#6b7280", marginTop: 4 }}>
               Format file: CSV, XLS, atau XLSX. Ukuran maksimal: 5MB
@@ -154,7 +122,6 @@ export default function ImportStudentsPage() {
                   gap: 1,
                 }}
               >
-                <CheckCircle2 color="#22c55e" />
                 <Typography variant="body2" sx={{ color: "#15803d" }}>
                   Data siswa berhasil diimport.{" "}
                   <Link
@@ -179,7 +146,6 @@ export default function ImportStudentsPage() {
                   gap: 1,
                 }}
               >
-                <AlertCircle color="#ef4444" />
                 <Typography variant="body2" sx={{ color: "#b91c1c" }}>
                   Terjadi kesalahan saat mengimport data. Silakan periksa format
                   file dan coba lagi.
@@ -188,7 +154,6 @@ export default function ImportStudentsPage() {
             )}
           </CardContent>
 
-          {/* Ganti CardFooter dengan Box */}
           <Box sx={{ display: "flex", justifyContent: "space-between", p: 2 }}>
             <Button
               variant="outlined"
@@ -212,109 +177,6 @@ export default function ImportStudentsPage() {
             </Button>
           </Box>
         </Card>
-
-        {/* Preview Data */}
-        {previewData.length > 0 && (
-          <Card sx={{ mt: 3 }}>
-            <CardHeader
-              title="Preview Data"
-              subheader="Preview data yang akan diimport"
-            />
-            <CardContent sx={{ overflowX: "auto" }}>
-              <table
-                style={{
-                  width: "100%",
-                  borderCollapse: "collapse",
-                  minWidth: 600,
-                }}
-              >
-                <thead style={{ backgroundColor: "#f3f4f6" }}>
-                  <tr>
-                    <th
-                      style={{
-                        padding: 12,
-                        borderBottom: "1px solid #d1d5db",
-                        textAlign: "left",
-                      }}
-                    >
-                      Nama
-                    </th>
-                    <th
-                      style={{
-                        padding: 12,
-                        borderBottom: "1px solid #d1d5db",
-                        textAlign: "left",
-                      }}
-                    >
-                      NISN
-                    </th>
-                    <th
-                      style={{
-                        padding: 12,
-                        borderBottom: "1px solid #d1d5db",
-                        textAlign: "left",
-                      }}
-                    >
-                      Kelas
-                    </th>
-                    <th
-                      style={{
-                        padding: 12,
-                        borderBottom: "1px solid #d1d5db",
-                        textAlign: "left",
-                      }}
-                    >
-                      Jenis Kelamin
-                    </th>
-                    <th
-                      style={{
-                        padding: 12,
-                        borderBottom: "1px solid #d1d5db",
-                        textAlign: "left",
-                      }}
-                    >
-                      Status
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {previewData.map((student, index) => (
-                    <tr
-                      key={index}
-                      style={{ borderBottom: "1px solid #e5e7eb" }}
-                    >
-                      <td style={{ padding: 12, fontWeight: 600 }}>
-                        {student.name}
-                      </td>
-                      <td style={{ padding: 12 }}>{student.nisn}</td>
-                      <td style={{ padding: 12 }}>{student.class}</td>
-                      <td style={{ padding: 12 }}>{student.gender}</td>
-                      <td style={{ padding: 12 }}>
-                        <span
-                          style={{
-                            backgroundColor: "#d1fae5",
-                            color: "#065f46",
-                            borderRadius: 9999,
-                            padding: "0.125rem 0.625rem",
-                            fontSize: "0.75rem",
-                            fontWeight: 600,
-                          }}
-                        >
-                          {student.status}
-                        </span>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-              <Typography
-                sx={{ mt: 1, fontSize: "0.875rem", color: "#6b7280" }}
-              >
-                Menampilkan {previewData.length} dari {previewData.length} data
-              </Typography>
-            </CardContent>
-          </Card>
-        )}
       </main>
     </div>
   );

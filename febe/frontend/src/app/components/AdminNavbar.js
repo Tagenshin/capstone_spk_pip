@@ -27,7 +27,6 @@ const menuItems = [
     icon: UserGroupIcon,
     submenu: [
       { label: "Daftar Siswa", href: "/admin/data-siswa" },
-      { label: "Tambah Siswa", href: "/admin/data-siswa/tambah-siswa" },
       { label: "Input Data", href: "/admin/data-siswa/input-data" },
       { label: "Import Data", href: "/admin/data-siswa/import-data" },
     ],
@@ -44,20 +43,9 @@ const menuItems = [
     ],
   },
   {
-    label: "Statistik",
-    href: "/admin/statistik",
-    icon: ChartBarIcon,
-  },
-  {
     label: "Pengaturan",
+    href: "/admin/pengaturan/umum",
     icon: Cog6ToothIcon,
-    submenu: [
-      { label: "Umum", href: "/admin/pengaturan/umum" },
-      { label: "Model Prediksi", href: "/admin/pengaturan/model-prediksi" },
-      { label: "Database", href: "/admin/pengaturan/database" },
-      { label: "Keamanan", href: "/admin/pengaturan/keamanan" },
-      { label: "Pengguna", href: "/admin/pengaturan/pengguna" },
-    ],
   },
 ];
 

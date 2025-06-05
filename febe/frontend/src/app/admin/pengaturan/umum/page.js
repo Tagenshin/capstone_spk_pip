@@ -165,56 +165,6 @@ export default function PengaturanUmumPage() {
           </Box>
         </Card>
 
-        {/* Pengaturan Tampilan */}
-        <Card>
-          <CardHeader title="Pengaturan Tampilan" />
-          <Divider />
-          <CardContent>
-            <Stack spacing={3}>
-              <FormControl fullWidth>
-                <InputLabel>Tema</InputLabel>
-                <Select
-                  value={theme}
-                  onChange={(e) => setTheme(e.target.value)}
-                  label="Tema"
-                >
-                  <MenuItem value="Terang">Terang</MenuItem>
-                  <MenuItem value="Gelap">Gelap</MenuItem>
-                </Select>
-              </FormControl>
-
-              <FormControl fullWidth>
-                <InputLabel>Bahasa</InputLabel>
-                <Select
-                  value={language}
-                  onChange={(e) => setLanguage(e.target.value)}
-                  label="Bahasa"
-                >
-                  <MenuItem value="Bahasa Indonesia">Bahasa Indonesia</MenuItem>
-                  <MenuItem value="English">English</MenuItem>
-                </Select>
-              </FormControl>
-
-              <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-                <Typography>Ukuran Font</Typography>
-                <Slider
-                  value={fontSize}
-                  onChange={(e, newValue) => setFontSize(newValue)}
-                  min={12}
-                  max={20}
-                  valueLabelDisplay="auto"
-                  sx={{ flexGrow: 1 }}
-                />
-                <Typography>{fontSize}px</Typography>
-              </Box>
-            </Stack>
-          </CardContent>
-          <Box sx={{ p: 3, display: "flex", justifyContent: "flex-end" }}>
-            <Button variant="contained" size="large">
-              Simpan Perubahan
-            </Button>
-          </Box>
-        </Card>
       </Box>
     </Box>
   );
