@@ -1,37 +1,100 @@
 "use client";
 
+import { useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Link from "next/link";
-
+import { useRouter } from "next/navigation";
+import Loading from "../components/Loading";
 export default function Register() {
+  const [formData, setFormData] = useState({
+    email: "",
+    schoolname: "",
+    schooltype: "",
+    password: "",
+    confirmPassword: "",
+    terms: false,
+  });
+  
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: type === "checkbox" ? checked : value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    setSuccess("");
+    setLoading(true);
+
+    // Validasi manual
+    if (!formData.email || !formData.schoolname || !formData.schooltype || !formData.password || !formData.confirmPassword) {
+      return setError("Semua field wajib diisi.");
+    }
+
+    if (formData.password !== formData.confirmPassword) {
+      return setError("Password dan konfirmasi password tidak cocok.");
+    }
+
+    if (!formData.terms) {
+      return setError("Anda harus menyetujui Syarat dan Ketentuan.");
+    }
+
+    try {
+      const res = await fetch('http://localhost:5000/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      const json = await res.json();
+
+      if (!res.ok) {
+        throw new Error(json.message || 'Unknown error');
+      }
+      setSuccess(json.message);
+      
+      // Reset form
+      setFormData({
+        email: "",
+        schoolname: "",
+        schooltype: "",
+        password: "",
+        confirmPassword: "",
+        terms: false,
+      });
+      router.push('/login');
+      setLoading(false);
+      console.log('Register sukses:', json);
+    } catch (err) {
+      console.error('Register gagal:', err.message);
+      setError(err.message);
+      setLoading(false);
+    }
+  };
+
+  (loading && <Loading />);
   return (
     <>
       <Navbar />
       <main className="min-h-screen flex items-center justify-center bg-white px-6 py-12">
         <div className="w-full max-w-sm p-8 border border-gray-200 rounded-lg shadow-sm text-center">
-            <h1 className="text-xl font-bold mt-2 text-blue-600">🎓 SPK PIP</h1>
-
+          <h1 className="text-xl font-bold mt-2 text-blue-600">🎓 SPK PIP</h1>
           <h2 className="text-lg font-bold mb-1">Buat Akun Baru</h2>
-          <p className="text-gray-600 mb-6 text-sm">
-            Daftar untuk mengakses sistem pendukung keputusan PIP
-          </p>
+          <p className="text-gray-600 mb-6 text-sm">Daftar untuk mengakses sistem pendukung keputusan PIP</p>
 
-          <form className="space-y-5 text-left">
-            <div>
-              <label htmlFor="fullname" className="block mb-1 text-sm font-medium text-gray-700">
-                Nama Lengkap
-              </label>
-              <input
-                type="text"
-                id="fullname"
-                name="fullname"
-                placeholder="Nama lengkap Anda"
-                required
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
-              />
-            </div>
+          {error && <p className="text-red-600 text-sm mb-4">{error}</p>}
+          {success && <p className="text-green-600 text-sm mb-4">{success}</p>}
 
+          <form className="space-y-5 text-left" onSubmit={handleSubmit}>
             <div>
               <label htmlFor="email" className="block mb-1 text-sm font-medium text-gray-700">
                 Email
@@ -40,9 +103,11 @@ export default function Register() {
                 type="email"
                 id="email"
                 name="email"
-                placeholder="nama@sekolah.ac.id"
+                value={formData.email}
+                onChange={handleChange}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
+                placeholder="nama@sekolah.ac.id"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
               />
             </div>
 
@@ -54,9 +119,11 @@ export default function Register() {
                 type="text"
                 id="schoolname"
                 name="schoolname"
-                placeholder="Nama sekolah Anda"
+                value={formData.schoolname}
+                onChange={handleChange}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
+                placeholder="Nama sekolah Anda"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
               />
             </div>
 
@@ -67,13 +134,12 @@ export default function Register() {
               <select
                 id="schooltype"
                 name="schooltype"
+                value={formData.schooltype}
+                onChange={handleChange}
                 required
-                defaultValue=""
-                className="w-full px-3 py-2 border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-blue-600"
               >
-                <option value="" disabled>
-                  Pilih jenis sekolah
-                </option>
+                <option value="" disabled>Pilih jenis sekolah</option>
                 <option value="SD">SD</option>
                 <option value="SMP">SMP</option>
                 <option value="SMA">SMA</option>
@@ -89,8 +155,10 @@ export default function Register() {
                 type="password"
                 id="password"
                 name="password"
+                value={formData.password}
+                onChange={handleChange}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
               />
             </div>
 
@@ -102,8 +170,10 @@ export default function Register() {
                 type="password"
                 id="confirmPassword"
                 name="confirmPassword"
+                value={formData.confirmPassword}
+                onChange={handleChange}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
               />
             </div>
 
@@ -111,7 +181,8 @@ export default function Register() {
               <input
                 type="checkbox"
                 name="terms"
-                required
+                checked={formData.terms}
+                onChange={handleChange}
                 className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
               />
               Saya menyetujui{" "}
