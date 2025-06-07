@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
   output   = "../node_modules/.prisma/client"
@@ -15,8 +9,8 @@ datasource db {
 }
 
 model User {
-  id          String      @id @default(uuid())
-  email       String      @unique
+  id          String       @id @default(uuid())
+  email       String       @unique
   password    String
   namaSekolah String
   tingkat     String
@@ -24,26 +18,37 @@ model User {
   alamat      String?
   logo        String?
   role        String
-  hasil       Hasil[]
-  rekap       RekapHasil?
-  createdAt   DateTime    @default(now())
+  hasil       Hasil[]      // 1 user bisa punya banyak hasil siswa
+  siswa       Siswa[]      // 1 user bisa punya banyak siswa
+  rekap       RekapHasil?  // 1 user hanya punya 1 rekap
+  createdAt   DateTime     @default(now())
 }
 
-model Hasil {
-  id               String   @id @default(uuid())
+model Siswa {
+  id               String   @id @default(ulid())
   namaSiswa        String
-  jenisKelamin     String
-  Agama            String
   alatTransportasi String
   pekerjaanOrtu    String
-  penghasilan      Int
+  penghasilan      String
   tanggungan       String
   statusKIP        String
   statusPKH        String
-  status           String? //layak atau tidak
-  tanggal          DateTime @default(now())
+
   user             User     @relation(fields: [userId], references: [id])
   userId           String
+
+}
+
+model Hasil {
+  id          String   @id @default(uuid())
+  skor        String
+  status      String  // layak atau tidak
+  tanggal     DateTime @default(now())
+
+  user        User     @relation(fields: [userId], references: [id])
+  userId      String
+
+  siswaId     String @unique
 }
 
 model RekapHasil {

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Button,
@@ -8,15 +8,10 @@ import {
   CardContent,
   CardHeader,
   Divider,
-  FormControl,
   FormControlLabel,
-  InputLabel,
   Switch,
   TextField,
   Typography,
-  MenuItem,
-  Select,
-  Slider,
   Stack,
 } from "@mui/material";
 import { Upload } from "lucide-react";
@@ -25,11 +20,48 @@ import AdminNavbar from "../../../components/AdminNavbar";
 export default function PengaturanUmumPage() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [notifEmail, setNotifEmail] = useState(true);
-  const [theme, setTheme] = useState("Terang");
-  const [language, setLanguage] = useState("Bahasa Indonesia");
-  const [fontSize, setFontSize] = useState(14);
-
   const [logoFile, setLogoFile] = useState(null);
+  const [formData, setFormData] = useState({
+    namaSekolah: "",
+    alamat: "",
+    email: "",
+    noHp: "",
+    tingkat: "",
+  });
+
+  // Fetch data from backend
+  useEffect(() => {
+  const token = localStorage.getItem("token");
+
+  fetch("http://localhost:5000/user", {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      const data = res.data;
+      setFormData({
+        namaSekolah: data.namaSekolah || "",
+        alamat: data.alamat || "",
+        email: data.email || "",
+        noHp: data.noHp || "",
+        tingkat: data.tingkat || "",
+      });
+    })
+    .catch((err) => {
+      console.log("Gagal fetch data user:", err);
+    });
+}, []);
+
+
+  const handleChange = (e) => {
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
 
   const handleLogoChange = (e) => {
     const file = e.target.files[0];
@@ -37,6 +69,41 @@ export default function PengaturanUmumPage() {
       setLogoFile(file);
     }
   };
+
+  const handleSubmit = async () => {
+    try {
+      const token = localStorage.getItem("token");
+
+      const body = {
+        ...formData,
+        ...(logoFile ? { logo: logoFile.name } : {}),
+      };
+
+      const res = await fetch("http://localhost:5000/user", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(body),
+      });
+
+      const result = await res.json();
+
+      if (!res.ok) {
+        console.error("Server Error:", result);
+        alert(`Gagal menyimpan: ${result.message}`);
+        return;
+      }
+
+      alert("Pengaturan berhasil diperbarui!");
+      console.log(result);
+    } catch (err) {
+      console.error("Gagal menyimpan:", err);
+      alert("Terjadi kesalahan saat menyimpan data.");
+    }
+  };
+
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -56,17 +123,6 @@ export default function PengaturanUmumPage() {
           bgcolor: "#f9fafb",
         }}
       >
-        {/* Breadcrumb */}
-        <Typography
-          variant="body2"
-          color="text.secondary"
-          gutterBottom
-          sx={{ mb: 1 }}
-        >
-          Dashboard &gt; Pengaturan
-        </Typography>
-
-        {/* Title */}
         <Typography variant="h4" fontWeight="bold" gutterBottom>
           Pengaturan
         </Typography>
@@ -74,7 +130,6 @@ export default function PengaturanUmumPage() {
           Kelola pengaturan sistem pendukung keputusan
         </Typography>
 
-        {/* Form Umum */}
         <Card sx={{ mb: 5 }}>
           <CardHeader
             title="Pengaturan Umum"
@@ -85,28 +140,54 @@ export default function PengaturanUmumPage() {
             <Stack spacing={3}>
               <TextField
                 label="Nama Sekolah"
+                name="namaSekolah"
                 fullWidth
-                defaultValue="SMA Negeri 1 Contoh"
+                value={formData.namaSekolah}
+                onChange={handleChange}
               />
               <TextField
                 label="Alamat Sekolah"
+                name="alamat"
                 fullWidth
                 multiline
                 rows={3}
-                defaultValue="Jl. Contoh No. 123, Kota Contoh, Provinsi Contoh"
+                value={formData.alamat}
+                onChange={handleChange}
               />
               <TextField
                 label="Email Sekolah"
+                name="email"
                 fullWidth
-                defaultValue="info@sman1contoh.sch.id"
+                value={formData.email}
+                onChange={handleChange}
               />
               <TextField
                 label="Nomor Telepon Sekolah"
+                name="noHp"
                 fullWidth
-                defaultValue="(021) 1234567"
+                value={formData.noHp}
+                onChange={handleChange}
               />
+              <div>
+                <label htmlFor="tingkat" className="block mb-1 text-sm font-medium text-gray-700">
+                  Jenis Sekolah
+                </label>
+                <select
+                  id="tingkat"
+                  name="tingkat"
+                  value={formData.tingkat}
+                  onChange={handleChange}
+                  required
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-blue-600"
+                >
+                  <option value="" disabled>Pilih jenis sekolah</option>
+                  <option value="SD">SD</option>
+                  <option value="SMP">SMP</option>
+                  <option value="SMA">SMA</option>
+                  <option value="SMK">SMK</option>
+                </select>
+              </div>
 
-              {/* Logo Upload */}
               <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
                 <Box
                   sx={{
@@ -120,7 +201,6 @@ export default function PengaturanUmumPage() {
                     color: "#888",
                     fontWeight: "bold",
                     fontSize: 14,
-                    userSelect: "none",
                   }}
                 >
                   Logo
@@ -143,7 +223,6 @@ export default function PengaturanUmumPage() {
                 )}
               </Box>
 
-              {/* Notifikasi Email */}
               <FormControlLabel
                 control={
                   <Switch
@@ -159,12 +238,11 @@ export default function PengaturanUmumPage() {
             </Stack>
           </CardContent>
           <Box sx={{ p: 3, display: "flex", justifyContent: "flex-end" }}>
-            <Button variant="contained" size="large">
+            <Button variant="contained" size="large" onClick={handleSubmit}>
               Simpan Perubahan
             </Button>
           </Box>
         </Card>
-
       </Box>
     </Box>
   );

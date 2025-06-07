@@ -39,14 +39,38 @@ export default function ImportStudentsPage() {
     }
   }
 
-  function handleUpload() {
+  const handleUpload = async () => {
     if (!file) return;
 
     setIsUploading(true);
-    setTimeout(() => {
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      console.log(formData);
+      
+
+      const response = await fetch("http://localhost:5000/siswa/import", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: formData,
+      });
+
+      if (response.ok) {
+        setUploadStatus("success");
+        setFile(null);
+        setIsUploading(false);
+      } else {
+        setUploadStatus("error");
+        setIsUploading(false);
+      }
+    } catch (error) {
+      console.log("Error uploading file:", error);
+      setUploadStatus("error");
       setIsUploading(false);
-      setUploadStatus("success");
-    }, 2000);
+    }
+    
   }
 
   return (
@@ -125,7 +149,7 @@ export default function ImportStudentsPage() {
                 <Typography variant="body2" sx={{ color: "#15803d" }}>
                   Data siswa berhasil diimport.{" "}
                   <Link
-                    href="/dashboard/students"
+                    href="/admin/data-siswa "
                     style={{ textDecoration: "underline", color: "#15803d" }}
                   >
                     Lihat data siswa
