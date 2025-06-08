@@ -1,1 +1,0 @@
-# capstone_spk_pip
