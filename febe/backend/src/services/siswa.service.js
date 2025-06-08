@@ -1,13 +1,10 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
-const { prediksiKelayakan } = require('../utils/aiRekomendasi');
 
 async function inputSiswa(
     userId,
     { 
         namaSiswa, 
-        jenisKelamin, 
-        agama, 
         alatTransportasi, 
         pekerjaanOrtu, 
         penghasilan, 
@@ -15,26 +12,16 @@ async function inputSiswa(
         statusKIP, 
         statusPKH 
     }) {
-    const status = prediksiKelayakan(
-        alatTransportasi, 
-        pekerjaanOrtu, 
-        penghasilan, 
-        tanggungan, 
-        statusKIP, 
-        statusPKH);
 
-    const hasil = await prisma.hasil.create({
+    const hasil = await prisma.siswa.create({
         data: {
             namaSiswa,
-            jenisKelamin,
-            Agama : agama,
             alatTransportasi,
             pekerjaanOrtu, 
             penghasilan, 
             tanggungan, 
             statusKIP, 
             statusPKH,
-            status,
             userId
         }
     });
@@ -42,6 +29,29 @@ async function inputSiswa(
     return hasil;
 }
 
+async function getSiswa(userId) {
+    const siswa = await prisma.siswa.findMany({ where: { userId } }); 
+
+    return siswa;
+}
+
+async function getSiswabyId(siswaId) {
+    const siswa = await prisma.siswa.findUnique({ where: { id: siswaId } }); 
+
+    return siswa;
+}
+
+async function updateSiswa(siswaId, payload) {
+    const siswa = await prisma.siswa.update({ where: { id: siswaId }, data: payload });
+
+    return siswa;
+}
+
+async function deleteSiswa(siswaId) {
+    const siswa = await prisma.siswa.delete({ where: { id: siswaId } });
+
+    return siswa;
+}
 
 
-module.exports = { inputSiswa };
+module.exports = { inputSiswa, getSiswa, getSiswabyId, updateSiswa, deleteSiswa };

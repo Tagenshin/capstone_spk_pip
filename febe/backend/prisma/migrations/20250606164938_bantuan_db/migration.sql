@@ -15,20 +15,28 @@ CREATE TABLE "User" (
 );
 
 -- CreateTable
-CREATE TABLE "Hasil" (
+CREATE TABLE "Siswa" (
     "id" TEXT NOT NULL,
     "namaSiswa" TEXT NOT NULL,
-    "jenisKelamin" TEXT NOT NULL,
-    "Agama" TEXT NOT NULL,
     "alatTransportasi" TEXT NOT NULL,
     "pekerjaanOrtu" TEXT NOT NULL,
     "penghasilan" INTEGER NOT NULL,
     "tanggungan" TEXT NOT NULL,
     "statusKIP" TEXT NOT NULL,
     "statusPKH" TEXT NOT NULL,
-    "status" TEXT,
+    "userId" TEXT NOT NULL,
+
+    CONSTRAINT "Siswa_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Hasil" (
+    "id" TEXT NOT NULL,
+    "skor" TEXT NOT NULL,
+    "status" TEXT NOT NULL,
     "tanggal" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "userId" TEXT NOT NULL,
+    "siswaId" TEXT NOT NULL,
 
     CONSTRAINT "Hasil_pkey" PRIMARY KEY ("id")
 );
@@ -48,7 +56,13 @@ CREATE TABLE "RekapHasil" (
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "Hasil_siswaId_key" ON "Hasil"("siswaId");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "RekapHasil_userId_key" ON "RekapHasil"("userId");
+
+-- AddForeignKey
+ALTER TABLE "Siswa" ADD CONSTRAINT "Siswa_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Hasil" ADD CONSTRAINT "Hasil_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

@@ -1,6 +1,6 @@
 "use client";
-
-import { useState } from "react";
+import * as tf from "@tensorflow/tfjs";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import {
   Box,
@@ -44,122 +44,42 @@ export default function DataSiswaPage() {
   const theme = useTheme();
   const isSmUp = useMediaQuery(theme.breakpoints.up("sm"));
   const router = useRouter();
+  const [students, setStudents] = useState([]);
 
-  // Dummy data
-  const studentsData = [
-    {
-      id: 1,
-      name: "Ahmad Fauzi",
-      nisn: "1234567890",
-      class: "XII IPA 1",
-      gender: "Laki-laki",
-      address: "Jl. Merdeka No. 123, Jakarta",
-      parentIncome: "Rp 2.500.000",
-      transportation: "Sepeda Motor",
-      fatherOccupation: "PNS",
-      siblings: 2,
-      kip: "Ya",
-      kps: "Ya",
-    },
-    {
-      id: 2,
-      name: "Siti Nurhaliza",
-      nisn: "0987654321",
-      class: "XI IPS 2",
-      gender: "Perempuan",
-      address: "Jl. Pahlawan No. 45, Bandung",
-      parentIncome: "Rp 1.800.000",
-      transportation: "Angkutan Umum",
-      fatherOccupation: "Petani",
-      siblings: 1,
-      kip: "Tidak",
-      kps: "Tidak",
-    },
-    {
-      id: 3,
-      name: "Budi Santoso",
-      nisn: "2345678901",
-      class: "X IPA 3",
-      gender: "Laki-laki",
-      address: "Jl. Sudirman No. 78, Surabaya",
-      parentIncome: "Rp 3.200.000",
-      transportation: "Mobil Pribadi",
-      fatherOccupation: "Karyawan Swasta",
-      siblings: 3,
-      kip: "Ya",
-      kps: "Tidak",
-    },
-    {
-      id: 4,
-      name: "Dewi Lestari",
-      nisn: "3456789012",
-      class: "XII IPS 1",
-      gender: "Perempuan",
-      address: "Jl. Gatot Subroto No. 12, Semarang",
-      parentIncome: "Rp 2.100.000",
-      transportation: "Sepeda",
-      fatherOccupation: "Wiraswasta",
-      siblings: 2,
-      kip: "Ya",
-      kps: "Ya",
-    },
-    {
-      id: 5,
-      name: "Eko Prasetyo",
-      nisn: "4567890123",
-      class: "XI IPA 2",
-      gender: "Laki-laki",
-      address: "Jl. Ahmad Yani No. 56, Yogyakarta",
-      parentIncome: "Rp 2.800.000",
-      transportation: "Jalan Kaki",
-      fatherOccupation: "Buruh",
-      siblings: 4,
-      kip: "Tidak",
-      kps: "Ya",
-    },
-    {
-      id: 6,
-      name: "Rina Wati",
-      nisn: "5678901234",
-      class: "X IPS 3",
-      gender: "Perempuan",
-      address: "Jl. Diponegoro No. 34, Malang",
-      parentIncome: "Rp 1.950.000",
-      transportation: "Sepeda Motor",
-      fatherOccupation: "Tidak Bekerja",
-      siblings: 1,
-      kip: "Ya",
-      kps: "Tidak",
-    },
-    {
-      id: 7,
-      name: "Doni Kusuma",
-      nisn: "6789012345",
-      class: "XII IPA 3",
-      gender: "Laki-laki",
-      address: "Jl. Imam Bonjol No. 67, Medan",
-      parentIncome: "Rp 2.300.000",
-      transportation: "Angkutan Umum",
-      fatherOccupation: "PNS",
-      siblings: 2,
-      kip: "Ya",
-      kps: "Ya",
-    },
-    {
-      id: 8,
-      name: "Maya Sari",
-      nisn: "7890123456",
-      class: "XI IPS 1",
-      gender: "Perempuan",
-      address: "Jl. Veteran No. 23, Makassar",
-      parentIncome: "Rp 2.750.000",
-      transportation: "Mobil Pribadi",
-      fatherOccupation: "Karyawan Swasta",
-      siblings: 3,
-      kip: "Tidak",
-      kps: "Tidak",
-    },
-  ];
+
+  useEffect(() => {
+    fetch("http://localhost:5000/siswa", {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setStudents(data.data);
+      });
+  }, []);
+
+const [model, setModel] = useState(null);
+const [result, setResult] = useState(null);
+useEffect(() => {
+  const loadModel = async () => {
+    try {
+      // Jika model sudah ada sebelumnya, buang dulu dari memory
+      if (model) {
+        model.dispose();
+      }
+
+      const loadedModel = await tf.loadLayersModel("/model/model.json");
+      setModel(loadedModel);
+      loadedModel.summary();
+    } catch (error) {
+      console.error("❌ Gagal memuat model:", error);
+    }
+  };
+
+  loadModel(); // hanya dipanggil sekali saat mount
+}, []);
 
   const [searchTerm, setSearchTerm] = useState("");
   const [filterClass, setFilterClass] = useState("all");
@@ -186,10 +106,9 @@ export default function DataSiswaPage() {
   ];
 
   // Filter data
-  const filteredStudents = studentsData.filter((s) => {
+  const filteredStudents = students.filter((s) => {
     return (
-      (s.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        s.nisn.includes(searchTerm)) &&
+      (s.namaSiswa.toLowerCase().includes(searchTerm.toLowerCase())) &&
       (filterClass === "all" || s.class === filterClass) &&
       (filterGender === "all" || s.gender === filterGender)
     );
@@ -240,15 +159,117 @@ export default function DataSiswaPage() {
     setSelectedIds(new Set());
   };
 
-  const handleDoPredict = () => {
+  function validateModelInput(model) {
+  const inputInfo = {
+    shape: model.inputs[0].shape,
+    dtype: model.inputs[0].dtype,
+    expectedFeatures: model.inputs[0].shape[1], // jumlah fitur
+    name: model.inputs[0].name
+  };
+  
+  console.log('=== MODEL INPUT REQUIREMENTS ===');
+  console.log('Input Shape:', inputInfo.shape);
+  console.log('Data Type:', inputInfo.dtype);
+  console.log('Expected Features:', inputInfo.expectedFeatures);
+  console.log('Input Name:', inputInfo.name);
+  
+  return inputInfo;
+}
+
+function debugModelInput(model, inputData) {
+  console.log('=== DEBUGGING MODEL INPUT ===');
+  
+  // Info model
+  const modelInfo = validateModelInput(model);
+  
+  // Info input data
+  console.log('\n=== INPUT DATA ANALYSIS ===');
+  console.log('Raw input data:', inputData);
+  console.log('Input data types:', inputData.map(val => typeof val));
+  console.log('Input data length:', inputData.length);
+  
+  // Validasi
+  const validation = validateInputData(inputData, modelInfo.expectedFeatures);
+  console.log('\n=== VALIDATION RESULTS ===');
+  console.log('Is Valid:', validation.isValid);
+  if (!validation.isValid) {
+    console.log('Errors:', validation.errors);
+  }
+  console.log('Processed Data:', validation.processedData);
+  
+  return validation;
+}
+
+  const handleDoPredict = async () => {
     if (selectedIds.size === 0) {
       alert("Pilih siswa terlebih dahulu untuk prediksi.");
       return;
     }
-    // Kirim selected ids via query param (contoh: ?ids=1,3,5)
-    const idsParam = Array.from(selectedIds).join(",");
-    router.push(`/admin/hasil-prediksi/daftar-prediksi?ids=${idsParam}`);
+
+    if (!model) {
+      alert("Model belum siap!");
+      return;
+    }
+
+    const selectedData = students
+      .filter((student) => selectedIds.has(student.id))
+      .map((student) => [
+        student.penghasilan,
+        student.alatTransportasi,
+        student.tanggungan,
+        student.pekerjaanOrtu,
+        student.statusKIP,
+        student.statusPKH,
+      ]);
+
+    if (selectedData.length === 0) {
+      alert("Data siswa tidak ditemukan.");
+      return;
+    }
+
+    try {
+
+      console.log('Input tensor shape:', inputTensor.shape);
+      const inputTensor = tf.tensor2d(selectedData); // [n,6]
+      const prediction = model.predict(inputTensor);
+      const values = await prediction.data();
+
+      setResult(values);
+      console.log(result);
+
+      const idsParam = Array.from(selectedIds).join(",");
+      // router.push(`/admin/hasil-prediksi/daftar-prediksi?ids=${idsParam}`);
+    } catch (error) {
+      console.error("Gagal melakukan prediksi:", error);
+      alert("Terjadi kesalahan saat memproses prediksi.");
+    }
   };
+
+
+  const handleEditSiswa = (id) => {
+    router.push(`/admin/data-siswa/input-data?id=${id}`);
+  }
+
+  const handleDeleteSiswa = (id) => {
+    try {
+      fetch(`http://localhost:5000/siswa/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }).then(response => {
+        if (response.ok) {
+          alert("Data siswa berhasil dihapus.");
+          window.location.reload();
+        } else {
+          alert("Gagal menghapus data siswa.");
+        }
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -401,9 +422,9 @@ export default function DataSiswaPage() {
             <TableBody>
               {(rowsPerPage > 0
                 ? filteredStudents.slice(
-                    page * rowsPerPage,
-                    page * rowsPerPage + rowsPerPage
-                  )
+                  page * rowsPerPage,
+                  page * rowsPerPage + rowsPerPage
+                )
                 : filteredStudents
               ).map((student) => (
                 <TableRow key={student.id} hover>
@@ -416,13 +437,13 @@ export default function DataSiswaPage() {
                       />
                     </TableCell>
                   )}
-                  <TableCell sx={{ textAlign: "center" }}>{student.name}</TableCell>
-                  <TableCell sx={{ textAlign: "center" }}>{student.parentIncome}</TableCell>
-                  <TableCell sx={{ textAlign: "center" }}>{student.transportation}</TableCell>
-                  <TableCell sx={{ textAlign: "center" }}>{student.siblings}</TableCell>
-                  <TableCell sx={{ textAlign: "center" }}>{student.fatherOccupation}</TableCell>
-                  <TableCell sx={{ textAlign: "center" }}>{student.kip}</TableCell>
-                  <TableCell sx={{ textAlign: "center" }}>{student.kps}</TableCell>
+                  <TableCell sx={{ textAlign: "center" }}>{student.namaSiswa}</TableCell>
+                  <TableCell sx={{ textAlign: "center" }}>{student.penghasilan}</TableCell>
+                  <TableCell sx={{ textAlign: "center" }}>{student.alatTransportasi}</TableCell>
+                  <TableCell sx={{ textAlign: "center" }}>{student.tanggungan}</TableCell>
+                  <TableCell sx={{ textAlign: "center" }}>{student.pekerjaanOrtu}</TableCell>
+                  <TableCell sx={{ textAlign: "center" }}>{student.statusKIP}</TableCell>
+                  <TableCell sx={{ textAlign: "center" }}>{student.statusPKH}</TableCell>
                   <TableCell sx={{ textAlign: "center" }}>
                     {!predictMode && (
                       <>
@@ -446,24 +467,16 @@ export default function DataSiswaPage() {
                             horizontal: "right",
                           }}
                         >
-                          <MuiMenuItem
-                            onClick={() => {
-                              alert(`Edit data siswa ID ${student.id}`);
-                              handleMenuClose();
-                            }}
-                          >
+                          <MuiMenuItem onClick={() => handleEditSiswa(student.id)}>
                             <Edit fontSize="small" sx={{ mr: 1 }} />
                             Edit
                           </MuiMenuItem>
-                          <MuiMenuItem
-                            onClick={() => {
-                              alert(`Hapus data siswa ID ${student.id}`);
-                              handleMenuClose();
-                            }}
-                          >
+
+                          <MuiMenuItem onClick={() => handleDeleteSiswa(student.id)}>
                             <Delete fontSize="small" sx={{ mr: 1 }} />
                             Delete
                           </MuiMenuItem>
+
                           <MuiMenuItem onClick={togglePredictMode}>
                             <PlaylistAddCheck fontSize="small" sx={{ mr: 1 }} />
                             Predict
