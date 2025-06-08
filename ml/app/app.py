@@ -11,6 +11,7 @@ import matplotlib.pyplot as plt
 # Load model yang sudah dilatih
 model = load_model("../model/model_ann.h5")
 
+
 # Fungsi untuk mengategorikan 'Penghasilan Orang Tua'
 def kategori_penghasilan(nilai):
     if nilai <= 1500000:
@@ -83,7 +84,7 @@ if uploaded_file is not None:
 
     st.subheader("Hasil Prediksi")
     st.write(df)
-    
+
     # Menyimpan hasil prediksi
     output_file = "hasil_prediksi.xlsx"
     df.to_excel(output_file, index=False)
@@ -93,7 +94,7 @@ if uploaded_file is not None:
         label="Unduh Hasil Prediksi",
         data=open(output_file, "rb").read(),
         file_name=output_file,
-        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
     )
 
 # Form untuk prediksi real-time dengan memasukkan data manual
