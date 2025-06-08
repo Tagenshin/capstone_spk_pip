@@ -98,6 +98,18 @@ if uploaded_file is not None:
     # st.subheader("Confusion Matrix")
     # st.pyplot(fig)
 
+    # Menyimpan hasil prediksi
+    output_file = "hasil_prediksi.xlsx"
+    df.to_excel(output_file, index=False)
+
+    # Menambahkan tombol unduh di Streamlit
+    st.download_button(
+        label="Unduh Hasil Prediksi",
+        data=open(output_file, "rb").read(),
+        file_name=output_file,
+        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    )
+
 # Form untuk prediksi real-time dengan memasukkan data manual
 st.subheader("Masukkan Data untuk Prediksi Real-time")
 
@@ -110,7 +122,7 @@ with st.form(key="prediction_form"):
     pekerjaan_ortu = st.selectbox(
         "Pekerjaan Orang Tua", ["Wirausaha", "Peternak", "Petani", "Buruh", "Lainnya"]
     )
-    penghasilan = st.number_input("Penghasilan Orang Tua", min_value=0)
+    penghasilan = st.number_input("Penghasilan Orang Tua (Rp)", min_value=0)
     tanggungan = st.selectbox("Jumlah Tanggungan", ["1", "2", "3", "Lebih dari 3"])
     pemilik_kip = st.selectbox("Pemilik KIP", ["Tidak", "Ya"])
     pemilik_kps = st.selectbox("Pemilik KPS", ["Tidak", "Ya"])
