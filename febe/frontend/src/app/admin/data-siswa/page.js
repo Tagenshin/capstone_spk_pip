@@ -85,7 +85,7 @@ useEffect(() => {
   const [filterClass, setFilterClass] = useState("all");
   const [filterGender, setFilterGender] = useState("all");
   const [page, setPage] = useState(0);
-  const rowsPerPage = 5;
+  const rowsPerPage = 10;
 
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const toggleSidebar = () => setSidebarOpen((prev) => !prev);
@@ -135,6 +135,7 @@ useEffect(() => {
   // State untuk mode prediksi dan selected siswa
   const [predictMode, setPredictMode] = useState(false);
   const [selectedIds, setSelectedIds] = useState(new Set());
+  const [predictedStudents, setPredictedStudents] = useState([]);
 
   const togglePredictMode = () => {
     setPredictMode(true);
@@ -159,91 +160,91 @@ useEffect(() => {
     setSelectedIds(new Set());
   };
 
-  function validateModelInput(model) {
-  const inputInfo = {
-    shape: model.inputs[0].shape,
-    dtype: model.inputs[0].dtype,
-    expectedFeatures: model.inputs[0].shape[1], // jumlah fitur
-    name: model.inputs[0].name
-  };
-  
-  console.log('=== MODEL INPUT REQUIREMENTS ===');
-  console.log('Input Shape:', inputInfo.shape);
-  console.log('Data Type:', inputInfo.dtype);
-  console.log('Expected Features:', inputInfo.expectedFeatures);
-  console.log('Input Name:', inputInfo.name);
-  
-  return inputInfo;
-}
+const handleDoPredict = async () => {
+  setResult(null);
+  setPredictedStudents([]); // reset
 
-function debugModelInput(model, inputData) {
-  console.log('=== DEBUGGING MODEL INPUT ===');
-  
-  // Info model
-  const modelInfo = validateModelInput(model);
-  
-  // Info input data
-  console.log('\n=== INPUT DATA ANALYSIS ===');
-  console.log('Raw input data:', inputData);
-  console.log('Input data types:', inputData.map(val => typeof val));
-  console.log('Input data length:', inputData.length);
-  
-  // Validasi
-  const validation = validateInputData(inputData, modelInfo.expectedFeatures);
-  console.log('\n=== VALIDATION RESULTS ===');
-  console.log('Is Valid:', validation.isValid);
-  if (!validation.isValid) {
-    console.log('Errors:', validation.errors);
+  if (selectedIds.size === 0) {
+    alert("Pilih siswa terlebih dahulu untuk prediksi.");
+    return;
   }
-  console.log('Processed Data:', validation.processedData);
-  
-  return validation;
-}
 
-  const handleDoPredict = async () => {
-    if (selectedIds.size === 0) {
-      alert("Pilih siswa terlebih dahulu untuk prediksi.");
-      return;
-    }
+  if (!model) {
+    alert("Model belum siap!");
+    return;
+  }
 
-    if (!model) {
-      alert("Model belum siap!");
-      return;
-    }
+  const mapToNumber = (value, map) => map[value] ?? 0;
 
-    const selectedData = students
-      .filter((student) => selectedIds.has(student.id))
-      .map((student) => [
-        student.penghasilan,
-        student.alatTransportasi,
-        student.tanggungan,
-        student.pekerjaanOrtu,
-        student.statusKIP,
-        student.statusPKH,
-      ]);
-
-    if (selectedData.length === 0) {
-      alert("Data siswa tidak ditemukan.");
-      return;
-    }
-
-    try {
-
-      console.log('Input tensor shape:', inputTensor.shape);
-      const inputTensor = tf.tensor2d(selectedData); // [n,6]
-      const prediction = model.predict(inputTensor);
-      const values = await prediction.data();
-
-      setResult(values);
-      console.log(result);
-
-      const idsParam = Array.from(selectedIds).join(",");
-      // router.push(`/admin/hasil-prediksi/daftar-prediksi?ids=${idsParam}`);
-    } catch (error) {
-      console.error("Gagal melakukan prediksi:", error);
-      alert("Terjadi kesalahan saat memproses prediksi.");
-    }
+  const pekerjaanOrtuMap = {
+    "Wirausaha": 0,
+    "Lainnya": 1,
+    "Peternak": 2,
+    "Petani": 3,
+    "Buruh": 4,
   };
+
+  const transportasiMap = {
+    "Jalan Kaki": 0,
+    "Sepeda Motor": 1,
+    "Lainnya": 2
+  };
+
+  const yaTidakMap = {
+    "Ya": 1,
+    "Tidak": 0,
+  };
+
+  const tanggunganMap = {
+    "1": 0,
+    "Lebih dari 3": 1,
+    "2": 2,
+    "3": 3,
+  }
+
+  const penghasilanMap = (penghasilan) => {
+    if (penghasilan <= 1500000) return 2;
+    if (penghasilan <= 3000000) return 1;
+    return 0;
+  }
+
+  const selectedStudents = students.filter((student) => selectedIds.has(student.id));
+
+  const selectedData = selectedStudents.map((student) => [
+    Number(penghasilanMap(student.penghasilan)),
+    mapToNumber(student.alatTransportasi, transportasiMap),
+    mapToNumber(student.tanggungan, tanggunganMap),
+    mapToNumber(student.pekerjaanOrtu, pekerjaanOrtuMap),
+    mapToNumber(student.statusKIP, yaTidakMap),
+    mapToNumber(student.statusPKH, yaTidakMap),
+  ]);
+
+  if (selectedData.length === 0) {
+    alert("Data siswa tidak ditemukan.");
+    return;
+  }
+
+  try {
+    const inputTensor = tf.tensor2d(selectedData);
+    const prediction = model.predict(inputTensor);
+    const values = await prediction.data();
+    const resultArray = Array.from(values);
+
+    setResult(resultArray);
+
+    const resultWithStudent = selectedStudents.map((student, index) => ({
+      ...student,
+      prediksi: resultArray[index] >= 0.5 ? "Layak" : "Tidak Layak", // threshold bisa disesuaikan
+      score: resultArray[index]
+    }));
+
+    setPredictedStudents(resultWithStudent);
+    console.log("Hasil prediksi:", resultWithStudent);
+  } catch (error) {
+    console.log("Gagal melakukan prediksi:", error);
+    alert("Terjadi kesalahan saat memproses prediksi.");
+  }
+};
 
 
   const handleEditSiswa = (id) => {
@@ -497,7 +498,7 @@ function debugModelInput(model, inputData) {
             </TableBody>
           </Table>
           <TablePagination
-            rowsPerPageOptions={[5]}
+            rowsPerPageOptions={[10]}
             component="div"
             count={filteredStudents.length}
             rowsPerPage={rowsPerPage}
