@@ -7,9 +7,9 @@ from sklearn.metrics import classification_report
 import seaborn as sns
 import matplotlib.pyplot as plt
 
+
 # Load model yang sudah dilatih
 model = load_model("../model/model_ann.h5")
-
 
 # Fungsi untuk mengategorikan 'Penghasilan Orang Tua'
 def kategori_penghasilan(nilai):
