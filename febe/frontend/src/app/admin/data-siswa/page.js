@@ -177,17 +177,17 @@ const handleDoPredict = async () => {
   const mapToNumber = (value, map) => map[value] ?? 0;
 
   const pekerjaanOrtuMap = {
-    "Wirausaha": 0,
+    "Wirausaha": 4,
     "Lainnya": 1,
-    "Peternak": 2,
-    "Petani": 3,
-    "Buruh": 4,
+    "Peternak": 3,
+    "Petani": 2,
+    "Buruh": 0,
   };
 
   const transportasiMap = {
     "Jalan Kaki": 0,
-    "Sepeda Motor": 1,
-    "Lainnya": 2
+    "Sepeda Motor": 2,
+    "Lainnya": 1
   };
 
   const yaTidakMap = {
@@ -197,24 +197,24 @@ const handleDoPredict = async () => {
 
   const tanggunganMap = {
     "1": 0,
-    "Lebih dari 3": 1,
-    "2": 2,
-    "3": 3,
+    "Lebih dari 3": 3,
+    "2": 1,
+    "3": 2,
   }
 
   const penghasilanMap = (penghasilan) => {
-    if (penghasilan <= 1500000) return 2;
+    if (penghasilan <= 1500000) return 0;
     if (penghasilan <= 3000000) return 1;
-    return 0;
+    return 2;
   }
 
   const selectedStudents = students.filter((student) => selectedIds.has(student.id));
 
   const selectedData = selectedStudents.map((student) => [
-    Number(penghasilanMap(student.penghasilan)),
     mapToNumber(student.alatTransportasi, transportasiMap),
-    mapToNumber(student.tanggungan, tanggunganMap),
     mapToNumber(student.pekerjaanOrtu, pekerjaanOrtuMap),
+    Number(penghasilanMap(student.penghasilan)),
+    mapToNumber(student.tanggungan, tanggunganMap),
     mapToNumber(student.statusKIP, yaTidakMap),
     mapToNumber(student.statusPKH, yaTidakMap),
   ]);
@@ -237,7 +237,7 @@ const handleDoPredict = async () => {
       prediksi: resultArray[index] >= 0.5 ? "Layak" : "Tidak Layak", // threshold bisa disesuaikan
       score: resultArray[index]
     }));
-
+    
     setPredictedStudents(resultWithStudent);
     console.log("Hasil prediksi:", resultWithStudent);
   } catch (error) {
@@ -245,7 +245,6 @@ const handleDoPredict = async () => {
     alert("Terjadi kesalahan saat memproses prediksi.");
   }
 };
-
 
   const handleEditSiswa = (id) => {
     router.push(`/admin/data-siswa/input-data?id=${id}`);

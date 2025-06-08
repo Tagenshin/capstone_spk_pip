@@ -44,8 +44,6 @@ const GetSiswaById = async (request, h) => {
 const UpdateSiswa = async (request, h) => {
     try {
         const payload = request.payload;
-        console.log(payload);
-        console.log(request.params.id);
 
         const siswa = await updateSiswa(request.params.id, payload);
 
@@ -84,7 +82,7 @@ const importSiswaExcelHandler = async (request, h) => {
         for (const row of data) {
 
             const siswa = {
-                namaSiswa: row['Nama Siswa'],
+                namaSiswa: row['Nama'],
                 alatTransportasi: row['Alat Transportasi'],
                 pekerjaanOrtu: row['Pekerjaan Orang Tua'],
                 penghasilan: row['Penghasilan Orang Tua'].toString(),
