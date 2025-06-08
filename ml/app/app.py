@@ -83,21 +83,7 @@ if uploaded_file is not None:
 
     st.subheader("Hasil Prediksi")
     st.write(df)
-
-    # # Matriks kebingungannya (optional, jika ada data label untuk diuji)
-    # cm = classification_report(df["Prediksi"], df["Prediksi"])
-    # st.subheader("Classification Report")
-    # st.text(cm)
-
-    # # Menampilkan confusion matrix (optional)
-    # cm_data = pd.crosstab(
-    #     df["Prediksi"], df["Prediksi"], rownames=["Actual"], colnames=["Predicted"]
-    # )
-    # fig, ax = plt.subplots(figsize=(6, 5))
-    # sns.heatmap(cm_data, annot=True, fmt="d", cmap="Blues", cbar=True, ax=ax)
-    # st.subheader("Confusion Matrix")
-    # st.pyplot(fig)
-
+    
     # Menyimpan hasil prediksi
     output_file = "hasil_prediksi.xlsx"
     df.to_excel(output_file, index=False)
