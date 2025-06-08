@@ -11,6 +11,7 @@ import matplotlib.pyplot as plt
 # Load model yang sudah dilatih
 model = load_model("../model/model_ann.h5")
 
+
 # Fungsi untuk mengategorikan 'Penghasilan Orang Tua'
 def kategori_penghasilan(nilai):
     if nilai <= 1500000:
@@ -84,20 +85,6 @@ if uploaded_file is not None:
     st.subheader("Hasil Prediksi")
     st.write(df)
 
-    # # Matriks kebingungannya (optional, jika ada data label untuk diuji)
-    # cm = classification_report(df["Prediksi"], df["Prediksi"])
-    # st.subheader("Classification Report")
-    # st.text(cm)
-
-    # # Menampilkan confusion matrix (optional)
-    # cm_data = pd.crosstab(
-    #     df["Prediksi"], df["Prediksi"], rownames=["Actual"], colnames=["Predicted"]
-    # )
-    # fig, ax = plt.subplots(figsize=(6, 5))
-    # sns.heatmap(cm_data, annot=True, fmt="d", cmap="Blues", cbar=True, ax=ax)
-    # st.subheader("Confusion Matrix")
-    # st.pyplot(fig)
-
     # Menyimpan hasil prediksi
     output_file = "hasil_prediksi.xlsx"
     df.to_excel(output_file, index=False)
@@ -107,7 +94,7 @@ if uploaded_file is not None:
         label="Unduh Hasil Prediksi",
         data=open(output_file, "rb").read(),
         file_name=output_file,
-        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
     )
 
 # Form untuk prediksi real-time dengan memasukkan data manual
