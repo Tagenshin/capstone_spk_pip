@@ -4,9 +4,10 @@ module.exports = {
     saveResultsHandler: async (request, h) => {
         try {
             const user = request.auth.credentials;
+            const { results } = request.payload;
 
-            const hasil = await resultService.saveResults(user.id, request.payload);
-            return h.response({ status: 'success', hasil }).code(201);
+            const inserted = await resultService.saveResults(user.id, results);
+            return h.response({ status: 'success', inserted }).code(201);
         } catch (err) {
             return h.response({ status: 'fail', message: err.message }).code(400);
         }
@@ -26,6 +27,16 @@ module.exports = {
         try {
             await resultService.deleteResult(request.params.id);
             return h.response({ status: 'success' }).code(200);
+        } catch (err) {
+            return h.response({ status: 'fail', message: err.message }).code(401);
+        }
+    },
+
+    getRekapHandler: async (request, h) => {
+        try {
+            const user = request.auth.credentials;
+            const rekap = await resultService.getRekapHasil(user.id);
+            return h.response({ status: 'success', rekap }).code(200);
         } catch (err) {
             return h.response({ status: 'fail', message: err.message }).code(401);
         }

@@ -1,0 +1,2 @@
+-- AddForeignKey
+ALTER TABLE "Hasil" ADD CONSTRAINT "Hasil_siswaId_fkey" FOREIGN KEY ("siswaId") REFERENCES "Siswa"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

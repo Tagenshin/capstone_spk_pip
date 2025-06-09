@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -26,28 +26,49 @@ import AdminNavbar from "../../../components/AdminNavbar";
 export default function HasilPrediksiPage() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const toggleSidebar = () => setSidebarOpen((prev) => !prev);
-
+  const [searchKeyword, setSearchKeyword] = useState("");
   const [filterStatus, setFilterStatus] = useState("");
   const [filterDate, setFilterDate] = useState("");
 
-  // Contoh data dummy
-  const dataPrediksi = [
-    { name: "Ahmad Fauzi", nisn: "1234567890", class: "XII IPA 1", score: 92, status: "Layak", date: "2023-05-15" },
-    { name: "Siti Nurhaliza", nisn: "0987654321", class: "XI IPS 2", score: 85, status: "Layak", date: "2023-05-15" },
-    { name: "Budi Santoso", nisn: "2345678901", class: "X IPA 3", score: 45, status: "Tidak Layak", date: "2023-05-15" },
-    { name: "Dewi Lestari", nisn: "3456789012", class: "XII IPS 1", score: 78, status: "Layak", date: "2023-05-15" },
-    { name: "Eko Prasetyo", nisn: "4567890123", class: "XI IPA 2", score: 32, status: "Tidak Layak", date: "2023-05-15" },
-    { name: "Rina Wati", nisn: "5678901234", class: "X IPS 3", score: 88, status: "Layak", date: "2023-05-16" },
-    { name: "Doni Kusuma", nisn: "6789012345", class: "XII IPA 3", score: 67, status: "Layak", date: "2023-05-16" },
-    { name: "Maya Sari", nisn: "7890123456", class: "XI IPS 1", score: 38, status: "Tidak Layak", date: "2023-05-16" },
-  ];
+  const [results, setResults] = useState([]);
+  console.log(results);
+  
+  const getResults = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/hasil", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        });
+      const data = await response.json();
+      setResults(data.hasil.hasil);
+      
+    } catch (error) {
+      console.error("Error fetching results:", error);
+    }
+  }
+  useEffect(() => {
+    getResults();
+  }, []);
+
+  const dataPrediksi = results.map((d) => ({
+    id: d.id,
+    name: d.siswa?.namaSiswa || "Tidak Diketahui",
+    score: parseFloat(d.skor) * 100, 
+    status: d.status,
+    date: new Date(d.tanggal).toISOString().split("T")[0], 
+  }));
 
   // Filtered data sesuai filter status dan tanggal
-  const filteredData = dataPrediksi.filter(item => {
+  const filteredData = dataPrediksi.filter((item) => {
     const matchStatus = filterStatus ? item.status === filterStatus : true;
     const matchDate = filterDate ? item.date === filterDate : true;
-    return matchStatus && matchDate;
+    const matchSearch = searchKeyword ? item.name.toLowerCase().includes(searchKeyword) : true;
+    return matchStatus && matchDate && matchSearch;
   });
+
 
   // Fungsi warna chip status
   const statusColor = (status) => {
@@ -63,8 +84,24 @@ export default function HasilPrediksiPage() {
     return "error.main";
   };
 
-  const handleDelete = (name) => {
-    alert(`Hapus data untuk siswa: ${name}`);
+  const handleDelete = async (hasilId) => {
+    try {
+      const response = await fetch(`http://localhost:5000/hasil/${hasilId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+
+      if (!response.ok) throw new Error("Gagal menghapus data");
+      setResults(prev => prev.filter(item => item.id !== hasilId));
+
+      alert("Hasil prediksi berhasil dihapus!");
+    } catch (err) {
+      console.log(err);
+      alert("Terjadi kesalahan saat menghapus data.");
+    }
   };
 
   return (
@@ -97,9 +134,7 @@ export default function HasilPrediksiPage() {
               size="small"
               placeholder="Cari siswa..."
               sx={{ flexGrow: 1, minWidth: 200 }}
-              onChange={e => {
-                // Implementasi cari nama jika perlu
-              }}
+              onChange={e => setSearchKeyword(e.target.value.toLowerCase())}
             />
             <FormControl sx={{ minWidth: 150 }}>
               <InputLabel>Status</InputLabel>
@@ -167,7 +202,7 @@ export default function HasilPrediksiPage() {
                         />
                       </Box>
                       <Typography variant="caption" sx={{ ml: 1 }}>
-                        {row.score}%
+                        {Math.round(row.score)}%
                       </Typography>
                     </TableCell>
                     <TableCell>
@@ -184,7 +219,7 @@ export default function HasilPrediksiPage() {
                         variant="text"
                         size="small"
                         startIcon={<Delete />}
-                        onClick={() => handleDelete(row.name)}
+                        onClick={() => handleDelete(row.id)}
                       >
                         Hapus
                       </Button>

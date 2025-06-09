@@ -20,7 +20,7 @@ model User {
   role        String
   hasil       Hasil[]      // 1 user bisa punya banyak hasil siswa
   siswa       Siswa[]      // 1 user bisa punya banyak siswa
-  rekap       RekapHasil?  // 1 user hanya punya 1 rekap
+  rekap       RekapHasil[]  // 1 user hanya punya 1 rekap
   createdAt   DateTime     @default(now())
 }
 
@@ -37,25 +37,31 @@ model Siswa {
   user             User     @relation(fields: [userId], references: [id])
   userId           String
 
+  hasil            Hasil?
 }
 
 model Hasil {
-  id          String   @id @default(uuid())
-  skor        String
-  status      String  // layak atau tidak
-  tanggal     DateTime @default(now())
+  id        String   @id @default(uuid())
+  skor      String
+  status    String
+  tanggal   DateTime @default(now())
 
-  user        User     @relation(fields: [userId], references: [id])
-  userId      String
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
 
-  siswaId     String @unique
+  siswa     Siswa    @relation(fields: [siswaId], references: [id])
+  siswaId   String   @unique
 }
 
 model RekapHasil {
-  id         String @id @default(uuid())
-  user       User   @relation(fields: [userId], references: [id])
-  userId     String @unique
+  id         String   @id @default(uuid())
+  user       User     @relation(fields: [userId], references: [id])
+  userId     String
   totalLayak Int
   totalTidak Int
   totalSiswa Int
+  bulan      DateTime @default(now())
+
+  @@unique([userId, bulan]) // agar 1 user hanya punya 1 rekap tiap bulan
 }
+

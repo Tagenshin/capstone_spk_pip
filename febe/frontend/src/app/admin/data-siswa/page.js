@@ -160,6 +160,32 @@ useEffect(() => {
     setSelectedIds(new Set());
   };
 
+ const handleSaveResults = async (predictedStudents) => {
+  try {
+    const response = await fetch("http://localhost:5000/hasil", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      body: JSON.stringify({
+        results: predictedStudents.map((siswa) => ({
+          siswaId: siswa.id,
+          status: siswa.prediksi,
+          skor: siswa.score,
+        })),
+      }),
+    });
+
+    const data = await response.json();
+    console.log("Sukses simpan:", data);
+    alert("Seluruh hasil prediksi berhasil disimpan.");
+  } catch (error) {
+    console.log("Gagal menyimpan:", error);
+    alert("Terjadi kesalahan saat menyimpan.");
+  }
+};
+
 const handleDoPredict = async () => {
   setResult(null);
   setPredictedStudents([]); // reset
@@ -239,6 +265,7 @@ const handleDoPredict = async () => {
     }));
     
     setPredictedStudents(resultWithStudent);
+    await handleSaveResults(resultWithStudent);
     console.log("Hasil prediksi:", resultWithStudent);
   } catch (error) {
     console.log("Gagal melakukan prediksi:", error);
