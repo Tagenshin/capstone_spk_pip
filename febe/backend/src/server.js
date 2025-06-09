@@ -5,6 +5,7 @@ const Inert = require('@hapi/inert');
 const authRoutes = require('./routes/auth.route');
 const siswaRoutes = require('./routes/siswa.route');
 const userRoutes = require('./routes/user.route');
+const hasilRoutes = require('./routes/hasil.route');
 
 const init = async () => {
     const server = Hapi.server({
@@ -52,6 +53,7 @@ const init = async () => {
         ...authRoutes,
         ...siswaRoutes,
         ...userRoutes,
+        ...hasilRoutes,
         {
             method: 'OPTIONS',
             path: '/{any*}',

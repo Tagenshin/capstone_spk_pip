@@ -205,19 +205,13 @@ export default function StudentInputPage() {
 
               {/* Penghasilan Orang Tua */}
               <FormControl required>
-                <InputLabel>Penghasilan Orang Tua</InputLabel>
-                <Select
-                  name="penghasilan"
-                  value={formData.penghasilan}
-                  onChange={handleChange}
-                  label="Penghasilan Orang Tua"
-                >
-                  {incomeOptions.map((item) => (
-                    <MenuItem key={item} value={item}>
-                      {item}
-                    </MenuItem>
-                  ))}
-                </Select>
+                <TextField
+                label="Penghasilan Orang Tua"
+                name="penghasilan"
+                value={formData.penghasilan}
+                onChange={handleChange}
+                required
+              />
               </FormControl>
 
               {/* Status KIP */}

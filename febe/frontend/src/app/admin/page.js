@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AdminNavbar from "../components/AdminNavbar";
 import {
   Box,
@@ -43,21 +43,9 @@ import SchoolIcon from "@mui/icons-material/School";
 import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import TrendingDownIcon from "@mui/icons-material/TrendingDown";
+const dayjs = require('dayjs');
 
-const monthlyData = [
-  { name: "Jan", penerima: 65, total: 240 },
-  { name: "Feb", penerima: 59, total: 238 },
-  { name: "Mar", penerima: 80, total: 245 },
-  { name: "Apr", penerima: 81, total: 250 },
-  { name: "Mei", penerima: 56, total: 252 },
-  { name: "Jun", penerima: 55, total: 248 },
-  { name: "Jul", penerima: 40, total: 245 },
-  { name: "Agu", penerima: 45, total: 250 },
-  { name: "Sep", penerima: 62, total: 255 },
-  { name: "Okt", penerima: 78, total: 262 },
-  { name: "Nov", penerima: 91, total: 270 },
-  { name: "Des", penerima: 125, total: 280 },
-];
+
 
 const criteriaData = [
   { name: "Ekonomi", value: 45, color: "#003d80" },
@@ -75,6 +63,60 @@ export default function AdminPage() {
 
   const [tabIndex, setTabIndex] = useState(0);
   const [year, setYear] = useState("2025");
+
+  const [rekap, setRekap] = useState([]);
+
+  const monthlyData = rekap.map(item => ({
+    name: dayjs(item.bulan).format("MMM"),
+    penerima: item.totalLayak,
+    total: item.totalSiswa,
+  }));
+  const getRekap = async () => {
+    try {
+      const response = await fetch(`http://localhost:5000/hasil/rekap?year=${year}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      const data = await response.json();
+      
+      // console.log(data.rekap.rekapList);
+      
+      setRekap(data.rekap.rekapList);
+      
+    } catch (error) {
+      console.error("Error fetching rekap:", error);
+    }
+  };
+
+  useEffect(() => {
+    getRekap();
+  }, [year]);
+
+  const bulanIni = dayjs(); 
+  const bulanLalu = dayjs().subtract(1, "month");
+
+  const thisMonth = rekap?.find(item =>
+    dayjs(item.bulan).isSame(bulanIni, "month")
+  );
+
+  const lastMonth = rekap?.find(item =>
+    dayjs(item.bulan).isSame(bulanLalu, "month")
+  );
+
+  const totalLayakThisMonth = thisMonth?.totalLayak ?? 0;
+  const totalLayakLastMonth = lastMonth?.totalLayak ?? 0;
+  const selisihLayak = totalLayakThisMonth - totalLayakLastMonth;
+
+  const totalTidakThisMonth = thisMonth?.totalTidak ?? 0;
+  const totalTidakLastMonth = lastMonth?.totalTidak ?? 0;
+  const selisihTidak = totalTidakThisMonth - totalTidakLastMonth;
+
+  const totalSiswaThisMonth = thisMonth?.totalSiswa ?? 0;
+  const totalSiswaLastMonth = lastMonth?.totalSiswa ?? 0;
+  const selisihSiswa = totalSiswaThisMonth - totalSiswaLastMonth;
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -162,85 +204,73 @@ export default function AdminPage() {
                     <Typography variant="subtitle2" fontWeight="bold">
                       Total Siswa
                     </Typography>
-                    <Typography variant="h5" fontWeight="bold" color="green">
-                      1,248
+                    <Typography variant="h5" fontWeight="bold">
+                      {totalSiswaThisMonth}
                     </Typography>
                     <Box
                       sx={{
                         display: "flex",
                         alignItems: "center",
                         gap: 0.5,
-                        color: "green",
+                        color: selisihSiswa >= 0 ? "green" : "red",
                         fontSize: "0.75rem",
                       }}
                     >
+                    {selisihSiswa >= 0 ? (
                       <TrendingUpIcon fontSize="small" />
-                      <span>+12% dari bulan lalu</span>
+                    ) : (
+                      <TrendingDownIcon fontSize="small" />
+                    )}
+                      <span>
+                      {selisihSiswa >= 0 ? "+" : ""}
+                      {selisihSiswa} dari bulan lalu
+                    </span>
                     </Box>
                   </Box>
                 </Paper>
               </Grid>
 
-              <Grid item xs={12} sm={6} md={3}>
-                <Paper
-                  elevation={1}
-                  sx={{
-                    p: 2,
-                    borderRadius: 2,
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 2,
-                  }}
-                >
-                  <EmojiEventsIcon fontSize="large" color="action" />
-                  <Box>
-                    <Typography variant="subtitle2" fontWeight="bold">
-                      Penerima PIP
-                    </Typography>
-                    <Typography variant="h5" fontWeight="bold" color="green">
-                      324
-                    </Typography>
-                    <Box
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 0.5,
-                        color: "green",
-                        fontSize: "0.75rem",
-                      }}
-                    >
+               <Grid item xs={12} sm={6} md={4}>
+              <Paper
+                elevation={1}
+                sx={{
+                  p: 2,
+                  borderRadius: 2,
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 2,
+                }}
+              >
+                <EmojiEventsIcon fontSize="large" color="action" />
+                <Box>
+                  <Typography variant="subtitle2" fontWeight="bold">
+                    Total Layak
+                  </Typography>
+                  <Typography variant="h5" fontWeight="bold" >
+                    {totalLayakThisMonth}
+                  </Typography>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 0.5,
+                      color: selisihLayak >= 0 ? "green" : "error.main",
+                      fontSize: "0.75rem",
+                    }}
+                  >
+                    {selisihLayak >= 0 ? (
                       <TrendingUpIcon fontSize="small" />
-                      <span>+4% dari bulan lalu</span>
-                    </Box>
+                    ) : (
+                      <TrendingDownIcon fontSize="small" />
+                    )}
+                    <span>
+                      {selisihLayak >= 0 ? "+" : ""}
+                      {selisihLayak} dari bulan lalu
+                    </span>
                   </Box>
-                </Paper>
-              </Grid>
-
-              <Grid item xs={12} sm={6} md={3}>
-                <Paper
-                  elevation={1}
-                  sx={{
-                    p: 2,
-                    borderRadius: 2,
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 2,
-                  }}
-                >
-                  <SchoolIcon fontSize="large" color="action" />
-                  <Box>
-                    <Typography variant="subtitle2" fontWeight="bold">
-                      Kelas Aktif
-                    </Typography>
-                    <Typography variant="h5" fontWeight="bold" color="text.primary">
-                      24
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
-                      Sama dengan bulan lalu
-                    </Typography>
-                  </Box>
-                </Paper>
-              </Grid>
+                </Box>
+              </Paper>
+            </Grid>
 
               <Grid item xs={12} sm={6} md={3}>
                 <Paper
@@ -254,33 +284,40 @@ export default function AdminPage() {
                   }}
                 >
                   <WarningAmberIcon fontSize="large" color="action" />
-                  <Box>
-                    <Typography variant="subtitle2" fontWeight="bold">
-                      Perlu Verifikasi
-                    </Typography>
-                    <Typography variant="h5" fontWeight="bold" color="error">
-                      12
-                    </Typography>
-                    <Box
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 0.5,
-                        color: "error.main",
-                        fontSize: "0.75rem",
-                      }}
-                    >
+                <Box>
+                  <Typography variant="subtitle2" fontWeight="bold">
+                    Total Tidak Layak
+                  </Typography>
+                  <Typography variant="h5" fontWeight="bold">
+                    {totalTidakThisMonth}
+                  </Typography>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 0.5,
+                      color: selisihTidak >= 0 ? "green" : "error.main",
+                      fontSize: "0.75rem",
+                    }}
+                  >
+                    {selisihTidak >= 0 ? (
+                      <TrendingUpIcon fontSize="small" />
+                    ) : (
                       <TrendingDownIcon fontSize="small" />
-                      <span>-2 dari bulan lalu</span>
-                    </Box>
+                    )}
+                    <span>
+                      {selisihTidak >= 0 ? "+" : ""}
+                      {selisihTidak} dari bulan lalu
+                    </span>
                   </Box>
+                </Box>
                 </Paper>
               </Grid>
             </Grid>
 
             {/* Charts side by side */}
             <Grid container spacing={3}>
-              <Grid item xs={12} md={7}>
+              <Grid item xs={12} md={7} width={'100%'}>
                 <Paper
                   elevation={1}
                   sx={{ p: 3, borderRadius: 2, height: 400, display: "flex", flexDirection: "column" }}
@@ -306,7 +343,7 @@ export default function AdminPage() {
                   </Box>
                 </Paper>
               </Grid>
-              <Grid item xs={12} md={5}>
+              {/* <Grid item xs={12} md={5}>
                 <Paper
                   elevation={1}
                   sx={{ p: 3, borderRadius: 2, height: 400, display: "flex", flexDirection: "column" }}
@@ -340,7 +377,7 @@ export default function AdminPage() {
                     </ResponsiveContainer>
                   </Box>
                 </Paper>
-              </Grid>
+              </Grid> */}
             </Grid>
           </>
         )}
