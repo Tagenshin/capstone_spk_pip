@@ -18,7 +18,7 @@ Aplikasi ini mengimplementasikan sistem berbasis **Deep Learning** untuk mempred
 Berikut ini adalah link [Dataset PIP](.............)
 
 ## **Struktur Proyek**
-- `app.py`: Aplikasi Streamlit untuk prediksi kelayakan.
+- `app/app.py`: Aplikasi Streamlit untuk prediksi kelayakan.
 - `model/model_ann.h5`: Model ANN yang telah dilatih dan disimpan.
 - `dataset/`: Folder untuk menyimpan dataset.
 - `data_test/`: Folder untuk data uji dan data aktual.
