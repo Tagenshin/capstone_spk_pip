@@ -47,6 +47,7 @@ export default function Login() {
       // Simpan token
       if (data.token) {
         localStorage.setItem("token", data.token);
+        Cookies.set('token', data.token, { expires: 7 });
       }
 
       // Handle remember me
