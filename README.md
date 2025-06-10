@@ -35,14 +35,14 @@ Berikut ini adalah link [Dataset PIP](https://drive.google.com/drive/folders/1iA
    pip install -r requirements.txt
    ```
 3. Melatih ulang model<br>
-   Untuk melatih model ulang pada berkas notebook .ipynb, Anda bisa menjalankan langkah-langkah berikut:
+   Untuk melatih model ulang pada berkas notebook .ipynb, Anda bisa menjalankan langkah-langkah berikut:<br>
    - Gunakan platform seperti Jupyter Notebook atau Google Colab untuk membuka berkas .ipynb yang berisi kode yang ingin Anda jalankan.
    - Di Jupyter Notebook, Anda dapat menekan Shift + Enter untuk menjalankan sel satu per satu, atau pilih "Run All" untuk menjalankan semua sel dalam notebook.
-   Untuk melatih model ulang pada berkas .py, Anda bisa menjalankan langkah-langkah berikut:
+   Untuk melatih model ulang pada berkas .py, Anda bisa menjalankan langkah-langkah berikut:<br>
    - Untuk menjalankan berkas .py, buka terminal atau command prompt, lalu navigasikan ke direktori tempat berkas .py berada dan jalankan dengan perintah:
-   ```bash
-   python nama_berkas.py
-   ```
+      ```bash
+      python nama_berkas.py
+      ```
 
 ## **Cara Menggunakan Aplikasi**
 
