@@ -26,7 +26,7 @@ Berikut ini adalah link [Dataset PIP](.............)
 ## **Instalasi dan Persiapan Lingkungan**
 1. **Clone repository ini:**
    ```bash
-   git clone [https://github.com/username/repository_name.git](https://github.com/Tagenshin/capstone_spk_pip.git)
+   git clone https://github.com/Tagenshin/capstone_spk_pip.git
    ```
 
 2. **Install dependensi:**
