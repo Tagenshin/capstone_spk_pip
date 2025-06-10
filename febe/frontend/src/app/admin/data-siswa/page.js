@@ -46,7 +46,6 @@ export default function DataSiswaPage() {
   const router = useRouter();
   const [students, setStudents] = useState([]);
 
-
   useEffect(() => {
     fetch("https://pip-clasification-app-production.up.railway.app/siswa", {
       headers: {
@@ -60,57 +59,44 @@ export default function DataSiswaPage() {
       });
   }, []);
 
-const [model, setModel] = useState(null);
-const [result, setResult] = useState(null);
-useEffect(() => {
-  const loadModel = async () => {
-    try {
-      // Jika model sudah ada sebelumnya, buang dulu dari memory
-      if (model) {
-        model.dispose();
+  const [model, setModel] = useState(null);
+  const [result, setResult] = useState(null);
+  useEffect(() => {
+    const loadModel = async () => {
+      try {
+        // Jika model sudah ada sebelumnya, buang dulu dari memory
+        if (model) {
+          model.dispose();
+        }
+
+        const loadedModel = await tf.loadLayersModel("/model/model.json");
+        setModel(loadedModel);
+        loadedModel.summary();
+      } catch (error) {
+        console.error("❌ Gagal memuat model:", error);
       }
+    };
 
-      const loadedModel = await tf.loadLayersModel("/model/model.json");
-      setModel(loadedModel);
-      loadedModel.summary();
-    } catch (error) {
-      console.error("❌ Gagal memuat model:", error);
-    }
-  };
-
-  loadModel(); // hanya dipanggil sekali saat mount
-}, []);
+    loadModel(); // hanya dipanggil sekali saat mount
+  }, []);
 
   const [searchTerm, setSearchTerm] = useState("");
-  const [filterClass, setFilterClass] = useState("all");
-  const [filterGender, setFilterGender] = useState("all");
+  const [filterPenghasilan, setFilterPenghasilan] = useState("all");
+  const [filterTransportasi, setFilterTransportasi] = useState("all");
+  const [filterPekerjaanOrtu, setFilterPekerjaanOrtu] = useState("all");
   const [page, setPage] = useState(0);
   const rowsPerPage = 10;
 
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const toggleSidebar = () => setSidebarOpen((prev) => !prev);
 
-  const classesOptions = [
-    "X IPA 1",
-    "X IPA 2",
-    "X IPA 3",
-    "X IPS 1",
-    "X IPS 2",
-    "XI IPA 1",
-    "XI IPA 2",
-    "XI IPS 1",
-    "XI IPS 2",
-    "XII IPA 1",
-    "XII IPA 2",
-    "XII IPS 1",
-  ];
-
   // Filter data
   const filteredStudents = students.filter((s) => {
     return (
       (s.namaSiswa.toLowerCase().includes(searchTerm.toLowerCase())) &&
-      (filterClass === "all" || s.class === filterClass) &&
-      (filterGender === "all" || s.gender === filterGender)
+      (filterPenghasilan === "all" || s.penghasilan === filterPenghasilan) &&
+      (filterTransportasi === "all" || s.alatTransportasi === filterTransportasi) &&
+      (filterPekerjaanOrtu === "all" || s.pekerjaanOrtu === filterPekerjaanOrtu)
     );
   });
 
@@ -160,122 +146,122 @@ useEffect(() => {
     setSelectedIds(new Set());
   };
 
- const handleSaveResults = async (predictedStudents) => {
-  try {
-    const response = await fetch("https://pip-clasification-app-production.up.railway.app/hasil", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-      body: JSON.stringify({
-        results: predictedStudents.map((siswa) => ({
-          siswaId: siswa.id,
-          status: siswa.prediksi,
-          skor: siswa.score,
-        })),
-      }),
-    });
+  const handleSaveResults = async (predictedStudents) => {
+    try {
+      const response = await fetch("https://pip-clasification-app-production.up.railway.app/hasil", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify({
+          results: predictedStudents.map((siswa) => ({
+            siswaId: siswa.id,
+            status: siswa.prediksi,
+            skor: siswa.score,
+          })),
+        }),
+      });
 
-    const data = await response.json();
-    console.log("Sukses simpan:", data);
-    alert("Seluruh hasil prediksi berhasil disimpan.");
-  } catch (error) {
-    console.log("Gagal menyimpan:", error);
-    alert("Terjadi kesalahan saat menyimpan.");
-  }
-};
-
-const handleDoPredict = async () => {
-  setResult(null);
-  setPredictedStudents([]); // reset
-
-  if (selectedIds.size === 0) {
-    alert("Pilih siswa terlebih dahulu untuk prediksi.");
-    return;
-  }
-
-  if (!model) {
-    alert("Model belum siap!");
-    return;
-  }
-
-  const mapToNumber = (value, map) => map[value] ?? 0;
-
-  const pekerjaanOrtuMap = {
-    "Wirausaha": 4,
-    "Lainnya": 1,
-    "Peternak": 3,
-    "Petani": 2,
-    "Buruh": 0,
+      const data = await response.json();
+      console.log("Sukses simpan:", data);
+      alert("Seluruh hasil prediksi berhasil disimpan.");
+    } catch (error) {
+      console.log("Gagal menyimpan:", error);
+      alert("Terjadi kesalahan saat menyimpan.");
+    }
   };
 
-  const transportasiMap = {
-    "Jalan Kaki": 0,
-    "Sepeda Motor": 2,
-    "Lainnya": 1
+  const handleDoPredict = async () => {
+    setResult(null);
+    setPredictedStudents([]); // reset
+
+    if (selectedIds.size === 0) {
+      alert("Pilih siswa terlebih dahulu untuk prediksi.");
+      return;
+    }
+
+    if (!model) {
+      alert("Model belum siap!");
+      return;
+    }
+
+    const mapToNumber = (value, map) => map[value] ?? 0;
+
+    const pekerjaanOrtuMap = {
+      "Wirausaha": 4,
+      "Lainnya": 1,
+      "Peternak": 3,
+      "Petani": 2,
+      "Buruh": 0,
+    };
+
+    const transportasiMap = {
+      "Jalan Kaki": 0,
+      "Sepeda Motor": 2,
+      "Lainnya": 1
+    };
+
+    const yaTidakMap = {
+      "Ya": 1,
+      "Tidak": 0,
+    };
+
+    const tanggunganMap = {
+      "1": 0,
+      "Lebih dari 3": 3,
+      "2": 1,
+      "3": 2,
+    };
+
+    const penghasilanMap = (penghasilan) => {
+      if (penghasilan <= 1500000) return 0;
+      if (penghasilan <= 3000000) return 1;
+      return 2;
+    };
+
+    const selectedStudents = students.filter((student) => selectedIds.has(student.id));
+
+    const selectedData = selectedStudents.map((student) => [
+      mapToNumber(student.alatTransportasi, transportasiMap),
+      mapToNumber(student.pekerjaanOrtu, pekerjaanOrtuMap),
+      Number(penghasilanMap(student.penghasilan)),
+      mapToNumber(student.tanggungan, tanggunganMap),
+      mapToNumber(student.statusKIP, yaTidakMap),
+      mapToNumber(student.statusPKH, yaTidakMap),
+    ]);
+
+    if (selectedData.length === 0) {
+      alert("Data siswa tidak ditemukan.");
+      return;
+    }
+
+    try {
+      const inputTensor = tf.tensor2d(selectedData);
+      const prediction = model.predict(inputTensor);
+      const values = await prediction.data();
+      const resultArray = Array.from(values);
+
+      setResult(resultArray);
+
+      const resultWithStudent = selectedStudents.map((student, index) => ({
+        ...student,
+        prediksi: resultArray[index] >= 0.5 ? "Layak" : "Tidak Layak", // threshold bisa disesuaikan
+        score: resultArray[index]
+      }));
+
+      setPredictedStudents(resultWithStudent);
+      await handleSaveResults(resultWithStudent);
+      console.log("Hasil prediksi:", resultWithStudent);
+    } catch (error) {
+      console.log("Gagal melakukan prediksi:", error);
+      alert("Terjadi kesalahan saat memproses prediksi.");
+    }
   };
-
-  const yaTidakMap = {
-    "Ya": 1,
-    "Tidak": 0,
-  };
-
-  const tanggunganMap = {
-    "1": 0,
-    "Lebih dari 3": 3,
-    "2": 1,
-    "3": 2,
-  }
-
-  const penghasilanMap = (penghasilan) => {
-    if (penghasilan <= 1500000) return 0;
-    if (penghasilan <= 3000000) return 1;
-    return 2;
-  }
-
-  const selectedStudents = students.filter((student) => selectedIds.has(student.id));
-
-  const selectedData = selectedStudents.map((student) => [
-    mapToNumber(student.alatTransportasi, transportasiMap),
-    mapToNumber(student.pekerjaanOrtu, pekerjaanOrtuMap),
-    Number(penghasilanMap(student.penghasilan)),
-    mapToNumber(student.tanggungan, tanggunganMap),
-    mapToNumber(student.statusKIP, yaTidakMap),
-    mapToNumber(student.statusPKH, yaTidakMap),
-  ]);
-
-  if (selectedData.length === 0) {
-    alert("Data siswa tidak ditemukan.");
-    return;
-  }
-
-  try {
-    const inputTensor = tf.tensor2d(selectedData);
-    const prediction = model.predict(inputTensor);
-    const values = await prediction.data();
-    const resultArray = Array.from(values);
-
-    setResult(resultArray);
-
-    const resultWithStudent = selectedStudents.map((student, index) => ({
-      ...student,
-      prediksi: resultArray[index] >= 0.5 ? "Layak" : "Tidak Layak", // threshold bisa disesuaikan
-      score: resultArray[index]
-    }));
-    
-    setPredictedStudents(resultWithStudent);
-    await handleSaveResults(resultWithStudent);
-    console.log("Hasil prediksi:", resultWithStudent);
-  } catch (error) {
-    console.log("Gagal melakukan prediksi:", error);
-    alert("Terjadi kesalahan saat memproses prediksi.");
-  }
-};
 
   const handleEditSiswa = (id) => {
     router.push(`/admin/data-siswa/input-data?id=${id}`);
-  }
+  };
 
   const handleDeleteSiswa = (id) => {
     try {
@@ -296,14 +282,17 @@ const handleDoPredict = async () => {
     } catch (err) {
       console.log(err);
     }
-  }
+  };
+
+  // Format penghasilan untuk tampilan
+  const formatRupiah = (angka) => {
+    if (!angka) return "";
+    return "Rp " + new Intl.NumberFormat("id-ID").format(angka);
+  };
 
   return (
     <Box sx={{ display: "flex" }}>
-      {/* Sidebar Navbar */}
       <AdminNavbar isOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
-
-      {/* Main content area */}
       <Box
         component="main"
         sx={{
@@ -315,7 +304,6 @@ const handleDoPredict = async () => {
           bgcolor: "#f9fafb",
         }}
       >
-        {/* Title and description */}
         <Box sx={{ mb: 3 }}>
           <Typography variant="h4" fontWeight="bold" gutterBottom>
             Data Siswa
@@ -325,7 +313,6 @@ const handleDoPredict = async () => {
           </Typography>
         </Box>
 
-        {/* Action Buttons */}
         <Box
           sx={{
             display: "flex",
@@ -345,9 +332,18 @@ const handleDoPredict = async () => {
           >
             Tambah Siswa
           </Button>
+
+          {/* Pindahkan tombol prediksi ke luar aksi menu */}
+          <Button
+            variant="contained"
+            startIcon={<PlaylistAddCheck />}
+            onClick={togglePredictMode}
+            disabled={predictMode}
+          >
+            Prediksi
+          </Button>
         </Box>
 
-        {/* Filters */}
         <Box
           sx={{
             display: "flex",
@@ -372,39 +368,54 @@ const handleDoPredict = async () => {
             disabled={predictMode}
           />
           <FormControl size="small" sx={{ minWidth: 150 }}>
-            <InputLabel id="filter-class-label">Semua Kelas</InputLabel>
+            <InputLabel id="filter-penghasilan-label">Semua Penghasilan</InputLabel>
             <Select
-              labelId="filter-class-label"
-              value={filterClass}
-              label="Semua Kelas"
-              onChange={(e) => setFilterClass(e.target.value)}
+              labelId="filter-penghasilan-label"
+              value={filterPenghasilan}
+              label="Semua Penghasilan"
+              onChange={(e) => setFilterPenghasilan(e.target.value)}
               disabled={predictMode}
             >
-              <MenuItem value="all">Semua Kelas</MenuItem>
-              {classesOptions.map((cls) => (
-                <MenuItem key={cls} value={cls}>
-                  {cls}
-                </MenuItem>
-              ))}
+              <MenuItem value="all">Semua Penghasilan</MenuItem>
+              <MenuItem value="0">Rp 0 - 1,500,000</MenuItem>
+              <MenuItem value="1">Rp 1,500,001 - 3,000,000</MenuItem>
+              <MenuItem value="2">Rp 3,000,001+</MenuItem>
             </Select>
           </FormControl>
           <FormControl size="small" sx={{ minWidth: 150 }}>
-            <InputLabel id="filter-gender-label">Semua</InputLabel>
+            <InputLabel id="filter-transportasi-label">Alat Transportasi</InputLabel>
             <Select
-              labelId="filter-gender-label"
-              value={filterGender}
-              label="Semua"
-              onChange={(e) => setFilterGender(e.target.value)}
+              labelId="filter-transportasi-label"
+              value={filterTransportasi}
+              label="Alat Transportasi"
+              onChange={(e) => setFilterTransportasi(e.target.value)}
               disabled={predictMode}
             >
               <MenuItem value="all">Semua</MenuItem>
-              <MenuItem value="Laki-laki">Laki-laki</MenuItem>
-              <MenuItem value="Perempuan">Perempuan</MenuItem>
+              <MenuItem value="Jalan Kaki">Jalan Kaki</MenuItem>
+              <MenuItem value="Sepeda Motor">Sepeda Motor</MenuItem>
+              <MenuItem value="Lainnya">Lainnya</MenuItem>
+            </Select>
+          </FormControl>
+          <FormControl size="small" sx={{ minWidth: 150 }}>
+            <InputLabel id="filter-pekerjaanOrtu-label">Pekerjaan Orang Tua</InputLabel>
+            <Select
+              labelId="filter-pekerjaanOrtu-label"
+              value={filterPekerjaanOrtu}
+              label="Pekerjaan Orang Tua"
+              onChange={(e) => setFilterPekerjaanOrtu(e.target.value)}
+              disabled={predictMode}
+            >
+              <MenuItem value="all">Semua</MenuItem>
+              <MenuItem value="Wirausaha">Wirausaha</MenuItem>
+              <MenuItem value="Peternak">Peternak</MenuItem>
+              <MenuItem value="Petani">Petani</MenuItem>
+              <MenuItem value="Buruh">Buruh</MenuItem>
+              <MenuItem value="Lainnya">Lainnya</MenuItem>
             </Select>
           </FormControl>
         </Box>
 
-        {/* Table */}
         <TableContainer
           component={Paper}
           variant="outlined"
@@ -465,52 +476,46 @@ const handleDoPredict = async () => {
                     </TableCell>
                   )}
                   <TableCell sx={{ textAlign: "center" }}>{student.namaSiswa}</TableCell>
-                  <TableCell sx={{ textAlign: "center" }}>{student.penghasilan}</TableCell>
+                  <TableCell sx={{ textAlign: "center" }}>
+                    {formatRupiah(student.penghasilan)}
+                  </TableCell>
                   <TableCell sx={{ textAlign: "center" }}>{student.alatTransportasi}</TableCell>
                   <TableCell sx={{ textAlign: "center" }}>{student.tanggungan}</TableCell>
                   <TableCell sx={{ textAlign: "center" }}>{student.pekerjaanOrtu}</TableCell>
                   <TableCell sx={{ textAlign: "center" }}>{student.statusKIP}</TableCell>
                   <TableCell sx={{ textAlign: "center" }}>{student.statusPKH}</TableCell>
                   <TableCell sx={{ textAlign: "center" }}>
-                    {!predictMode && (
-                      <>
-                        <IconButton
-                          size="small"
-                          aria-label="menu aksi"
-                          onClick={(e) => handleMenuOpen(e, student.id)}
-                        >
-                          <MoreVert />
-                        </IconButton>
-                        <Menu
-                          anchorEl={anchorEl}
-                          open={menuRowId === student.id}
-                          onClose={handleMenuClose}
-                          anchorOrigin={{
-                            vertical: "bottom",
-                            horizontal: "right",
-                          }}
-                          transformOrigin={{
-                            vertical: "top",
-                            horizontal: "right",
-                          }}
-                        >
-                          <MuiMenuItem onClick={() => handleEditSiswa(student.id)}>
-                            <Edit fontSize="small" sx={{ mr: 1 }} />
-                            Edit
-                          </MuiMenuItem>
 
-                          <MuiMenuItem onClick={() => handleDeleteSiswa(student.id)}>
-                            <Delete fontSize="small" sx={{ mr: 1 }} />
-                            Delete
-                          </MuiMenuItem>
+                    <IconButton
+                      size="small"
+                      aria-label="menu aksi"
+                      onClick={(e) => handleMenuOpen(e, student.id)}
+                    >
+                      <MoreVert />
+                    </IconButton>
+                    <Menu
+                      anchorEl={anchorEl}
+                      open={menuRowId === student.id}
+                      onClose={handleMenuClose}
+                      anchorOrigin={{
+                        vertical: "bottom",
+                        horizontal: "right",
+                      }}
+                      transformOrigin={{
+                        vertical: "top",
+                        horizontal: "right",
+                      }}
+                    >
+                      <MuiMenuItem onClick={() => handleEditSiswa(student.id)}>
+                        <Edit fontSize="small" sx={{ mr: 1 }} />
+                        Edit
+                      </MuiMenuItem>
 
-                          <MuiMenuItem onClick={togglePredictMode}>
-                            <PlaylistAddCheck fontSize="small" sx={{ mr: 1 }} />
-                            Predict
-                          </MuiMenuItem>
-                        </Menu>
-                      </>
-                    )}
+                      <MuiMenuItem onClick={() => handleDeleteSiswa(student.id)}>
+                        <Delete fontSize="small" sx={{ mr: 1 }} />
+                        Delete
+                      </MuiMenuItem>
+                    </Menu>
                   </TableCell>
                 </TableRow>
               ))}
@@ -538,7 +543,7 @@ const handleDoPredict = async () => {
           />
         </TableContainer>
 
-        {/* Predict Buttons */}
+        {/* Predict Buttons Outside */}
         {predictMode && (
           <Box
             sx={{
