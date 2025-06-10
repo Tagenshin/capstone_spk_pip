@@ -1,16 +1,24 @@
 
-# **Prediksi Status Kelayakan Siswa - Program Indonesia Pintar (PIP)**
+# **Sistem Pendukung Keputusan dalam Menentukan Penerima Program Indonesia Pintar dengan Teknologi Deep Learning**
 
 ## **Deskripsi**
 Aplikasi ini mengimplementasikan sistem berbasis **Deep Learning** untuk memprediksi status kelayakan penerima bantuan dari Program Indonesia Pintar (PIP). Model menggunakan **Artificial Neural Network (ANN)** untuk memproses data sosial dan ekonomi guna mengklasifikasikan kelayakan penerima bantuan secara lebih akurat, cepat, dan objektif.
 
-## **Fitur**
-- **Prediksi menggunakan file Excel atau CSV**: Pengguna dapat mengunggah file untuk memprediksi status kelayakan calon penerima bantuan.
-- **Prediksi Real-time**: Pengguna dapat memasukkan data secara manual melalui form yang disediakan, dan aplikasi akan memberikan hasil prediksi kelayakan secara langsung.
-- **Unduh Hasil Prediksi**: Pengguna dapat mengunduh hasil prediksi dalam format Excel setelah proses selesai.
+## Team
+| Name                        | Student ID    | University                            | Role                           | LinkedIn  | Github   |
+|-----------------------------|---------------|----------------------------------------|---------------------------------|-----------|----------|
+| Trio Anggoro               | MC427D5Y0300  | Universitas Bina Insan                 | Machine Learning                | [Click Me](#) | [Click Me](#) |
+| Muhammad Daffa Rachman     | MC314D5Y0997  | Universitas Singaperbangsa Karawang    | Machine Learning                | [Click Me](#) | [Click Me](#) |
+| Azel Fabian Azmi           | MC314D5Y0547  | Universitas Singaperbangsa Karawang    | Machine Learning                | [Click Me](#) | [Click Me](#) |
+| Paundra Afif Zamroni       | FC525D5Y0009  | Politeknik Negeri Banyuwangi           | Front-End dan Back-End Developer| [Click Me](#) | [Click Me](#) |
+| Muhammad Fariz Nur Hidayat| FC120D5Y2012  | Telkom University Purwokerto           | Front-End dan Back-End Developer | [Click Me](#) | [Click Me](#) |
+
+# Learning Path Machine Learning
+## **Dataset**
+Berikut ini adalah link [Dataset PIP](https://drive.google.com/drive/folders/1iADr7XhA5aghODKH9SYVi85xkQ1jc1F9?usp=drive_link)
 
 ## **Struktur Proyek**
-- `app.py`: Aplikasi Streamlit untuk prediksi kelayakan.
+- `app/app.py`: Aplikasi Streamlit untuk prediksi kelayakan.
 - `model/model_ann.h5`: Model ANN yang telah dilatih dan disimpan.
 - `dataset/`: Folder untuk menyimpan dataset.
 - `data_test/`: Folder untuk data uji dan data aktual.
@@ -18,8 +26,7 @@ Aplikasi ini mengimplementasikan sistem berbasis **Deep Learning** untuk mempred
 ## **Instalasi dan Persiapan Lingkungan**
 1. **Clone repository ini:**
    ```bash
-   git clone https://github.com/username/repository_name.git
-   cd repository_name
+   git clone https://github.com/Tagenshin/capstone_spk_pip.git
    ```
 
 2. **Install dependensi:**
@@ -27,14 +34,16 @@ Aplikasi ini mengimplementasikan sistem berbasis **Deep Learning** untuk mempred
    ```bash
    pip install -r requirements.txt
    ```
-
-3. **Pastikan TensorFlow, scikit-learn, dan Streamlit terinstall.**
-   ```bash
-   pip install tensorflow scikit-learn streamlit
-   ```
-
-4. **Persiapkan model ANN:**
-   Pastikan Anda memiliki model yang sudah dilatih dalam format `model_ann.h5`. Model ini digunakan untuk memprediksi kelayakan penerima bantuan.
+3. **Melatih ulang model**<br>
+   Untuk melatih model ulang pada berkas notebook .ipynb, Anda bisa menjalankan langkah-langkah berikut:<br>
+   - Gunakan platform seperti Jupyter Notebook atau Google Colab untuk membuka berkas .ipynb yang berisi kode yang ingin Anda jalankan.
+   - Di Jupyter Notebook, Anda dapat menekan Shift + Enter untuk menjalankan sel satu per satu, atau pilih "Run All" untuk menjalankan semua sel dalam notebook.
+   
+   Untuk melatih model ulang pada berkas .py, Anda bisa menjalankan langkah-langkah berikut:<br>
+   - Untuk menjalankan berkas .py, buka terminal atau command prompt, lalu navigasikan ke direktori tempat berkas .py berada dan jalankan dengan perintah:
+      ```bash
+      python nama_berkas.py
+      ```
 
 ## **Cara Menggunakan Aplikasi**
 
@@ -55,24 +64,8 @@ Aplikasi ini mengimplementasikan sistem berbasis **Deep Learning** untuk mempred
 4. **Unduh Hasil:**
    - Setelah prediksi selesai, Anda dapat mengunduh hasilnya dalam format Excel.
 
-## **Struktur File**
-- `app.py`: Kode aplikasi Streamlit untuk antarmuka pengguna.
-- `model_ann.h5`: Model yang telah dilatih.
-- `requirements.txt`: Daftar dependensi Python yang dibutuhkan.
-- `data_test/`: Folder untuk menyimpan file data uji dan data aktual.
 
-## **Membuat Model (jika ingin melatih ulang)**
+# Learning Path Front End Back End Developer
+....................................
 
-1. **Persiapkan Data:**
-   - Gunakan dataset yang sesuai dengan fitur yang dibutuhkan seperti `Penghasilan Orang Tua`, `Pekerjaan Orang Tua`, `Jumlah Tanggungan`, dll.
-
-2. **Pelatihan Model:**
-   - Gunakan kode yang ada pada notebook untuk mempersiapkan data dan melatih model dengan menggunakan **ANN**.
-   - Simpan model yang telah dilatih dalam format H5.
-
-3. **Evaluasi Model:**
-   - Lakukan evaluasi dengan menggunakan data uji dan tampilkan hasil menggunakan **Confusion Matrix** dan **Classification Report**.
-
-## **Catatan**
-- Aplikasi ini menggunakan **TensorFlow** untuk model Deep Learning dan **Streamlit** untuk antarmuka pengguna.
-- Pastikan file input yang diunggah memiliki format yang sesuai agar dapat diproses dengan benar oleh aplikasi.
+................
