@@ -41,31 +41,18 @@ export default function Home() {
                   Pelajari Lebih Lanjut
                 </a>
               </div>
-              <div className="flex flex-wrap gap-10 text-white">
-                <div>
-                  <h2 className="text-2xl font-bold">1,248+</h2>
-                  <p>Siswa Terdaftar</p>
-                </div>
-                <div>
-                  <h2 className="text-2xl font-bold">324+</h2>
-                  <p>Penerima PIP</p>
-                </div>
-                <div>
-                  <h2 className="text-2xl font-bold">24+</h2>
-                  <p>Kelas Aktif</p>
-                </div>
-                <div>
-                  <h2 className="text-2xl font-bold">98%</h2>
-                  <p>Akurasi Prediksi</p>
-                </div>
-              </div>
             </div>
 
             {/* Hero Image */}
             <div
-              className="flex-1 border-4 border-blue-300 bg-gray-100 bg-cover bg-center rounded-xl
-                         h-56 sm:h-72 md:h-80 lg:h-[500px] min-w-[280px]"
-              style={{ backgroundImage: 'url("/images/hero.jpg")' }}
+              className="flex-1 border-4 border-blue-300 bg-gray-100 bg-cover object-fill rounded-xl 
+                          sm:h-72 md:h-80 lg:h-[500px] min-w-[280px]"
+              style={{
+                backgroundImage: 'url("/images/about.png")',
+                backgroundSize: 'contain',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat'
+              }}
               aria-label="Hero image"
             />
           </div>
@@ -118,9 +105,15 @@ export default function Home() {
           <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-10 flex-wrap">
             {/* About Image */}
             <div
-              className="flex-1 border-4 border-blue-300 bg-gray-100 bg-cover bg-center rounded-xl
+              className="flex-1 border-4 border-blue-300 bg-gray-100 bg-cover rounded-xl
                          h-56 sm:h-72 md:h-80 lg:h-[500px] min-w-[280px]"
-              style={{ backgroundImage: 'url("/images/about.jpg")' }}
+              style={{
+                backgroundImage: 'url("/images/hero.png")',
+                backgroundSize: 'contain',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat',
+                backgroundColor: 'rgba(255, 255, 255, 0.5)'
+              }}
               aria-label="About image"
             />
             <div className="flex-1 min-w-[280px]">

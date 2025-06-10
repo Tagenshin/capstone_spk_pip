@@ -1,5 +1,4 @@
 "use client";
-import * as tf from "@tensorflow/tfjs";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import {
@@ -59,6 +58,7 @@ export default function DataSiswaPage() {
       });
   }, []);
 
+<<<<<<< HEAD
   const [model, setModel] = useState(null);
   const [result, setResult] = useState(null);
   useEffect(() => {
@@ -79,6 +79,10 @@ export default function DataSiswaPage() {
 
     loadModel(); // hanya dipanggil sekali saat mount
   }, []);
+=======
+const [model, setModel] = useState(null);
+const [result, setResult] = useState(null);
+>>>>>>> c531e4e9551baabbc46ad6e8aa4bd0f29d6d6625
 
   const [searchTerm, setSearchTerm] = useState("");
   const [filterPenghasilan, setFilterPenghasilan] = useState("all");
@@ -163,6 +167,7 @@ export default function DataSiswaPage() {
         }),
       });
 
+<<<<<<< HEAD
       const data = await response.json();
       console.log("Sukses simpan:", data);
       alert("Seluruh hasil prediksi berhasil disimpan.");
@@ -170,6 +175,41 @@ export default function DataSiswaPage() {
       console.log("Gagal menyimpan:", error);
       alert("Terjadi kesalahan saat menyimpan.");
     }
+=======
+    const data = await response.json();
+    console.log("Sukses simpan:", data);
+    alert("Seluruh hasil prediksi berhasil disimpan.");
+  } catch (error) {
+    console.log("Gagal menyimpan:", error);
+    alert("Terjadi kesalahan saat menyimpan.");
+  }
+};
+
+const handleDoPredict = async () => {
+  const tf = await import('@tensorflow/tfjs');
+  const model = await tf.loadLayersModel('/model/model.json');
+  setResult(null);
+  setPredictedStudents([]); // reset
+
+  if (selectedIds.size === 0) {
+    alert("Pilih siswa terlebih dahulu untuk prediksi.");
+    return;
+  }
+
+  if (!model) {
+    alert("Model belum siap!");
+    return;
+  }
+
+  const mapToNumber = (value, map) => map[value] ?? 0;
+
+  const pekerjaanOrtuMap = {
+    "Wirausaha": 4,
+    "Lainnya": 1,
+    "Peternak": 3,
+    "Petani": 2,
+    "Buruh": 0,
+>>>>>>> c531e4e9551baabbc46ad6e8aa4bd0f29d6d6625
   };
 
   const handleDoPredict = async () => {
@@ -332,6 +372,7 @@ export default function DataSiswaPage() {
           >
             Tambah Siswa
           </Button>
+<<<<<<< HEAD
 
           {/* Pindahkan tombol prediksi ke luar aksi menu */}
           <Button
@@ -342,6 +383,12 @@ export default function DataSiswaPage() {
           >
             Prediksi
           </Button>
+=======
+          <MuiMenuItem onClick={togglePredictMode}>
+                            <PlaylistAddCheck fontSize="small" sx={{ mr: 1 }} />
+                            Predict
+                          </MuiMenuItem>
+>>>>>>> c531e4e9551baabbc46ad6e8aa4bd0f29d6d6625
         </Box>
 
         <Box
@@ -367,6 +414,7 @@ export default function DataSiswaPage() {
             sx={{ minWidth: 200 }}
             disabled={predictMode}
           />
+<<<<<<< HEAD
           <FormControl size="small" sx={{ minWidth: 150 }}>
             <InputLabel id="filter-penghasilan-label">Semua Penghasilan</InputLabel>
             <Select
@@ -414,6 +462,8 @@ export default function DataSiswaPage() {
               <MenuItem value="Lainnya">Lainnya</MenuItem>
             </Select>
           </FormControl>
+=======
+>>>>>>> c531e4e9551baabbc46ad6e8aa4bd0f29d6d6625
         </Box>
 
         <TableContainer
@@ -511,11 +561,17 @@ export default function DataSiswaPage() {
                         Edit
                       </MuiMenuItem>
 
+<<<<<<< HEAD
                       <MuiMenuItem onClick={() => handleDeleteSiswa(student.id)}>
                         <Delete fontSize="small" sx={{ mr: 1 }} />
                         Delete
                       </MuiMenuItem>
                     </Menu>
+=======
+                        </Menu>
+                      </>
+                    )}
+>>>>>>> c531e4e9551baabbc46ad6e8aa4bd0f29d6d6625
                   </TableCell>
                 </TableRow>
               ))}
