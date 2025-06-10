@@ -15,7 +15,7 @@ Aplikasi ini mengimplementasikan sistem berbasis **Deep Learning** untuk mempred
 
 # Learning Path Machine Learning
 ## **Dataset**
-Berikut ini adalah link [Dataset PIP](.............)
+Berikut ini adalah link [Dataset PIP](https://drive.google.com/drive/folders/1iADr7XhA5aghODKH9SYVi85xkQ1jc1F9?usp=drive_link)
 
 ## **Struktur Proyek**
 - `app/app.py`: Aplikasi Streamlit untuk prediksi kelayakan.
