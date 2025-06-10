@@ -73,7 +73,7 @@ export default function AdminPage() {
   }));
   const getRekap = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/hasil/rekap?year=${year}`, {
+      const response = await fetch(`https://pip-clasification-app-production.up.railway.app/hasil/rekap?year=${year}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -180,7 +180,6 @@ export default function AdminPage() {
         >
           <Tab label="Ikhtisar" value={0} />
           <Tab label="Analitik" value={1} />
-          <Tab label="Laporan" value={2} />
         </Tabs>
 
         {/* Tab Contents */}
@@ -406,68 +405,6 @@ export default function AdminPage() {
           </Paper>
         )}
 
-        {tabIndex === 2 && (
-          <Card>
-            <CardHeader>
-              <CardTitle>Laporan Bulanan</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <Grid container spacing={3}>
-                <Grid item xs={12} md={4}>
-                  <Card variant="outlined" sx={{ p: 2 }}>
-                    <Typography variant="subtitle2" fontWeight="bold" gutterBottom>
-                      Laporan November 2023
-                    </Typography>
-                    <Typography variant="h5" fontWeight="bold">
-                      91
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary" gutterBottom>
-                      Penerima PIP
-                    </Typography>
-                    <Button fullWidth variant="outlined" size="small">
-                      Lihat Detail
-                    </Button>
-                  </Card>
-                </Grid>
-                <Grid item xs={12} md={4}>
-                  <Card variant="outlined" sx={{ p: 2 }}>
-                    <Typography variant="subtitle2" fontWeight="bold" gutterBottom>
-                      Laporan Oktober 2023
-                    </Typography>
-                    <Typography variant="h5" fontWeight="bold">
-                      78
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary" gutterBottom>
-                      Penerima PIP
-                    </Typography>
-                    <Button fullWidth variant="outlined" size="small">
-                      Lihat Detail
-                    </Button>
-                  </Card>
-                </Grid>
-                <Grid item xs={12} md={4}>
-                  <Card variant="outlined" sx={{ p: 2 }}>
-                    <Typography variant="subtitle2" fontWeight="bold" gutterBottom>
-                      Laporan September 2023
-                    </Typography>
-                    <Typography variant="h5" fontWeight="bold">
-                      62
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary" gutterBottom>
-                      Penerima PIP
-                    </Typography>
-                    <Button fullWidth variant="outlined" size="small">
-                      Lihat Detail
-                    </Button>
-                  </Card>
-                </Grid>
-              </Grid>
-              <Button variant="outlined" sx={{ mt: 2 }}>
-                Lihat Semua Laporan
-              </Button>
-            </CardContent>
-          </Card>
-        )}
       </Box>
     </Box>
   );

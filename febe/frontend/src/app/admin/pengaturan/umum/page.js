@@ -33,7 +33,7 @@ export default function PengaturanUmumPage() {
   useEffect(() => {
   const token = localStorage.getItem("token");
 
-  fetch("http://localhost:5000/user", {
+  fetch("https://pip-clasification-app-production.up.railway.app/user", {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
@@ -79,7 +79,7 @@ export default function PengaturanUmumPage() {
         ...(logoFile ? { logo: logoFile.name } : {}),
       };
 
-      const res = await fetch("http://localhost:5000/user", {
+      const res = await fetch("https://pip-clasification-app-production.up.railway.app/user", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

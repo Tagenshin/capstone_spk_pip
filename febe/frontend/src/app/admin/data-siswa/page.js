@@ -48,7 +48,7 @@ export default function DataSiswaPage() {
 
 
   useEffect(() => {
-    fetch("http://localhost:5000/siswa", {
+    fetch("https://pip-clasification-app-production.up.railway.app/siswa", {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -162,7 +162,7 @@ useEffect(() => {
 
  const handleSaveResults = async (predictedStudents) => {
   try {
-    const response = await fetch("http://localhost:5000/hasil", {
+    const response = await fetch("https://pip-clasification-app-production.up.railway.app/hasil", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -279,7 +279,7 @@ const handleDoPredict = async () => {
 
   const handleDeleteSiswa = (id) => {
     try {
-      fetch(`http://localhost:5000/siswa/${id}`, {
+      fetch(`https://pip-clasification-app-production.up.railway.app/siswa/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

@@ -1,6 +1,10 @@
-function prediksiKelayakan(namaSiswa, nomorIdentitas) {
-    const hasil = Math.random() > 0.5 ? "layak" : "tidak";
-    return hasil;
+const { PrismaClient } = require('@prisma/client');
+const prisma = new PrismaClient();
+
+async function checkDB() {
+  const users = await prisma.user.findMany();
+  console.log(users);
+  await prisma.$disconnect();
 }
 
-module.exports = { prediksiKelayakan };
+checkDB();
