@@ -1,5 +1,4 @@
 "use client";
-import * as tf from "@tensorflow/tfjs";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import {
@@ -48,7 +47,7 @@ export default function DataSiswaPage() {
 
 
   useEffect(() => {
-    fetch("http://localhost:5000/siswa", {
+    fetch("https://pip-clasification-app-production.up.railway.app/siswa", {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -62,24 +61,6 @@ export default function DataSiswaPage() {
 
 const [model, setModel] = useState(null);
 const [result, setResult] = useState(null);
-useEffect(() => {
-  const loadModel = async () => {
-    try {
-      // Jika model sudah ada sebelumnya, buang dulu dari memory
-      if (model) {
-        model.dispose();
-      }
-
-      const loadedModel = await tf.loadLayersModel("/model/model.json");
-      setModel(loadedModel);
-      loadedModel.summary();
-    } catch (error) {
-      console.error("❌ Gagal memuat model:", error);
-    }
-  };
-
-  loadModel(); // hanya dipanggil sekali saat mount
-}, []);
 
   const [searchTerm, setSearchTerm] = useState("");
   const [filterClass, setFilterClass] = useState("all");
@@ -162,7 +143,7 @@ useEffect(() => {
 
  const handleSaveResults = async (predictedStudents) => {
   try {
-    const response = await fetch("http://localhost:5000/hasil", {
+    const response = await fetch("https://pip-clasification-app-production.up.railway.app/hasil", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -187,6 +168,8 @@ useEffect(() => {
 };
 
 const handleDoPredict = async () => {
+  const tf = await import('@tensorflow/tfjs');
+  const model = await tf.loadLayersModel('/model/model.json');
   setResult(null);
   setPredictedStudents([]); // reset
 
@@ -279,7 +262,7 @@ const handleDoPredict = async () => {
 
   const handleDeleteSiswa = (id) => {
     try {
-      fetch(`http://localhost:5000/siswa/${id}`, {
+      fetch(`https://pip-clasification-app-production.up.railway.app/siswa/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -345,6 +328,10 @@ const handleDoPredict = async () => {
           >
             Tambah Siswa
           </Button>
+          <MuiMenuItem onClick={togglePredictMode}>
+                            <PlaylistAddCheck fontSize="small" sx={{ mr: 1 }} />
+                            Predict
+                          </MuiMenuItem>
         </Box>
 
         {/* Filters */}
@@ -371,37 +358,6 @@ const handleDoPredict = async () => {
             sx={{ minWidth: 200 }}
             disabled={predictMode}
           />
-          <FormControl size="small" sx={{ minWidth: 150 }}>
-            <InputLabel id="filter-class-label">Semua Kelas</InputLabel>
-            <Select
-              labelId="filter-class-label"
-              value={filterClass}
-              label="Semua Kelas"
-              onChange={(e) => setFilterClass(e.target.value)}
-              disabled={predictMode}
-            >
-              <MenuItem value="all">Semua Kelas</MenuItem>
-              {classesOptions.map((cls) => (
-                <MenuItem key={cls} value={cls}>
-                  {cls}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <FormControl size="small" sx={{ minWidth: 150 }}>
-            <InputLabel id="filter-gender-label">Semua</InputLabel>
-            <Select
-              labelId="filter-gender-label"
-              value={filterGender}
-              label="Semua"
-              onChange={(e) => setFilterGender(e.target.value)}
-              disabled={predictMode}
-            >
-              <MenuItem value="all">Semua</MenuItem>
-              <MenuItem value="Laki-laki">Laki-laki</MenuItem>
-              <MenuItem value="Perempuan">Perempuan</MenuItem>
-            </Select>
-          </FormControl>
         </Box>
 
         {/* Table */}
@@ -504,10 +460,6 @@ const handleDoPredict = async () => {
                             Delete
                           </MuiMenuItem>
 
-                          <MuiMenuItem onClick={togglePredictMode}>
-                            <PlaylistAddCheck fontSize="small" sx={{ mr: 1 }} />
-                            Predict
-                          </MuiMenuItem>
                         </Menu>
                       </>
                     )}

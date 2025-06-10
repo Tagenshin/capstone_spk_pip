@@ -33,7 +33,7 @@ export default function PengaturanUmumPage() {
   useEffect(() => {
   const token = localStorage.getItem("token");
 
-  fetch("http://localhost:5000/user", {
+  fetch("https://pip-clasification-app-production.up.railway.app/user", {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
@@ -79,7 +79,7 @@ export default function PengaturanUmumPage() {
         ...(logoFile ? { logo: logoFile.name } : {}),
       };
 
-      const res = await fetch("http://localhost:5000/user", {
+      const res = await fetch("https://pip-clasification-app-production.up.railway.app/user", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -187,54 +187,6 @@ export default function PengaturanUmumPage() {
                   <option value="SMK">SMK</option>
                 </select>
               </div>
-
-              <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-                <Box
-                  sx={{
-                    width: 64,
-                    height: 64,
-                    bgcolor: "#f0f0f0",
-                    borderRadius: 1,
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    color: "#888",
-                    fontWeight: "bold",
-                    fontSize: 14,
-                  }}
-                >
-                  Logo
-                </Box>
-                <Button
-                  variant="outlined"
-                  component="label"
-                  startIcon={<Upload />}
-                >
-                  Unggah Logo
-                  <input
-                    hidden
-                    accept="image/*"
-                    type="file"
-                    onChange={handleLogoChange}
-                  />
-                </Button>
-                {logoFile && (
-                  <Typography variant="body2">{logoFile.name}</Typography>
-                )}
-              </Box>
-
-              <FormControlLabel
-                control={
-                  <Switch
-                    checked={notifEmail}
-                    onChange={() => setNotifEmail((prev) => !prev)}
-                  />
-                }
-                label="Notifikasi Email"
-              />
-              <Typography variant="body2" color="text.secondary" sx={{ ml: 1 }}>
-                Aktifkan notifikasi email untuk pemberitahuan penting
-              </Typography>
             </Stack>
           </CardContent>
           <Box sx={{ p: 3, display: "flex", justifyContent: "flex-end" }}>

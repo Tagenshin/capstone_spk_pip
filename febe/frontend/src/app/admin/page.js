@@ -68,12 +68,12 @@ export default function AdminPage() {
 
   const monthlyData = rekap.map(item => ({
     name: dayjs(item.bulan).format("MMM"),
-    penerima: item.totalLayak,
+    layak: item.totalLayak,
     total: item.totalSiswa,
   }));
   const getRekap = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/hasil/rekap?year=${year}`, {
+      const response = await fetch(`https://pip-clasification-app-production.up.railway.app/hasil/rekap?year=${year}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -151,24 +151,6 @@ export default function AdminPage() {
               Selamat datang di Sistem Pendukung Keputusan Penerima Bantuan PIP
             </Typography>
           </Box>
-          <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
-            <FormControl size="small" sx={{ minWidth: 120 }}>
-              <InputLabel id="year-label">Tahun Ini</InputLabel>
-              <Select
-                labelId="year-label"
-                value={year}
-                label="Tahun Ini"
-                onChange={(e) => setYear(e.target.value)}
-              >
-                <MenuItem value="2025">2025</MenuItem>
-                <MenuItem value="2024">2024</MenuItem>
-                <MenuItem value="2023">2023</MenuItem>
-              </Select>
-            </FormControl>
-            <IconButton>
-              <CalendarTodayIcon />
-            </IconButton>
-          </Box>
         </Box>
 
         {/* Tabs */}
@@ -180,7 +162,6 @@ export default function AdminPage() {
         >
           <Tab label="Ikhtisar" value={0} />
           <Tab label="Analitik" value={1} />
-          <Tab label="Laporan" value={2} />
         </Tabs>
 
         {/* Tab Contents */}
@@ -323,10 +304,7 @@ export default function AdminPage() {
                   sx={{ p: 3, borderRadius: 2, height: 400, display: "flex", flexDirection: "column" }}
                 >
                   <Typography variant="h6" fontWeight="bold" gutterBottom>
-                    Statistik Penerima PIP
-                  </Typography>
-                  <Typography variant="body2" color="textSecondary" gutterBottom>
-                    Distribusi penerima PIP berdasarkan bulan
+                    Statistik Layak PIP
                   </Typography>
                   <Box sx={{ flexGrow: 1, width: "100%" }}>
                     <ResponsiveContainer width="100%" height="100%">
@@ -336,48 +314,13 @@ export default function AdminPage() {
                         <YAxis />
                         <Tooltip />
                         <Legend />
-                        <Line type="monotone" dataKey="penerima" stroke="#003d80" strokeWidth={2} />
+                        <Line type="monotone" dataKey="layak" stroke="#003d80" strokeWidth={2} />
                         <Line type="monotone" dataKey="total" stroke="#c00000" strokeWidth={2} />
                       </LineChart>
                     </ResponsiveContainer>
                   </Box>
                 </Paper>
               </Grid>
-              {/* <Grid item xs={12} md={5}>
-                <Paper
-                  elevation={1}
-                  sx={{ p: 3, borderRadius: 2, height: 400, display: "flex", flexDirection: "column" }}
-                >
-                  <Typography variant="h6" fontWeight="bold" gutterBottom>
-                    Distribusi Kriteria
-                  </Typography>
-                  <Typography variant="body2" color="textSecondary" gutterBottom>
-                    Persentase kriteria penerima PIP
-                  </Typography>
-                  <Box sx={{ flexGrow: 1, width: "100%" }}>
-                    <ResponsiveContainer width="100%" height="100%">
-                      <PieChart>
-                        <Pie
-                          data={criteriaData}
-                          cx="50%"
-                          cy="50%"
-                          labelLine={false}
-                          label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
-                          outerRadius={80}
-                          fill="#8884d8"
-                          dataKey="value"
-                        >
-                          {criteriaData.map((entry, index) => (
-                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                          ))}
-                        </Pie>
-                        <Tooltip formatter={(value) => [`${value}%`, "Persentase"]} />
-                        <Legend />
-                      </PieChart>
-                    </ResponsiveContainer>
-                  </Box>
-                </Paper>
-              </Grid> */}
             </Grid>
           </>
         )}
@@ -388,7 +331,7 @@ export default function AdminPage() {
               Analitik Lanjutan
             </Typography>
             <Typography variant="body2" color="textSecondary" gutterBottom>
-              Analisis mendalam tentang data penerima PIP
+              Analisis mendalam tentang data Layak PIP
             </Typography>
             <Box sx={{ height: "calc(100% - 64px)" }}>
               <ResponsiveContainer width="100%" height="100%">
@@ -398,7 +341,7 @@ export default function AdminPage() {
                   <YAxis />
                   <Tooltip />
                   <Legend />
-                  <Bar dataKey="penerima" name="Penerima PIP" fill="#003d80" />
+                  <Bar dataKey="layak" name="Layak PIP" fill="#003d80" />
                   <Bar dataKey="total" name="Total Siswa" fill="#c00000" />
                 </BarChart>
               </ResponsiveContainer>
@@ -406,68 +349,6 @@ export default function AdminPage() {
           </Paper>
         )}
 
-        {tabIndex === 2 && (
-          <Card>
-            <CardHeader>
-              <CardTitle>Laporan Bulanan</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <Grid container spacing={3}>
-                <Grid item xs={12} md={4}>
-                  <Card variant="outlined" sx={{ p: 2 }}>
-                    <Typography variant="subtitle2" fontWeight="bold" gutterBottom>
-                      Laporan November 2023
-                    </Typography>
-                    <Typography variant="h5" fontWeight="bold">
-                      91
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary" gutterBottom>
-                      Penerima PIP
-                    </Typography>
-                    <Button fullWidth variant="outlined" size="small">
-                      Lihat Detail
-                    </Button>
-                  </Card>
-                </Grid>
-                <Grid item xs={12} md={4}>
-                  <Card variant="outlined" sx={{ p: 2 }}>
-                    <Typography variant="subtitle2" fontWeight="bold" gutterBottom>
-                      Laporan Oktober 2023
-                    </Typography>
-                    <Typography variant="h5" fontWeight="bold">
-                      78
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary" gutterBottom>
-                      Penerima PIP
-                    </Typography>
-                    <Button fullWidth variant="outlined" size="small">
-                      Lihat Detail
-                    </Button>
-                  </Card>
-                </Grid>
-                <Grid item xs={12} md={4}>
-                  <Card variant="outlined" sx={{ p: 2 }}>
-                    <Typography variant="subtitle2" fontWeight="bold" gutterBottom>
-                      Laporan September 2023
-                    </Typography>
-                    <Typography variant="h5" fontWeight="bold">
-                      62
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary" gutterBottom>
-                      Penerima PIP
-                    </Typography>
-                    <Button fullWidth variant="outlined" size="small">
-                      Lihat Detail
-                    </Button>
-                  </Card>
-                </Grid>
-              </Grid>
-              <Button variant="outlined" sx={{ mt: 2 }}>
-                Lihat Semua Laporan
-              </Button>
-            </CardContent>
-          </Card>
-        )}
       </Box>
     </Box>
   );

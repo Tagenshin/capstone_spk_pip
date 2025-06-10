@@ -35,7 +35,7 @@ export default function HasilPrediksiPage() {
   
   const getResults = async () => {
     try {
-      const response = await fetch("http://localhost:5000/hasil", {
+      const response = await fetch("https://pip-clasification-app-production.up.railway.app/hasil", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -86,7 +86,7 @@ export default function HasilPrediksiPage() {
 
   const handleDelete = async (hasilId) => {
     try {
-      const response = await fetch(`http://localhost:5000/hasil/${hasilId}`, {
+      const response = await fetch(`https://pip-clasification-app-production.up.railway.app/hasil/${hasilId}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
