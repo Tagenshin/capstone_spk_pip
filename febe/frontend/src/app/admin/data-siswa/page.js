@@ -58,13 +58,11 @@ export default function DataSiswaPage() {
       });
   }, []);
 
-<<<<<<< HEAD
   const [model, setModel] = useState(null);
   const [result, setResult] = useState(null);
   useEffect(() => {
     const loadModel = async () => {
       try {
-        // Jika model sudah ada sebelumnya, buang dulu dari memory
         if (model) {
           model.dispose();
         }
@@ -77,12 +75,8 @@ export default function DataSiswaPage() {
       }
     };
 
-    loadModel(); // hanya dipanggil sekali saat mount
+    loadModel();
   }, []);
-=======
-const [model, setModel] = useState(null);
-const [result, setResult] = useState(null);
->>>>>>> c531e4e9551baabbc46ad6e8aa4bd0f29d6d6625
 
   const [searchTerm, setSearchTerm] = useState("");
   const [filterPenghasilan, setFilterPenghasilan] = useState("all");
@@ -167,7 +161,6 @@ const [result, setResult] = useState(null);
         }),
       });
 
-<<<<<<< HEAD
       const data = await response.json();
       console.log("Sukses simpan:", data);
       alert("Seluruh hasil prediksi berhasil disimpan.");
@@ -175,44 +168,11 @@ const [result, setResult] = useState(null);
       console.log("Gagal menyimpan:", error);
       alert("Terjadi kesalahan saat menyimpan.");
     }
-=======
-    const data = await response.json();
-    console.log("Sukses simpan:", data);
-    alert("Seluruh hasil prediksi berhasil disimpan.");
-  } catch (error) {
-    console.log("Gagal menyimpan:", error);
-    alert("Terjadi kesalahan saat menyimpan.");
-  }
-};
-
-const handleDoPredict = async () => {
-  const tf = await import('@tensorflow/tfjs');
-  const model = await tf.loadLayersModel('/model/model.json');
-  setResult(null);
-  setPredictedStudents([]); // reset
-
-  if (selectedIds.size === 0) {
-    alert("Pilih siswa terlebih dahulu untuk prediksi.");
-    return;
-  }
-
-  if (!model) {
-    alert("Model belum siap!");
-    return;
-  }
-
-  const mapToNumber = (value, map) => map[value] ?? 0;
-
-  const pekerjaanOrtuMap = {
-    "Wirausaha": 4,
-    "Lainnya": 1,
-    "Peternak": 3,
-    "Petani": 2,
-    "Buruh": 0,
->>>>>>> c531e4e9551baabbc46ad6e8aa4bd0f29d6d6625
   };
 
   const handleDoPredict = async () => {
+    const tf = await import('@tensorflow/tfjs');
+    const model = await tf.loadLayersModel('/model/model.json');
     setResult(null);
     setPredictedStudents([]); // reset
 
@@ -372,9 +332,7 @@ const handleDoPredict = async () => {
           >
             Tambah Siswa
           </Button>
-<<<<<<< HEAD
 
-          {/* Pindahkan tombol prediksi ke luar aksi menu */}
           <Button
             variant="contained"
             startIcon={<PlaylistAddCheck />}
@@ -383,12 +341,6 @@ const handleDoPredict = async () => {
           >
             Prediksi
           </Button>
-=======
-          <MuiMenuItem onClick={togglePredictMode}>
-                            <PlaylistAddCheck fontSize="small" sx={{ mr: 1 }} />
-                            Predict
-                          </MuiMenuItem>
->>>>>>> c531e4e9551baabbc46ad6e8aa4bd0f29d6d6625
         </Box>
 
         <Box
@@ -407,63 +359,11 @@ const handleDoPredict = async () => {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             InputProps={{
-              startAdornment: (
-                <Search sx={{ mr: 1, color: "text.secondary" }} />
-              ),
+              startAdornment: <Search sx={{ mr: 1, color: "text.secondary" }} />,
             }}
             sx={{ minWidth: 200 }}
             disabled={predictMode}
           />
-<<<<<<< HEAD
-          <FormControl size="small" sx={{ minWidth: 150 }}>
-            <InputLabel id="filter-penghasilan-label">Semua Penghasilan</InputLabel>
-            <Select
-              labelId="filter-penghasilan-label"
-              value={filterPenghasilan}
-              label="Semua Penghasilan"
-              onChange={(e) => setFilterPenghasilan(e.target.value)}
-              disabled={predictMode}
-            >
-              <MenuItem value="all">Semua Penghasilan</MenuItem>
-              <MenuItem value="0">Rp 0 - 1,500,000</MenuItem>
-              <MenuItem value="1">Rp 1,500,001 - 3,000,000</MenuItem>
-              <MenuItem value="2">Rp 3,000,001+</MenuItem>
-            </Select>
-          </FormControl>
-          <FormControl size="small" sx={{ minWidth: 150 }}>
-            <InputLabel id="filter-transportasi-label">Alat Transportasi</InputLabel>
-            <Select
-              labelId="filter-transportasi-label"
-              value={filterTransportasi}
-              label="Alat Transportasi"
-              onChange={(e) => setFilterTransportasi(e.target.value)}
-              disabled={predictMode}
-            >
-              <MenuItem value="all">Semua</MenuItem>
-              <MenuItem value="Jalan Kaki">Jalan Kaki</MenuItem>
-              <MenuItem value="Sepeda Motor">Sepeda Motor</MenuItem>
-              <MenuItem value="Lainnya">Lainnya</MenuItem>
-            </Select>
-          </FormControl>
-          <FormControl size="small" sx={{ minWidth: 150 }}>
-            <InputLabel id="filter-pekerjaanOrtu-label">Pekerjaan Orang Tua</InputLabel>
-            <Select
-              labelId="filter-pekerjaanOrtu-label"
-              value={filterPekerjaanOrtu}
-              label="Pekerjaan Orang Tua"
-              onChange={(e) => setFilterPekerjaanOrtu(e.target.value)}
-              disabled={predictMode}
-            >
-              <MenuItem value="all">Semua</MenuItem>
-              <MenuItem value="Wirausaha">Wirausaha</MenuItem>
-              <MenuItem value="Peternak">Peternak</MenuItem>
-              <MenuItem value="Petani">Petani</MenuItem>
-              <MenuItem value="Buruh">Buruh</MenuItem>
-              <MenuItem value="Lainnya">Lainnya</MenuItem>
-            </Select>
-          </FormControl>
-=======
->>>>>>> c531e4e9551baabbc46ad6e8aa4bd0f29d6d6625
         </Box>
 
         <TableContainer
@@ -535,7 +435,6 @@ const handleDoPredict = async () => {
                   <TableCell sx={{ textAlign: "center" }}>{student.statusKIP}</TableCell>
                   <TableCell sx={{ textAlign: "center" }}>{student.statusPKH}</TableCell>
                   <TableCell sx={{ textAlign: "center" }}>
-
                     <IconButton
                       size="small"
                       aria-label="menu aksi"
@@ -561,17 +460,11 @@ const handleDoPredict = async () => {
                         Edit
                       </MuiMenuItem>
 
-<<<<<<< HEAD
                       <MuiMenuItem onClick={() => handleDeleteSiswa(student.id)}>
                         <Delete fontSize="small" sx={{ mr: 1 }} />
                         Delete
                       </MuiMenuItem>
                     </Menu>
-=======
-                        </Menu>
-                      </>
-                    )}
->>>>>>> c531e4e9551baabbc46ad6e8aa4bd0f29d6d6625
                   </TableCell>
                 </TableRow>
               ))}
