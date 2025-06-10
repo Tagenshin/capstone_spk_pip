@@ -40,7 +40,7 @@ Berikut ini adalah link [Dataset PIP](https://drive.google.com/drive/folders/1iA
    - Di Jupyter Notebook, Anda dapat menekan Shift + Enter untuk menjalankan sel satu per satu, atau pilih "Run All" untuk menjalankan semua sel dalam notebook.
    Untuk melatih model ulang pada berkas .py, Anda bisa menjalankan langkah-langkah berikut:
    - Untuk menjalankan berkas .py, buka terminal atau command prompt, lalu navigasikan ke direktori tempat berkas .py berada dan jalankan dengan perintah:
-     ```bash
+   ```bash
    python nama_berkas.py
    ```
 
