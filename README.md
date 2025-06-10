@@ -36,14 +36,6 @@ Berikut ini adalah link [Dataset PIP](.............)
    pip install -r requirements.txt
    ```
 
-3. **Pastikan TensorFlow, scikit-learn, dan Streamlit terinstall.**
-   ```bash
-   pip install tensorflow scikit-learn streamlit
-   ```
-
-4. **Persiapkan model ANN:**
-   Pastikan Anda memiliki model yang sudah dilatih dalam format `model_ann.h5`. Model ini digunakan untuk memprediksi kelayakan penerima bantuan.
-
 ## **Cara Menggunakan Aplikasi**
 
 1. **Menjalankan Aplikasi:**
@@ -63,27 +55,6 @@ Berikut ini adalah link [Dataset PIP](.............)
 4. **Unduh Hasil:**
    - Setelah prediksi selesai, Anda dapat mengunduh hasilnya dalam format Excel.
 
-## **Struktur File**
-- `app.py`: Kode aplikasi Streamlit untuk antarmuka pengguna.
-- `model_ann.h5`: Model yang telah dilatih.
-- `requirements.txt`: Daftar dependensi Python yang dibutuhkan.
-- `data_test/`: Folder untuk menyimpan file data uji dan data aktual.
-
-## **Membuat Model (jika ingin melatih ulang)**
-
-1. **Persiapkan Data:**
-   - Gunakan dataset yang sesuai dengan fitur yang dibutuhkan seperti `Penghasilan Orang Tua`, `Pekerjaan Orang Tua`, `Jumlah Tanggungan`, dll.
-
-2. **Pelatihan Model:**
-   - Gunakan kode yang ada pada notebook untuk mempersiapkan data dan melatih model dengan menggunakan **ANN**.
-   - Simpan model yang telah dilatih dalam format H5.
-
-3. **Evaluasi Model:**
-   - Lakukan evaluasi dengan menggunakan data uji dan tampilkan hasil menggunakan **Confusion Matrix** dan **Classification Report**.
-
-## **Catatan**
-- Aplikasi ini menggunakan **TensorFlow** untuk model Deep Learning dan **Streamlit** untuk antarmuka pengguna.
-- Pastikan file input yang diunggah memiliki format yang sesuai agar dapat diproses dengan benar oleh aplikasi.
 
 # Learning Path Front End Back End Developer
 ....................................
