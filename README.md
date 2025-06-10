@@ -1,13 +1,12 @@
 
-# **Prediksi Status Kelayakan Siswa - Program Indonesia Pintar (PIP)**
+# **Sistem Pendukung Keputusan dalam Menentukan Penerima Program Indonesia Pintar dengan Teknologi Deep Learning**
 
 ## **Deskripsi**
 Aplikasi ini mengimplementasikan sistem berbasis **Deep Learning** untuk memprediksi status kelayakan penerima bantuan dari Program Indonesia Pintar (PIP). Model menggunakan **Artificial Neural Network (ANN)** untuk memproses data sosial dan ekonomi guna mengklasifikasikan kelayakan penerima bantuan secara lebih akurat, cepat, dan objektif.
 
-## **Fitur**
-- **Prediksi menggunakan file Excel atau CSV**: Pengguna dapat mengunggah file untuk memprediksi status kelayakan calon penerima bantuan.
-- **Prediksi Real-time**: Pengguna dapat memasukkan data secara manual melalui form yang disediakan, dan aplikasi akan memberikan hasil prediksi kelayakan secara langsung.
-- **Unduh Hasil Prediksi**: Pengguna dapat mengunduh hasil prediksi dalam format Excel setelah proses selesai.
+# Learning Path Machine Learning
+## **Dataset**
+Berikut ini adalah link [Dataset PIP](.............)
 
 ## **Struktur Proyek**
 - `app.py`: Aplikasi Streamlit untuk prediksi kelayakan.
@@ -76,3 +75,8 @@ Aplikasi ini mengimplementasikan sistem berbasis **Deep Learning** untuk mempred
 ## **Catatan**
 - Aplikasi ini menggunakan **TensorFlow** untuk model Deep Learning dan **Streamlit** untuk antarmuka pengguna.
 - Pastikan file input yang diunggah memiliki format yang sesuai agar dapat diproses dengan benar oleh aplikasi.
+
+# Learning Path Front End Back End Developer
+....................................
+
+................
