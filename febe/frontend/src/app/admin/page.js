@@ -71,7 +71,7 @@ export default function AdminPage() {
   }));
   const getRekap = async () => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_URL}/hasil/rekap`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/hasil/rekap`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

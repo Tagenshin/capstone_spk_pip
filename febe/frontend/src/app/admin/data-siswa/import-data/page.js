@@ -49,7 +49,7 @@ export default function ImportStudentsPage() {
       console.log(formData);
       
 
-      const response = await fetch("https://pip-clasification-app-production.up.railway.app/siswa/import", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/siswa/import`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,

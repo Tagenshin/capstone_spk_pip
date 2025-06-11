@@ -56,13 +56,14 @@ export default function AdminNavbar({ isOpen, toggleSidebar }) {
     setLoading(true);
     const token = localStorage.getItem("token");
     try {
-      const response = await fetch("http://localhost:5000/auth/logout", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/logout`, {
         Authorization: `Bearer ${token}`,
         method: "POST",
       })
 
       if (response.ok) {
         localStorage.removeItem("token");
+        Cookies.remove('token');
         router.push("/login");
       }
       setLoading(false);

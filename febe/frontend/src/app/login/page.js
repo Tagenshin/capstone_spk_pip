@@ -30,7 +30,7 @@ export default function Login() {
     setError("");
     
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_URL}/auth/login`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -64,7 +64,6 @@ export default function Login() {
       router.push("/admin");
     } catch (err) {
       setError(err.message);
-      console.log(err.message);
     } finally {
       setLoading(false);
     }

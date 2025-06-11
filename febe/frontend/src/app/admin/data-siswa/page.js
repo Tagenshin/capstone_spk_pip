@@ -1,7 +1,8 @@
 "use client";
-import * as tf from "@tensorflow/tfjs";
+
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import {
   Box,
   Typography,
@@ -47,12 +48,32 @@ export default function DataSiswaPage() {
   const router = useRouter();
   const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [tfLoaded, setTfLoaded] = useState(false);
+  const [tf, setTf] = useState(null);
+
+  // Load TensorFlow.js only on client side
+  useEffect(() => {
+    const loadTensorFlow = async () => {
+      if (typeof window !== 'undefined') {
+        try {
+          const tensorflowModule = await import('@tensorflow/tfjs');
+          setTf(tensorflowModule);
+          setTfLoaded(true);
+        } catch (error) {
+          console.error('Failed to load TensorFlow.js:', error);
+        }
+      }
+    };
+
+    loadTensorFlow();
+  }, []);
 
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_LOCAL_URL}/siswa`, {
+    const token = localStorage.getItem("token");
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/siswa`, {
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        Authorization: `Bearer ${token}`,
       },
     })
       .then((res) => res.json())
@@ -61,27 +82,7 @@ export default function DataSiswaPage() {
       });
   }, []);
 
-  const [model, setModel] = useState(null);
   const [result, setResult] = useState(null);
-  useEffect(() => {
-    const loadModel = async () => {
-      try {
-        // Jika model sudah ada sebelumnya, buang dulu dari memory
-        if (model) {
-          model.dispose();
-        }
-
-        const loadedModel = await tf.loadLayersModel("/model/model.json");
-        setModel(loadedModel);
-        loadedModel.summary();
-      } catch (error) {
-        console.error("❌ Gagal memuat model:", error);
-      }
-    };
-
-    loadModel(); // hanya dipanggil sekali saat mount
-  }, []);
-
   const [searchTerm, setSearchTerm] = useState("");
   const [filterTransportasi, setFilterTransportasi] = useState("all");
   const [filterPekerjaanOrtu, setFilterPekerjaanOrtu] = useState("all");
@@ -124,6 +125,16 @@ export default function DataSiswaPage() {
   const [predictedStudents, setPredictedStudents] = useState([]);
 
   const togglePredictMode = () => {
+    if (!tfLoaded) {
+      Swal.fire({
+        icon: "error",
+        title: "TensorFlow.js belum dimuat!",
+        text: "Silakan tunggu beberapa saat dan coba lagi.",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+      return;
+    }
     setPredictMode(true);
     setSelectedIds(new Set()); // Reset selection on start predict mode
     handleMenuClose();
@@ -148,7 +159,7 @@ export default function DataSiswaPage() {
 
   const handleSaveResults = async (predictedStudents) => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_URL}/hasil`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/hasil`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -182,71 +193,101 @@ export default function DataSiswaPage() {
   };
 
   const handleDoPredict = async () => {
+    if (!tf || !tfLoaded) {
+      Swal.fire({
+        icon: "error",
+        title: "TensorFlow.js belum dimuat!",
+        text: "Silakan tunggu beberapa saat dan coba lagi.",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+      return;
+    }
+
     setResult(null);
     setPredictedStudents([]); // reset
     setLoading(true);
 
     if (selectedIds.size === 0) {
-      alert("Pilih siswa terlebih dahulu untuk prediksi.");
-      return;
-    }
-
-    if (!model) {
-      alert("Model belum siap!");
-      return;
-    }
-
-    const mapToNumber = (value, map) => map[value] ?? 0;
-
-    const pekerjaanOrtuMap = {
-      "Wirausaha": 4,
-      "Lainnya": 1,
-      "Peternak": 3,
-      "Petani": 2,
-      "Buruh": 0,
-    };
-
-    const transportasiMap = {
-      "Jalan Kaki": 0,
-      "Sepeda Motor": 2,
-      "Lainnya": 1
-    };
-
-    const yaTidakMap = {
-      "Ya": 1,
-      "Tidak": 0,
-    };
-
-    const tanggunganMap = {
-      "1": 0,
-      "Lebih dari 3": 3,
-      "2": 1,
-      "3": 2,
-    };
-
-    const penghasilanMap = (penghasilan) => {
-      if (penghasilan <= 1500000) return 0;
-      if (penghasilan <= 3000000) return 1;
-      return 2;
-    };
-
-    const selectedStudents = students.filter((student) => selectedIds.has(student.id));
-
-    const selectedData = selectedStudents.map((student) => [
-      mapToNumber(student.alatTransportasi, transportasiMap),
-      mapToNumber(student.pekerjaanOrtu, pekerjaanOrtuMap),
-      Number(penghasilanMap(student.penghasilan)),
-      mapToNumber(student.tanggungan, tanggunganMap),
-      mapToNumber(student.statusKIP, yaTidakMap),
-      mapToNumber(student.statusPKH, yaTidakMap),
-    ]);
-
-    if (selectedData.length === 0) {
-      alert("Data siswa tidak ditemukan.");
+      Swal.fire({
+        icon: "error",
+        title: "Silahkan pilih siswa terlebih dahulu!",
+        showConfirmButton: false,
+        timer: 1500,
+      })
+      setLoading(false);
       return;
     }
 
     try {
+      const model = await tf.loadLayersModel('/model/model.json');
+      
+      if (!model) {
+        Swal.fire({
+          icon: "error",
+          title: "Model tidak dapat dimuat!",
+          showConfirmButton: false,
+          timer: 1500,
+        })
+        setLoading(false);
+        return;
+      }
+
+      const mapToNumber = (value, map) => map[value] ?? 0;
+
+      const pekerjaanOrtuMap = {
+        "Wirausaha": 4,
+        "Lainnya": 1,
+        "Peternak": 3,
+        "Petani": 2,
+        "Buruh": 0,
+      };
+
+      const transportasiMap = {
+        "Jalan Kaki": 0,
+        "Sepeda Motor": 2,
+        "Lainnya": 1
+      };
+
+      const yaTidakMap = {
+        "Ya": 1,
+        "Tidak": 0,
+      };
+
+      const tanggunganMap = {
+        "1": 0,
+        "Lebih dari 3": 3,
+        "2": 1,
+        "3": 2,
+      };
+
+      const penghasilanMap = (penghasilan) => {
+        if (penghasilan <= 1500000) return 0;
+        if (penghasilan <= 3000000) return 1;
+        return 2;
+      };
+
+      const selectedStudents = students.filter((student) => selectedIds.has(student.id));
+
+      const selectedData = selectedStudents.map((student) => [
+        mapToNumber(student.alatTransportasi, transportasiMap),
+        mapToNumber(student.pekerjaanOrtu, pekerjaanOrtuMap),
+        Number(penghasilanMap(student.penghasilan)),
+        mapToNumber(student.tanggungan, tanggunganMap),
+        mapToNumber(student.statusKIP, yaTidakMap),
+        mapToNumber(student.statusPKH, yaTidakMap),
+      ]);
+
+      if (selectedData.length === 0) {
+        Swal.fire({
+          icon: "error",
+          title: "Gagal melakukan prediksi",
+          text: "Tidak ada data yang dipilih.",
+        })
+        setLoading(false);
+        return;
+      }
+
       const inputTensor = tf.tensor2d(selectedData);
       const prediction = model.predict(inputTensor);
       const values = await prediction.data();
@@ -264,6 +305,7 @@ export default function DataSiswaPage() {
       await handleSaveResults(resultWithStudent);
       setLoading(false);
     } catch (error) {
+      console.error('Prediction error:', error);
       setLoading(false);
       Swal.fire({
         icon: "error",
@@ -279,7 +321,7 @@ export default function DataSiswaPage() {
 
   const handleDeleteSiswa = (id) => {
     try {
-      fetch(`${process.env.NEXT_PUBLIC_LOCAL_URL}/siswa/${id}`, {
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/siswa/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -287,14 +329,30 @@ export default function DataSiswaPage() {
         },
       }).then(response => {
         if (response.ok) {
-          alert("Data siswa berhasil dihapus.");
-          window.location.reload();
+          Swal.fire({
+            icon: "success",
+            title: "Data siswa berhasil dihapus!",
+            showConfirmButton: false,
+            timer: 1500,
+          })
+          setStudents((prev) => prev.filter((s) => s.id !== id));
         } else {
-          alert("Gagal menghapus data siswa.");
+          Swal.fire({
+            icon: "error",
+            title: "Gagal menghapus data!",
+            showConfirmButton: false,
+            timer: 1500,
+          })
         }
       });
     } catch (err) {
-      console.log(err);
+      console.log(err.message);
+      Swal.fire({
+        icon: "error",
+        title: "Gagal menghapus data!",
+        showConfirmButton: false,
+        timer: 1500,
+      })
     }
   };
 
@@ -352,9 +410,9 @@ export default function DataSiswaPage() {
             variant="contained"
             startIcon={<PlaylistAddCheck />}
             onClick={togglePredictMode}
-            disabled={predictMode}
+            disabled={predictMode || !tfLoaded}
           >
-            {loading ? "Loading..." : "Cek Kelayakan"}
+            {loading ? "Loading..." : tfLoaded ? "Cek Kelayakan" : "Memuat TensorFlow..."}
           </Button>
         </Box>
 
@@ -560,6 +618,7 @@ export default function DataSiswaPage() {
               variant="contained"
               startIcon={<PlaylistAddCheck />}
               onClick={handleDoPredict}
+              disabled={!tfLoaded}
             >
               {loading ? "Memproses..." : "Cek Kelayakan"}
             </Button>

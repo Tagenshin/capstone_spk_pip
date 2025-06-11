@@ -80,7 +80,7 @@ export default function PengaturanUmumPage() {
         ...formData,
       };
 
-      const res = await fetch("https://pip-clasification-app-production.up.railway.app/user", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

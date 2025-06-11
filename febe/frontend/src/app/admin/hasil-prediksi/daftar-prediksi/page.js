@@ -21,7 +21,6 @@ import {
 } from "@mui/material";
 import { Download, Delete } from "lucide-react"; // Hanya menggunakan ikon Download dan Delete
 import AdminNavbar from "../../../components/AdminNavbar";
-import html2pdf from "html2pdf.js"; // Import html2pdf.js
 import Swal from "sweetalert2";
 
 export default function HasilPrediksiPage() {
@@ -38,7 +37,7 @@ export default function HasilPrediksiPage() {
   // Mendapatkan hasil prediksi
   const getResults = async () => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_URL}/hasil`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/hasil`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -86,7 +85,7 @@ export default function HasilPrediksiPage() {
   const handleDelete = async (hasilId) => {
     setLoadingDelete(hasilId);
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_URL}/hasil/${hasilId}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/hasil/${hasilId}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -110,24 +109,29 @@ export default function HasilPrediksiPage() {
         title: "Gagal menghapus data!",
         showConfirmButton: false,
         timer: 1500,
-      })  
+      })
     } finally {
       setLoadingDelete(null);
     }
   };
 
   // Fungsi untuk mendownload hasil prediksi dalam format PDF menggunakan html2pdf.js
-  const handleDownloadPDF = () => {
-    setLoading(true);
-    const element = document.getElementById("pdf-content"); // Ambil elemen yang akan dicetak
-    const options = {
-      filename: 'hasil_prediksi.pdf', // Nama file PDF yang akan diunduh
-      html2canvas: { scale: 2 }, // Mengatur kualitas rendering
-      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' } // Konfigurasi PDF
-    };
-    html2pdf().from(element).set(options).save(); // Menggunakan html2pdf untuk mengonversi HTML menjadi PDF
-    setLoading(false);
+  const handleDownloadPDF = async () => {
+  setLoading(true);
+  const element = document.getElementById("pdf-content");
+  const html2pdf = (await import("html2pdf.js")).default;
+
+  const options = {
+    filename: "hasil_prediksi.pdf",
+    html2canvas: { scale: 2 },
+    jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
   };
+
+  html2pdf().from(element).set(options).save();
+  setLoading(false);
+};
+
+
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -192,7 +196,7 @@ export default function HasilPrediksiPage() {
             color="secondary"
             onClick={handleDownloadPDF}
           >
-            {loading? "Loading..." : "Unduh PDF"}
+            {loading ? "Loading..." : "Unduh PDF"}
           </Button>
         </Box>
 
