@@ -5,7 +5,7 @@ const SettingUser = async (request, h) => {
     try {
         const user = request.auth.credentials;
         const payload = request.payload;
-
+        
         const siswa = await UpdateUser(user.id, payload);
 
         return h.response({ message: 'Data berhasil disimpan', data: siswa }).code(201);

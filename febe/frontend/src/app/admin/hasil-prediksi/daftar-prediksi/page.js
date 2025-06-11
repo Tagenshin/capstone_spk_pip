@@ -29,6 +29,7 @@ export default function HasilPrediksiPage() {
   const [searchKeyword, setSearchKeyword] = useState("");
   const [filterStatus, setFilterStatus] = useState("");
   const [filterDate, setFilterDate] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const [results, setResults] = useState([]);
 
@@ -238,7 +239,7 @@ export default function HasilPrediksiPage() {
                         startIcon={<Delete />}
                         onClick={() => handleDelete(row.id)}
                       >
-                        Hapus
+                        {loading ? "Menghapus..." : "Hapus"}
                       </Button>
                     </TableCell>
                   </TableRow>

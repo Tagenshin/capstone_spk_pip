@@ -39,12 +39,14 @@ import {
 
 import AdminNavbar from "../../components/AdminNavbar";
 import { useRouter } from "next/navigation";
+import Swal from "sweetalert2";
 
 export default function DataSiswaPage() {
   const theme = useTheme();
   const isSmUp = useMediaQuery(theme.breakpoints.up("sm"));
   const router = useRouter();
   const [students, setStudents] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     fetch("https://pip-clasification-app-production.up.railway.app/siswa", {
@@ -81,7 +83,6 @@ export default function DataSiswaPage() {
   }, []);
 
   const [searchTerm, setSearchTerm] = useState("");
-  const [filterPenghasilan, setFilterPenghasilan] = useState("all");
   const [filterTransportasi, setFilterTransportasi] = useState("all");
   const [filterPekerjaanOrtu, setFilterPekerjaanOrtu] = useState("all");
   const [page, setPage] = useState(0);
@@ -94,7 +95,6 @@ export default function DataSiswaPage() {
   const filteredStudents = students.filter((s) => {
     return (
       (s.namaSiswa.toLowerCase().includes(searchTerm.toLowerCase())) &&
-      (filterPenghasilan === "all" || s.penghasilan === filterPenghasilan) &&
       (filterTransportasi === "all" || s.alatTransportasi === filterTransportasi) &&
       (filterPekerjaanOrtu === "all" || s.pekerjaanOrtu === filterPekerjaanOrtu)
     );
@@ -165,16 +165,27 @@ export default function DataSiswaPage() {
 
       const data = await response.json();
       console.log("Sukses simpan:", data);
-      alert("Seluruh hasil prediksi berhasil disimpan.");
+      Swal.fire({
+        icon: "success",
+        title: "Hasil prediksi berhasil disimpan!",
+        showConfirmButton: false,
+        timer: 1500,
+      })
     } catch (error) {
       console.log("Gagal menyimpan:", error);
-      alert("Terjadi kesalahan saat menyimpan.");
+      Swal.fire({
+        icon: "error",
+        title: "Gagal menyimpan hasil prediksi!",
+        showConfirmButton: false,
+        timer: 1500,
+      })
     }
   };
 
   const handleDoPredict = async () => {
     setResult(null);
     setPredictedStudents([]); // reset
+    setLoading(true);
 
     if (selectedIds.size === 0) {
       alert("Pilih siswa terlebih dahulu untuk prediksi.");
@@ -252,10 +263,16 @@ export default function DataSiswaPage() {
 
       setPredictedStudents(resultWithStudent);
       await handleSaveResults(resultWithStudent);
+      setLoading(false);
       console.log("Hasil prediksi:", resultWithStudent);
     } catch (error) {
       console.log("Gagal melakukan prediksi:", error);
-      alert("Terjadi kesalahan saat memproses prediksi.");
+      setLoading(false);
+      Swal.fire({
+        icon: "error",
+        title: "Gagal melakukan prediksi",
+        text: "Terjadi kesalahan saat melakukan prediksi.",
+      })
     }
   };
 
@@ -340,7 +357,7 @@ export default function DataSiswaPage() {
             onClick={togglePredictMode}
             disabled={predictMode}
           >
-            Prediksi
+            {loading ? "Loading..." : "Prediksi"}
           </Button>
         </Box>
 
@@ -367,21 +384,6 @@ export default function DataSiswaPage() {
             sx={{ minWidth: 200 }}
             disabled={predictMode}
           />
-          <FormControl size="small" sx={{ minWidth: 150 }}>
-            <InputLabel id="filter-penghasilan-label">Semua Penghasilan</InputLabel>
-            <Select
-              labelId="filter-penghasilan-label"
-              value={filterPenghasilan}
-              label="Semua Penghasilan"
-              onChange={(e) => setFilterPenghasilan(e.target.value)}
-              disabled={predictMode}
-            >
-              <MenuItem value="all">Semua Penghasilan</MenuItem>
-              <MenuItem value="0">Rp 0 - 1,500,000</MenuItem>
-              <MenuItem value="1">Rp 1,500,001 - 3,000,000</MenuItem>
-              <MenuItem value="2">Rp 3,000,001+</MenuItem>
-            </Select>
-          </FormControl>
           <FormControl size="small" sx={{ minWidth: 150 }}>
             <InputLabel id="filter-transportasi-label">Alat Transportasi</InputLabel>
             <Select

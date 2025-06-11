@@ -316,7 +316,7 @@ export default function StudentInputPage() {
                 Batal
               </Button>
               <Button type="submit" variant="contained" startIcon={<Save />}>
-                {id ? "Update Data" : "Simpan Data"}
+                {loading ? "Loading..." : "Simpan Data"}
               </Button>
             </Box>
           </form>

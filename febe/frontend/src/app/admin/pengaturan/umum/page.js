@@ -16,10 +16,11 @@ import {
 } from "@mui/material";
 import { Upload } from "lucide-react";
 import AdminNavbar from "../../../components/AdminNavbar";
+import Swal from "sweetalert2";
 
 export default function PengaturanUmumPage() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [notifEmail, setNotifEmail] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [logoFile, setLogoFile] = useState(null);
   const [formData, setFormData] = useState({
     namaSekolah: "",
@@ -72,11 +73,11 @@ export default function PengaturanUmumPage() {
 
   const handleSubmit = async () => {
     try {
+      setLoading(true);
       const token = localStorage.getItem("token");
 
       const body = {
         ...formData,
-        ...(logoFile ? { logo: logoFile.name } : {}),
       };
 
       const res = await fetch("https://pip-clasification-app-production.up.railway.app/user", {
@@ -91,16 +92,33 @@ export default function PengaturanUmumPage() {
       const result = await res.json();
 
       if (!res.ok) {
-        console.error("Server Error:", result);
-        alert(`Gagal menyimpan: ${result.message}`);
+        console.log("Server Error:", result);
+        setLoading(false);
+        Swal.fire({
+          icon: "error",
+          title: "Gagal menyimpan pengaturan!",
+          showConfirmButton: false,
+          timer: 1500,
+        })
         return;
       }
 
-      alert("Pengaturan berhasil diperbarui!");
-      console.log(result);
+      setLoading(false);
+      Swal.fire({
+        icon: "success",
+        title: "Pengaturan berhasil disimpan!",
+        showConfirmButton: false,
+        timer: 1500,
+      })
     } catch (err) {
-      console.error("Gagal menyimpan:", err);
-      alert("Terjadi kesalahan saat menyimpan data.");
+      console.log(err);
+      setLoading(false);
+      Swal.fire({
+        icon: "error",
+        title: "Gagal menyimpan pengaturan!",
+        showConfirmButton: false,
+        timer: 1500,
+      })
     }
   };
 
@@ -191,7 +209,7 @@ export default function PengaturanUmumPage() {
           </CardContent>
           <Box sx={{ p: 3, display: "flex", justifyContent: "flex-end" }}>
             <Button variant="contained" size="large" onClick={handleSubmit}>
-              Simpan Perubahan
+              {loading ? "Menyimpan..." : "Simpan"}
             </Button>
           </Box>
         </Card>

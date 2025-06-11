@@ -203,7 +203,7 @@ export default function Register() {
               type="submit"
               className="w-full py-2 rounded-md text-white font-semibold bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 transition"
             >
-              Daftar
+              {loading ? "Loading..." : "Daftar"}
             </button>
           </form>
 
