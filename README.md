@@ -58,7 +58,7 @@ Berikut ini adalah link [Dataset PIP](https://drive.google.com/drive/folders/1iA
    - Aplikasi akan memproses dan memberikan hasil prediksi berdasarkan model yang dilatih.
    - Contoh file Excel :
    ![image](https://github.com/user-attachments/assets/e645328b-579f-4dbb-8189-d784ebd962e7)
-
+   - note** pastikan nama kolom nya sama seperti contoh diatas. 
 
 3. **Prediksi Real-time:**
    - Isi form untuk memasukkan data secara manual.
