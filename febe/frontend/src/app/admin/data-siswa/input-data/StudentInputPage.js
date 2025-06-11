@@ -43,7 +43,7 @@ export default function StudentInputPage() {
   useEffect(() => {
     if (id) {
       setLoading(true);
-      fetch(`https://pip-clasification-app-production.up.railway.app/siswa/${id}`, {
+      fetch(`${process.env.NEXT_PUBLIC_LOCAL_URL}/siswa/${id}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -111,7 +111,7 @@ export default function StudentInputPage() {
     setLoading(true);
     try {
       const response = await fetch(
-        "https://pip-clasification-app-production.up.railway.app/siswa",
+        `${process.env.NEXT_PUBLIC_LOCAL_URL}/siswa`,
         {
           method: "POST",
           headers: {
@@ -148,7 +148,7 @@ export default function StudentInputPage() {
     setLoading(true);
     try {
       const response = await fetch(
-        `https://pip-clasification-app-production.up.railway.app/siswa/${id}`,
+        `${process.env.NEXT_PUBLIC_LOCAL_URL}/siswa/${id}`,
         {
           method: "PUT",
           headers: {

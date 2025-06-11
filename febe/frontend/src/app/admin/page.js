@@ -62,8 +62,6 @@ export default function AdminPage() {
   const toggleSidebar = () => setSidebarOpen((prev) => !prev);
 
   const [tabIndex, setTabIndex] = useState(0);
-  const [year, setYear] = useState("2025");
-
   const [rekap, setRekap] = useState([]);
 
   const monthlyData = rekap.map(item => ({
@@ -73,7 +71,7 @@ export default function AdminPage() {
   }));
   const getRekap = async () => {
     try {
-      const response = await fetch(`https://pip-clasification-app-production.up.railway.app/hasil/rekap?year=${year}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_URL}/hasil/rekap`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -93,7 +91,7 @@ export default function AdminPage() {
 
   useEffect(() => {
     getRekap();
-  }, [year]);
+  }, []);
 
   const bulanIni = dayjs(); 
   const bulanLalu = dayjs().subtract(1, "month");
@@ -183,7 +181,7 @@ export default function AdminPage() {
                   <PeopleIcon fontSize="large" color="action" />
                   <Box>
                     <Typography variant="subtitle2" fontWeight="bold">
-                      Total Siswa
+                      Total Siswa yang Sudah Dicek 
                     </Typography>
                     <Typography variant="h5" fontWeight="bold">
                       {totalSiswaThisMonth}

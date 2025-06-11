@@ -22,6 +22,7 @@ import {
 import { Download, Delete } from "lucide-react"; // Hanya menggunakan ikon Download dan Delete
 import AdminNavbar from "../../../components/AdminNavbar";
 import html2pdf from "html2pdf.js"; // Import html2pdf.js
+import Swal from "sweetalert2";
 
 export default function HasilPrediksiPage() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -30,13 +31,14 @@ export default function HasilPrediksiPage() {
   const [filterStatus, setFilterStatus] = useState("");
   const [filterDate, setFilterDate] = useState("");
   const [loading, setLoading] = useState(false);
+  const [loadingDelete, setLoadingDelete] = useState(null);
 
   const [results, setResults] = useState([]);
 
   // Mendapatkan hasil prediksi
   const getResults = async () => {
     try {
-      const response = await fetch("https://pip-clasification-app-production.up.railway.app/hasil", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_URL}/hasil`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -82,8 +84,9 @@ export default function HasilPrediksiPage() {
   };
 
   const handleDelete = async (hasilId) => {
+    setLoadingDelete(hasilId);
     try {
-      const response = await fetch(`https://pip-clasification-app-production.up.railway.app/hasil/${hasilId}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_URL}/hasil/${hasilId}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -91,18 +94,31 @@ export default function HasilPrediksiPage() {
         },
       });
 
+      console.log(response);
       if (!response.ok) throw new Error("Gagal menghapus data");
       setResults(prev => prev.filter(item => item.id !== hasilId));
-
-      alert("Hasil prediksi berhasil dihapus!");
+      Swal.fire({
+        icon: "success",
+        title: "Data berhasil dihapus!",
+        showConfirmButton: false,
+        timer: 1500,
+      })
     } catch (err) {
-      console.log(err);
-      alert("Terjadi kesalahan saat menghapus data.");
+      console.log(err.message);
+      Swal.fire({
+        icon: "error",
+        title: "Gagal menghapus data!",
+        showConfirmButton: false,
+        timer: 1500,
+      })  
+    } finally {
+      setLoadingDelete(null);
     }
   };
 
   // Fungsi untuk mendownload hasil prediksi dalam format PDF menggunakan html2pdf.js
   const handleDownloadPDF = () => {
+    setLoading(true);
     const element = document.getElementById("pdf-content"); // Ambil elemen yang akan dicetak
     const options = {
       filename: 'hasil_prediksi.pdf', // Nama file PDF yang akan diunduh
@@ -110,6 +126,7 @@ export default function HasilPrediksiPage() {
       jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' } // Konfigurasi PDF
     };
     html2pdf().from(element).set(options).save(); // Menggunakan html2pdf untuk mengonversi HTML menjadi PDF
+    setLoading(false);
   };
 
   return (
@@ -175,7 +192,7 @@ export default function HasilPrediksiPage() {
             color="secondary"
             onClick={handleDownloadPDF}
           >
-            Download PDF
+            {loading? "Loading..." : "Unduh PDF"}
           </Button>
         </Box>
 
@@ -238,8 +255,9 @@ export default function HasilPrediksiPage() {
                         size="small"
                         startIcon={<Delete />}
                         onClick={() => handleDelete(row.id)}
+                        disabled={loadingDelete === row.id}
                       >
-                        {loading ? "Menghapus..." : "Hapus"}
+                        {loadingDelete === row.id ? "Menghapus..." : "Hapus"}
                       </Button>
                     </TableCell>
                   </TableRow>

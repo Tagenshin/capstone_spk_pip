@@ -34,14 +34,9 @@ const menuItems = [
     ],
   },
   {
-    label: "Hasil Prediksi",
+    label: "Hasil Kelayakan Siswa",
     icon: PresentationChartBarIcon,
-    submenu: [
-      {
-        label: "Daftar Prediksi",
-        href: "/admin/hasil-prediksi/daftar-prediksi",
-      }
-    ],
+    href: "/admin/hasil-prediksi/daftar-prediksi",
   },
   {
     label: "Pengaturan",

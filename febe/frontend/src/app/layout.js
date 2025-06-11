@@ -12,8 +12,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Sistem Pendukung Keputusan PIP",
+  title: "Sistem Pendukung Keputusan Layak PIP",
   description: "Website SPK penerima bantuan Program Indonesia Pintar berbasis Machine Learning",
+  icons: {
+    icon: "/favicon.ico",
+  }
 };
 
 export default function RootLayout({ children }) {

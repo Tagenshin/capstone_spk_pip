@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { jwtVerify } from 'jose';
 
 // Definisikan path publik
-const PUBLIC_PATHS = ['', '/login', '/register', '/images', 'favicon.ico'];
+const PUBLIC_PATHS = ['', '/login', '/register', '/images'];
 
 export async function middleware(request) {
   const { pathname } = request.nextUrl;

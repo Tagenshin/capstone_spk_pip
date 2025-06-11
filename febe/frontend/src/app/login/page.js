@@ -30,7 +30,7 @@ export default function Login() {
     setError("");
     
     try {
-      const res = await fetch("https://pip-clasification-app-production.up.railway.app/auth/login", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_URL}/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -39,6 +39,8 @@ export default function Login() {
       });
 
       const data = await res.json();
+      console.log(data);
+      
 
       if (!res.ok) {
         throw new Error(data.message || "Gagal login. Coba lagi.");
@@ -62,6 +64,7 @@ export default function Login() {
       router.push("/admin");
     } catch (err) {
       setError(err.message);
+      console.log(err.message);
     } finally {
       setLoading(false);
     }

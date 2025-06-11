@@ -49,7 +49,7 @@ export default function DataSiswaPage() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    fetch("https://pip-clasification-app-production.up.railway.app/siswa", {
+    fetch(`${process.env.NEXT_PUBLIC_LOCAL_URL}/siswa`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -148,7 +148,7 @@ export default function DataSiswaPage() {
 
   const handleSaveResults = async (predictedStudents) => {
     try {
-      const response = await fetch("https://pip-clasification-app-production.up.railway.app/hasil", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_URL}/hasil`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -164,7 +164,7 @@ export default function DataSiswaPage() {
       });
 
       const data = await response.json();
-      console.log("Sukses simpan:", data);
+      router.push('/admin/hasil-prediksi/daftar-prediksi/');
       Swal.fire({
         icon: "success",
         title: "Hasil prediksi berhasil disimpan!",
@@ -172,7 +172,6 @@ export default function DataSiswaPage() {
         timer: 1500,
       })
     } catch (error) {
-      console.log("Gagal menyimpan:", error);
       Swal.fire({
         icon: "error",
         title: "Gagal menyimpan hasil prediksi!",
@@ -264,9 +263,7 @@ export default function DataSiswaPage() {
       setPredictedStudents(resultWithStudent);
       await handleSaveResults(resultWithStudent);
       setLoading(false);
-      console.log("Hasil prediksi:", resultWithStudent);
     } catch (error) {
-      console.log("Gagal melakukan prediksi:", error);
       setLoading(false);
       Swal.fire({
         icon: "error",
@@ -282,7 +279,7 @@ export default function DataSiswaPage() {
 
   const handleDeleteSiswa = (id) => {
     try {
-      fetch(`https://pip-clasification-app-production.up.railway.app/siswa/${id}`, {
+      fetch(`${process.env.NEXT_PUBLIC_LOCAL_URL}/siswa/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -357,7 +354,7 @@ export default function DataSiswaPage() {
             onClick={togglePredictMode}
             disabled={predictMode}
           >
-            {loading ? "Loading..." : "Prediksi"}
+            {loading ? "Loading..." : "Cek Kelayakan"}
           </Button>
         </Box>
 
@@ -557,14 +554,14 @@ export default function DataSiswaPage() {
             }}
           >
             <Button variant="outlined" onClick={handleCancelPredict}>
-              Batal Prediksi
+              Batal Cek
             </Button>
             <Button
               variant="contained"
               startIcon={<PlaylistAddCheck />}
               onClick={handleDoPredict}
             >
-              Prediksi
+              {loading ? "Memproses..." : "Cek Kelayakan"}
             </Button>
           </Box>
         )}

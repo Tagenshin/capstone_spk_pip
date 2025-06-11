@@ -82,9 +82,80 @@ const getResults = async (userId) => {
 };
 
 const deleteResult = async (hasilId) => {
+    // Cari data hasil yang akan dihapus, untuk dapatkan userId dan tanggal
+    const hasil = await prisma.hasil.findUnique({
+        where: { id: hasilId },
+        select: {
+            userId: true,
+            tanggal: true, // diasumsikan kamu punya kolom tanggal
+        },
+    });
+
+    if (!hasil) {
+        throw new Error("Hasil tidak ditemukan.");
+    }
+
+    const { userId, tanggal } = hasil;
+
+    // Hapus data hasil
     await prisma.hasil.delete({ where: { id: hasilId } });
+
+    // Dapatkan awal bulan dari tanggal tanggal
+    const bulan = new Date(tanggal.getFullYear(), tanggal.getMonth(), 1);
+
+    // Hitung ulang total setelah penghapusan
+    const totalLayak = await prisma.hasil.count({
+        where: { userId, status: "Layak" },
+    });
+    const totalTidak = await prisma.hasil.count({
+        where: { userId, status: "Tidak Layak" },
+    });
+    const totalSiswa = await prisma.hasil.count({
+        where: { userId },
+    });
+
+    // Update rekap untuk bulan itu
+    const existingRekap = await prisma.rekapHasil.findUnique({
+        where: {
+            userId_bulan: {
+                userId,
+                bulan,
+            },
+        },
+    });
+
+    if (existingRekap) {
+        if (totalSiswa === 0) {
+            // Jika semua hasil terhapus, hapus juga rekap bulan ini
+            await prisma.rekapHasil.delete({
+                where: {
+                    userId_bulan: {
+                        userId,
+                        bulan,
+                    },
+                },
+            });
+        } else {
+            // Kalau masih ada hasil, update angkanya
+            await prisma.rekapHasil.update({
+                where: {
+                    userId_bulan: {
+                        userId,
+                        bulan,
+                    },
+                },
+                data: {
+                    totalLayak,
+                    totalTidak,
+                    totalSiswa,
+                },
+            });
+        }
+    }
+
     return { status: 'success' };
 };
+
 
 const getRekapHasil = async (userId) => {
     const rekapList = await prisma.rekapHasil.findMany({

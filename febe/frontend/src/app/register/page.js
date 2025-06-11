@@ -55,9 +55,9 @@ export default function Register() {
     if (!formData.terms) {
       return setError("Anda harus menyetujui Syarat dan Ketentuan.");
     }
-
+    
     try {
-      const res = await fetch('https://pip-clasification-app-production.up.railway.app/auth/register', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_URL}/auth/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
