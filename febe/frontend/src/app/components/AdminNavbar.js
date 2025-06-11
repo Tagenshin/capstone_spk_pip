@@ -17,6 +17,8 @@ import {
 } from "@heroicons/react/24/outline";
 import { useRouter } from "next/navigation";
 import Loading from "./Loading";
+import { Button } from "@mui/material";
+import { request } from "http";
 
 const menuItems = [
   {
@@ -53,18 +55,25 @@ export default function AdminNavbar({ isOpen, toggleSidebar }) {
   const [openSubmenus, setOpenSubmenus] = useState({});
 
   const handleLogout = async () => {
+
     setLoading(true);
     const token = localStorage.getItem("token");
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/logout`, {
-        Authorization: `Bearer ${token}`,
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       })
 
+      console.log(response);
+
       if (response.ok) {
+        console.log(`njir`)
         localStorage.removeItem("token");
-        Cookies.remove('token');
-        router.push("/login");
+        request.cookies.delete('token');
+        // router.push("/login");
       }
       setLoading(false);
     } catch (error) {
@@ -90,7 +99,7 @@ export default function AdminNavbar({ isOpen, toggleSidebar }) {
 
   // Fungsi cek apakah submenu item aktif
   const isActiveSubmenuItem = (href) => pathname === href;
-  {loading && <Loading />}
+  { loading && <Loading /> }
 
   return (
     <aside
@@ -133,25 +142,22 @@ export default function AdminNavbar({ isOpen, toggleSidebar }) {
                       onClick={() => toggleSubmenu(label)}
                       className={`flex items-center justify-between w-full gap-3 px-4 py-3 rounded-md
                       transition-colors select-none truncate
-                      ${
-                        isOpen
+                      ${isOpen
                           ? "text-left"
                           : "justify-center"
-                      } ${
-                        menuIsActive
+                        } ${menuIsActive
                           ? "bg-blue-100 text-blue-600 font-semibold"
                           : "text-gray-700 hover:bg-gray-100 hover:text-blue-600"
-                      }`}
+                        }`}
                       aria-expanded={!!openSubmenus[label]}
                       aria-controls={`${label}-submenu`}
                     >
                       <div className="flex items-center gap-3">
                         <Icon
-                          className={`h-6 w-6 flex-shrink-0 ${
-                            menuIsActive
+                          className={`h-6 w-6 flex-shrink-0 ${menuIsActive
                               ? "text-blue-600"
                               : "text-gray-600"
-                          }`}
+                            }`}
                         />
                         {isOpen && <span className="font-medium">{label}</span>}
                       </div>
@@ -179,10 +185,9 @@ export default function AdminNavbar({ isOpen, toggleSidebar }) {
                               <Link
                                 href={subHref}
                                 className={`block px-4 py-2 rounded-md transition-colors select-none truncate
-                                  ${
-                                    subIsActive
-                                      ? "bg-blue-100 text-blue-600 font-semibold"
-                                      : "text-gray-600 hover:bg-gray-100 hover:text-blue-600"
+                                  ${subIsActive
+                                    ? "bg-blue-100 text-blue-600 font-semibold"
+                                    : "text-gray-600 hover:bg-gray-100 hover:text-blue-600"
                                   }`}
                               >
                                 {subLabel}
@@ -200,17 +205,15 @@ export default function AdminNavbar({ isOpen, toggleSidebar }) {
                     className={`flex items-center gap-3 px-4 py-3 rounded-md
                     transition-colors select-none truncate
                     ${isOpen ? "justify-start" : "justify-center"}
-                    ${
-                      menuIsActive
+                    ${menuIsActive
                         ? "bg-blue-100 text-blue-600 font-semibold"
                         : "text-gray-700 hover:bg-gray-100 hover:text-blue-600"
-                    }`}
+                      }`}
                     title={label}
                   >
                     <Icon
-                      className={`h-6 w-6 flex-shrink-0 ${
-                        menuIsActive ? "text-blue-600" : "text-gray-600"
-                      }`}
+                      className={`h-6 w-6 flex-shrink-0 ${menuIsActive ? "text-blue-600" : "text-gray-600"
+                        }`}
                     />
                     {isOpen && <span className="font-medium">{label}</span>}
                   </Link>
@@ -223,16 +226,17 @@ export default function AdminNavbar({ isOpen, toggleSidebar }) {
 
       {/* Logout Button */}
       <div className="border-t border-gray-200 p-4">
-        <Link 
-          href="/login" // atau path yang sesuai
-          className={`flex items-center gap-3 px-4 py-3 rounded-md text-red-600 hover:bg-red-50 transition-colors select-none truncate`}
+        <button
+          onClick={handleLogout}
+          className="flex items-center gap-3 px-4 py-3 rounded-md text-red-600 hover:cursor-pointer hover:bg-red-50 transition-colors select-none truncate w-full text-left"
           title="Keluar"
         >
-          <span onClick={handleLogout}>
-            {/* Konten di sini */}
-            {isOpen && <span className="font-medium">{loading ? "Loading..." : "Keluar"}</span>}
-          </span>
-        </Link>
+          {isOpen && (
+            <span className="font-medium">
+              {loading ? "Loading..." : "Keluar"}
+            </span>
+          )}
+        </button>
       </div>
     </aside>
   );
