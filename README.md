@@ -56,6 +56,9 @@ Berikut ini adalah link [Dataset PIP](https://drive.google.com/drive/folders/1iA
 2. **Menggunakan Prediksi File:**
    - Unggah file Excel atau CSV yang berisi data calon penerima bantuan (tanpa label) di form yang disediakan.
    - Aplikasi akan memproses dan memberikan hasil prediksi berdasarkan model yang dilatih.
+   - Contoh file Excel :
+   ![image](https://github.com/user-attachments/assets/e645328b-579f-4dbb-8189-d784ebd962e7)
+
 
 3. **Prediksi Real-time:**
    - Isi form untuk memasukkan data secara manual.
