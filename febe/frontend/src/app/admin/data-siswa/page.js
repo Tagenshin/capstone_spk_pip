@@ -1,4 +1,5 @@
 "use client";
+import * as tf from "@tensorflow/tfjs";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import {
@@ -63,6 +64,7 @@ export default function DataSiswaPage() {
   useEffect(() => {
     const loadModel = async () => {
       try {
+        // Jika model sudah ada sebelumnya, buang dulu dari memory
         if (model) {
           model.dispose();
         }
@@ -75,7 +77,7 @@ export default function DataSiswaPage() {
       }
     };
 
-    loadModel();
+    loadModel(); // hanya dipanggil sekali saat mount
   }, []);
 
   const [searchTerm, setSearchTerm] = useState("");
@@ -171,8 +173,6 @@ export default function DataSiswaPage() {
   };
 
   const handleDoPredict = async () => {
-    const tf = await import('@tensorflow/tfjs');
-    const model = await tf.loadLayersModel('/model/model.json');
     setResult(null);
     setPredictedStudents([]); // reset
 
@@ -333,6 +333,7 @@ export default function DataSiswaPage() {
             Tambah Siswa
           </Button>
 
+          {/* Pindahkan tombol prediksi ke luar aksi menu */}
           <Button
             variant="contained"
             startIcon={<PlaylistAddCheck />}
@@ -359,11 +360,60 @@ export default function DataSiswaPage() {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             InputProps={{
-              startAdornment: <Search sx={{ mr: 1, color: "text.secondary" }} />,
+              startAdornment: (
+                <Search sx={{ mr: 1, color: "text.secondary" }} />
+              ),
             }}
             sx={{ minWidth: 200 }}
             disabled={predictMode}
           />
+          <FormControl size="small" sx={{ minWidth: 150 }}>
+            <InputLabel id="filter-penghasilan-label">Semua Penghasilan</InputLabel>
+            <Select
+              labelId="filter-penghasilan-label"
+              value={filterPenghasilan}
+              label="Semua Penghasilan"
+              onChange={(e) => setFilterPenghasilan(e.target.value)}
+              disabled={predictMode}
+            >
+              <MenuItem value="all">Semua Penghasilan</MenuItem>
+              <MenuItem value="0">Rp 0 - 1,500,000</MenuItem>
+              <MenuItem value="1">Rp 1,500,001 - 3,000,000</MenuItem>
+              <MenuItem value="2">Rp 3,000,001+</MenuItem>
+            </Select>
+          </FormControl>
+          <FormControl size="small" sx={{ minWidth: 150 }}>
+            <InputLabel id="filter-transportasi-label">Alat Transportasi</InputLabel>
+            <Select
+              labelId="filter-transportasi-label"
+              value={filterTransportasi}
+              label="Alat Transportasi"
+              onChange={(e) => setFilterTransportasi(e.target.value)}
+              disabled={predictMode}
+            >
+              <MenuItem value="all">Semua</MenuItem>
+              <MenuItem value="Jalan Kaki">Jalan Kaki</MenuItem>
+              <MenuItem value="Sepeda Motor">Sepeda Motor</MenuItem>
+              <MenuItem value="Lainnya">Lainnya</MenuItem>
+            </Select>
+          </FormControl>
+          <FormControl size="small" sx={{ minWidth: 150 }}>
+            <InputLabel id="filter-pekerjaanOrtu-label">Pekerjaan Orang Tua</InputLabel>
+            <Select
+              labelId="filter-pekerjaanOrtu-label"
+              value={filterPekerjaanOrtu}
+              label="Pekerjaan Orang Tua"
+              onChange={(e) => setFilterPekerjaanOrtu(e.target.value)}
+              disabled={predictMode}
+            >
+              <MenuItem value="all">Semua</MenuItem>
+              <MenuItem value="Wirausaha">Wirausaha</MenuItem>
+              <MenuItem value="Peternak">Peternak</MenuItem>
+              <MenuItem value="Petani">Petani</MenuItem>
+              <MenuItem value="Buruh">Buruh</MenuItem>
+              <MenuItem value="Lainnya">Lainnya</MenuItem>
+            </Select>
+          </FormControl>
         </Box>
 
         <TableContainer
@@ -435,6 +485,7 @@ export default function DataSiswaPage() {
                   <TableCell sx={{ textAlign: "center" }}>{student.statusKIP}</TableCell>
                   <TableCell sx={{ textAlign: "center" }}>{student.statusPKH}</TableCell>
                   <TableCell sx={{ textAlign: "center" }}>
+
                     <IconButton
                       size="small"
                       aria-label="menu aksi"
