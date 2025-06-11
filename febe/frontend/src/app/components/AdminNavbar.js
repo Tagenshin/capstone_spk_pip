@@ -16,6 +16,7 @@ import {
   ChevronUpIcon,
 } from "@heroicons/react/24/outline";
 import { useRouter } from "next/navigation";
+import Loading from "./Loading";
 
 const menuItems = [
   {
@@ -93,6 +94,7 @@ export default function AdminNavbar({ isOpen, toggleSidebar }) {
 
   // Fungsi cek apakah submenu item aktif
   const isActiveSubmenuItem = (href) => pathname === href;
+  {loading && <Loading />}
 
   return (
     <aside
@@ -232,7 +234,7 @@ export default function AdminNavbar({ isOpen, toggleSidebar }) {
         >
           <span onClick={handleLogout}>
             {/* Konten di sini */}
-            {isOpen && <span className="font-medium">Keluar</span>}
+            {isOpen && <span className="font-medium">{loading ? "Loading..." : "Keluar"}</span>}
           </span>
         </Link>
       </div>

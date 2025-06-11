@@ -1,24 +1,9 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import Link from "next/link";
-import {
-  Box,
-  Button,
-  Card,
-  CardContent,
-  CardHeader,
-  Typography,
-  Table,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableBody,
-  TablePagination,
-  Chip,
-} from "@mui/material";
-import AdminNavbar from "../../../components/AdminNavbar";
-import { ArrowLeft, School, People, AccountBalance } from "lucide-react";
+import { Box, Button, Card, CardContent, CardHeader, Typography, Table, TableHead, TableRow, TableCell, TableBody, TablePagination, Chip } from "@mui/material";
+import { School, ArrowLeft } from "lucide-react";
+import AdminNavbar from "../components/super-admin/Navbar"; // Navbar Super Admin
 
 export default function SuperAdminDashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -28,7 +13,6 @@ export default function SuperAdminDashboard() {
   const [page, setPage] = useState(0);
   const rowsPerPage = 5;
 
-  // Dummy data for schools (replace with actual data from your backend)
   useEffect(() => {
     setSchoolsData([
       { id: 1, name: "SMK Negeri 1 Jakarta", numberOfStudents: 1200, location: "Jakarta", status: "Aktif" },
@@ -58,41 +42,23 @@ export default function SuperAdminDashboard() {
         sx={{
           flexGrow: 1,
           p: 3,
-          ml: sidebarOpen ? "256px" : "64px",
+          ml: sidebarOpen ? "250px" : "64px", // Adjust to sidebar toggle
           transition: "margin-left 0.3s ease",
           minHeight: "100vh",
           bgcolor: "#f9fafb",
         }}
       >
-        {/* Breadcrumb */}
-        <Typography variant="body2" color="text.secondary" gutterBottom>
-          Dashboard &gt; Super Admin &gt; Kelola Data Sekolah
-        </Typography>
-
         {/* Header */}
         <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 3 }}>
           <Box>
-            <Typography variant="h4" fontWeight="bold">
-              Dashboard Super Admin
-            </Typography>
-            <Typography color="text.secondary">
-              Kelola data sekolah dan jumlah sekolah yang terdaftar
-            </Typography>
+            <Typography variant="h4" fontWeight="bold">Dashboard Super Admin</Typography>
+            <Typography color="text.secondary">Kelola data sekolah dan jumlah sekolah yang terdaftar</Typography>
           </Box>
           <Box sx={{ display: "flex", gap: 1 }}>
-            <Button
-              variant="outlined"
-              startIcon={<ArrowLeft />}
-              onClick={() => window.history.back()}
-            >
+            <Button variant="outlined" startIcon={<ArrowLeft />} onClick={() => window.history.back()}>
               Kembali
             </Button>
-            <Button
-              variant="contained"
-              startIcon={<School />}
-              component={Link}
-              href="/super-admin/tambah-sekolah"
-            >
+            <Button variant="contained" startIcon={<School />} href="/super-admin/tambah-sekolah">
               Tambah Sekolah
             </Button>
           </Box>
@@ -177,4 +143,3 @@ export default function SuperAdminDashboard() {
     </Box>
   );
 }
-

@@ -16,14 +16,17 @@ import {
 } from "@mui/material";
 import { ArrowLeft, Save } from "lucide-react";
 import AdminNavbar from "../../../components/AdminNavbar";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import Swal from "sweetalert2";
+import Loading from "../../../components/AdminNavbar";
 
 export default function StudentInputPage() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [loading, setLoading] = useState(false);
   const toggleSidebar = () => setSidebarOpen((prev) => !prev);
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
-
+  const router = useRouter();
   const defaultForm = {
     namaSiswa: "",
     alatTransportasi: "",
@@ -39,6 +42,7 @@ export default function StudentInputPage() {
 
   useEffect(() => {
     if (id) {
+      setLoading(true);
       fetch(`https://pip-clasification-app-production.up.railway.app/siswa/${id}`, {
         method: "GET",
         headers: {
@@ -62,6 +66,7 @@ export default function StudentInputPage() {
           // Set formattedPenghasilan setelah data dimuat
           setFormattedPenghasilan(formatRupiah(siswa.penghasilan || ""));
         });
+        setLoading(false);
     }
   }, [id]);
 
@@ -103,6 +108,7 @@ export default function StudentInputPage() {
     // Pastikan penghasilan adalah string
     payload.penghasilan = formData.penghasilan; // Kirim penghasilan sebagai string
 
+    setLoading(true);
     try {
       const response = await fetch(
         "https://pip-clasification-app-production.up.railway.app/siswa",
@@ -117,16 +123,29 @@ export default function StudentInputPage() {
       );
 
       if (!response.ok) throw new Error("Gagal menyimpan data");
-
-      alert("Data siswa berhasil disimpan!");
+      setLoading(false);
+      router.push("/admin/data-siswa");
+      Swal.fire({
+        icon: "success",
+        title: "Data siswa berhasil disimpan!",
+        showConfirmButton: false,
+        timer: 1500,
+      })
     } catch (err) {
       console.log(err);
-      alert("Terjadi kesalahan saat menyimpan data.");
+      setLoading(false);
+      Swal.fire({
+        icon: "error",
+        title: "Terjadi kesalahan saat menyimpan data.",
+        showConfirmButton: false,
+        timer: 1500,
+      })
     }
   };
 
   const handleUpdate = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const response = await fetch(
         `https://pip-clasification-app-production.up.railway.app/siswa/${id}`,
@@ -139,19 +158,32 @@ export default function StudentInputPage() {
           body: JSON.stringify(formData),
         }
       );
-
+      
       if (!response.ok) throw new Error("Gagal mengupdate data");
-
-      alert("Data siswa berhasil diupdate!");
+      
+      setLoading(false);
+      router.push("/admin/data-siswa");
+       Swal.fire({
+        icon: "success",
+        title: "Data siswa berhasil disimpan!",
+        showConfirmButton: false,
+        timer: 1500,
+      })
     } catch (err) {
       console.log(err);
-      alert("Terjadi kesalahan saat mengupdate data.");
+      setLoading(false);
+      Swal.fire({
+        icon: "error",
+        title: "Terjadi kesalahan saat menyimpan data.",
+        showConfirmButton: false,
+        timer: 1500,
+      })
     }
   };
 
   const occupationOptions = ["Wirausaha", "Peternak", "Petani", "Buruh", "Lainnya"];
   const transportationOptions = ["Jalan kaki", "Sepeda motor"];
-
+  {loading && <Loading />}
   return (
     <Box sx={{ display: "flex" }}>
       <AdminNavbar isOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
