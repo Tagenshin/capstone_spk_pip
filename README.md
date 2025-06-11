@@ -2,7 +2,7 @@
 # **Sistem Pendukung Keputusan dalam Menentukan Penerima Program Indonesia Pintar dengan Teknologi Deep Learning**
 
 ## **Deskripsi**
-Aplikasi ini mengimplementasikan sistem berbasis **Deep Learning** untuk memprediksi status kelayakan penerima bantuan dari Program Indonesia Pintar (PIP). Model menggunakan **Artificial Neural Network (ANN)** untuk memproses data sosial dan ekonomi guna mengklasifikasikan kelayakan penerima bantuan secara lebih akurat, cepat, dan objektif.
+Penelitian ini mengembangkan sebuah Sistem Pendukung Keputusan (SPK) berbasis Deep Learning untuk mempercepat dan meningkatkan akurasi dalam seleksi penerima Program Indonesia Pintar (PIP). Sistem ini memanfaatkan teknologi Artificial Neural Network (ANN) untuk memproses data sosial dan ekonomi calon penerima bantuan, seperti penghasilan orang tua, jumlah tanggungan, dan kepemilikan KIP/KPS, guna menghasilkan keputusan yang lebih objektif dan akurat. Model ANN yang dibangun menunjukkan akurasi 91% pada data uji dan dapat memprediksi kelayakan penerima bantuan dengan tingkat kesalahan yang minimal. Sistem ini juga dilengkapi dengan antarmuka web yang memudahkan pengguna dalam mengakses dan menggunakan SPK PIP. Dokumentasi dan implementasi sistem dapat diakses melalui repository ini.
 
 ## Team
 | Name                        | Student ID    | University                            | Role                           | LinkedIn  | Github   |
