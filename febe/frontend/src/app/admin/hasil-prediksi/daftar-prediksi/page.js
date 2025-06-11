@@ -1,12 +1,11 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   Box,
   Button,
   Card,
   CardContent,
-  CardHeader,
   Typography,
   TextField,
   Select,
@@ -20,8 +19,9 @@ import {
   TableBody,
   Chip,
 } from "@mui/material";
-import { Printer, Download, MoreHorizontal, Delete } from "lucide-react";
+import { Download, Delete } from "lucide-react"; // Hanya menggunakan ikon Download dan Delete
 import AdminNavbar from "../../../components/AdminNavbar";
+import html2pdf from "html2pdf.js"; // Import html2pdf.js
 
 export default function HasilPrediksiPage() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -31,8 +31,8 @@ export default function HasilPrediksiPage() {
   const [filterDate, setFilterDate] = useState("");
 
   const [results, setResults] = useState([]);
-  console.log(results);
-  
+
+  // Mendapatkan hasil prediksi
   const getResults = async () => {
     try {
       const response = await fetch("https://pip-clasification-app-production.up.railway.app/hasil", {
@@ -41,14 +41,14 @@ export default function HasilPrediksiPage() {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-        });
+      });
       const data = await response.json();
       setResults(data.hasil.hasil);
-      
     } catch (error) {
       console.error("Error fetching results:", error);
     }
-  }
+  };
+
   useEffect(() => {
     getResults();
   }, []);
@@ -56,12 +56,11 @@ export default function HasilPrediksiPage() {
   const dataPrediksi = results.map((d) => ({
     id: d.id,
     name: d.siswa?.namaSiswa || "Tidak Diketahui",
-    score: parseFloat(d.skor) * 100, 
+    score: parseFloat(d.skor) * 100,
     status: d.status,
-    date: new Date(d.tanggal).toISOString().split("T")[0], 
+    date: new Date(d.tanggal).toISOString().split("T")[0],
   }));
 
-  // Filtered data sesuai filter status dan tanggal
   const filteredData = dataPrediksi.filter((item) => {
     const matchStatus = filterStatus ? item.status === filterStatus : true;
     const matchDate = filterDate ? item.date === filterDate : true;
@@ -69,15 +68,12 @@ export default function HasilPrediksiPage() {
     return matchStatus && matchDate && matchSearch;
   });
 
-
-  // Fungsi warna chip status
   const statusColor = (status) => {
     if (status === "Layak") return "success";
     if (status === "Tidak Layak") return "error";
     return "default";
   };
 
-  // Fungsi warna progress score
   const scoreColor = (score) => {
     if (score >= 80) return "success.main";
     if (score >= 60) return "warning.main";
@@ -104,6 +100,17 @@ export default function HasilPrediksiPage() {
     }
   };
 
+  // Fungsi untuk mendownload hasil prediksi dalam format PDF menggunakan html2pdf.js
+  const handleDownloadPDF = () => {
+    const element = document.getElementById("pdf-content"); // Ambil elemen yang akan dicetak
+    const options = {
+      filename: 'hasil_prediksi.pdf', // Nama file PDF yang akan diunduh
+      html2canvas: { scale: 2 }, // Mengatur kualitas rendering
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' } // Konfigurasi PDF
+    };
+    html2pdf().from(element).set(options).save(); // Menggunakan html2pdf untuk mengonversi HTML menjadi PDF
+  };
+
   return (
     <Box sx={{ display: "flex" }}>
       <AdminNavbar isOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
@@ -118,7 +125,6 @@ export default function HasilPrediksiPage() {
           bgcolor: "#f9fafb",
         }}
       >
-        {/* Breadcrumb */}
         <Typography variant="h4" fontWeight="bold" gutterBottom>
           Hasil Prediksi
         </Typography>
@@ -126,7 +132,6 @@ export default function HasilPrediksiPage() {
           Hasil prediksi penerima bantuan PIP berdasarkan model Machine Learning
         </Typography>
 
-        {/* Filter */}
         <Card sx={{ mb: 3 }}>
           <CardContent sx={{ display: "flex", flexWrap: "wrap", gap: 2, alignItems: "center" }}>
             <TextField
@@ -161,8 +166,20 @@ export default function HasilPrediksiPage() {
           </CardContent>
         </Card>
 
-        {/* Table */}
-        <Card>
+        {/* Button untuk mengunduh PDF */}
+        <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 2, mb: 3 }}>
+          <Button
+            variant="contained"
+            startIcon={<Download />}
+            color="secondary"
+            onClick={handleDownloadPDF}
+          >
+            Download PDF
+          </Button>
+        </Box>
+
+        {/* Tabel Hasil Prediksi */}
+        <Card id="pdf-content">
           <CardContent sx={{ overflowX: "auto" }}>
             <Table size="small" aria-label="hasil prediksi table">
               <TableHead>

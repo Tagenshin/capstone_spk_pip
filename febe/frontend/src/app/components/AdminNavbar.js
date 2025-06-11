@@ -39,8 +39,7 @@ const menuItems = [
       {
         label: "Daftar Prediksi",
         href: "/admin/hasil-prediksi/daftar-prediksi",
-      },
-      { label: "Cetak Hasil", href: "/admin/hasil-prediksi/cetak-hasil" },
+      }
     ],
   },
   {

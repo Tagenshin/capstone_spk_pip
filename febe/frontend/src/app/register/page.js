@@ -40,6 +40,14 @@ export default function Register() {
       return setError("Semua field wajib diisi.");
     }
 
+    if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(formData.email)) {
+      return setError("Email tidak valid.");
+    }
+
+    if (formData.password.length < 8) {
+      return setError("Password harus memiliki minimal 8 karakter.");
+    }
+
     if (formData.password !== formData.confirmPassword) {
       return setError("Password dan konfirmasi password tidak cocok.");
     }
