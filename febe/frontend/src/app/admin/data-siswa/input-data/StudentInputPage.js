@@ -31,13 +31,14 @@ export default function StudentInputPage() {
     namaSiswa: "",
     alatTransportasi: "",
     pekerjaanOrtu: "",
-    penghasilan: "",
+    penghasilan: "", // Nilai awal penghasilan berupa string
     tanggungan: "",
     statusKIP: "",
     statusPKH: "",
   };
 
   const [formData, setFormData] = useState(defaultForm);
+  const [formattedPenghasilan, setFormattedPenghasilan] = useState("");
 
   useEffect(() => {
     if (id) {
@@ -61,10 +62,19 @@ export default function StudentInputPage() {
             statusKIP: siswa.statusKIP || "",
             statusPKH: siswa.statusPKH || "",
           });
+
+          // Set formattedPenghasilan setelah data dimuat
+          setFormattedPenghasilan(formatRupiah(siswa.penghasilan || ""));
         });
         setLoading(false);
     }
   }, [id]);
+
+  // Fungsi untuk memformat angka menjadi format rupiah
+  const formatRupiah = (angka) => {
+    if (!angka) return "";
+    return "Rp " + new Intl.NumberFormat("id-ID").format(angka);
+  };
 
   const handleChange = (e) => {
     setFormData((prev) => ({
@@ -73,8 +83,31 @@ export default function StudentInputPage() {
     }));
   };
 
+  const handlePenghasilanChange = (e) => {
+    const rawValue = e.target.value.replace(/[^\d]/g, ""); // Hapus semua non-angka
+    const numericValue = parseInt(rawValue || "0", 10); // Konversi ke angka
+
+    setFormData({
+      ...formData,
+      penghasilan: rawValue, // Kirim sebagai string
+    });
+
+    setFormattedPenghasilan(formatRupiah(numericValue)); // Tampilkan format rupiah
+  };
+
+  const handlePenghasilanBlur = () => {
+    // Saat kehilangan fokus, pastikan format tetap ada
+    setFormattedPenghasilan(formatRupiah(formData.penghasilan));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // Kirim data sebagai string tanpa simbol rupiah
+    const payload = { ...formData };
+    
+    // Pastikan penghasilan adalah string
+    payload.penghasilan = formData.penghasilan; // Kirim penghasilan sebagai string
+
     setLoading(true);
     try {
       const response = await fetch(
@@ -85,7 +118,7 @@ export default function StudentInputPage() {
             "Content-Type": "application/json",
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
-          body: JSON.stringify(formData),
+          body: JSON.stringify(payload),
         }
       );
 
@@ -154,7 +187,6 @@ export default function StudentInputPage() {
   return (
     <Box sx={{ display: "flex" }}>
       <AdminNavbar isOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
-
       <Box
         component="main"
         sx={{
@@ -230,8 +262,10 @@ export default function StudentInputPage() {
               <TextField
                 label="Penghasilan Orang Tua"
                 name="penghasilan"
-                value={formData.penghasilan}
-                onChange={handleChange}
+                type="text"
+                value={formattedPenghasilan}
+                onChange={handlePenghasilanChange}
+                onBlur={handlePenghasilanBlur} // Format saat kehilangan fokus
                 required
               />
 
