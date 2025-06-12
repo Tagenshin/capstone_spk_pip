@@ -28,7 +28,7 @@ Berikut ini adalah link [Dataset PIP](https://drive.google.com/drive/folders/1iA
    ```bash
    git clone https://github.com/Tagenshin/capstone_spk_pip.git
    ```
-2. **Buat environment virtual baru:**
+2. **Buat environment virtual baru:** <br>
    Setelah meng-clone repository, buatlah environment virtual untuk menjaga dependensi proyek ini terpisah dari proyek lain. Gunakan venv untuk membuat environment baru:
    ```bash
    python -m venv env
