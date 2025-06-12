@@ -85,7 +85,9 @@ Frontend aplikasi **Sistem Pendukung Keputusan PIP (Program Indonesia Pintar)** 
 | **React**     | Library JavaScript untuk membangun antarmuka pengguna                     |
 | **Tailwind CSS** | CSS framework utility-first untuk desain cepat dan responsif           |
 | **Axios**     | Library HTTP client untuk komunikasi dengan backend API                   |
-| **React Router** | Library navigasi antar halaman pada aplikasi React SPA                |
+| **Material-UI** | Komponen UI untuk desain dan interaktivitas yang konsisten dengan prinsip Material Design |
+| **Cookies & LocalStorage** | Teknologi untuk mengelola sesi pengguna dan menyimpan data login |
+| **Lucide React** | Ikon untuk memperindah dan memberikan petunjuk visual dalam UI |
 
 ---
 
