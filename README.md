@@ -37,8 +37,8 @@ Berikut ini adalah link [Dataset PIP](https://drive.google.com/drive/folders/1iA
 3. **Aktifkan environment virtual:**
    - di windows
       ```bash
-   .\env\Scripts\activate
-   ```
+      .\env\Scripts\activate
+      ```
    
 4. **Install dependensi:**
    Gunakan `pip` untuk menginstall semua dependensi yang diperlukan.
