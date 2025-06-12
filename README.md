@@ -28,13 +28,24 @@ Berikut ini adalah link [Dataset PIP](https://drive.google.com/drive/folders/1iA
    ```bash
    git clone https://github.com/Tagenshin/capstone_spk_pip.git
    ```
+2. **Buat environment virtual baru:**
+   Setelah meng-clone repository, buatlah environment virtual untuk menjaga dependensi proyek ini terpisah dari proyek lain. Gunakan venv untuk membuat environment baru:
+   ```bash
+   python -m venv env
+   ```
 
-2. **Install dependensi:**
+3. **Aktifkan environment virtual:**
+   - di windows
+      ```bash
+   .\env\Scripts\activate
+   ```
+   
+4. **Install dependensi:**
    Gunakan `pip` untuk menginstall semua dependensi yang diperlukan.
    ```bash
    pip install -r requirements.txt
    ```
-3. **Melatih ulang model**<br>
+5. **Melatih ulang model**<br>
    Untuk melatih model ulang pada berkas notebook .ipynb, Anda bisa menjalankan langkah-langkah berikut:<br>
    - Gunakan platform seperti Jupyter Notebook atau Google Colab untuk membuka berkas .ipynb yang berisi kode yang ingin Anda jalankan.
    - Di Jupyter Notebook, Anda dapat menekan Shift + Enter untuk menjalankan sel satu per satu, atau pilih "Run All" untuk menjalankan semua sel dalam notebook.
@@ -52,19 +63,18 @@ Berikut ini adalah link [Dataset PIP](https://drive.google.com/drive/folders/1iA
    ```bash
    streamlit run app.py
    ```
-
-2. **Menggunakan Prediksi File:**
+4. **Menggunakan Prediksi File:**
    - Unggah file Excel atau CSV yang berisi data calon penerima bantuan (tanpa label) di form yang disediakan.
    - Aplikasi akan memproses dan memberikan hasil prediksi berdasarkan model yang dilatih.
    - Contoh file Excel :
    ![image](https://github.com/user-attachments/assets/e645328b-579f-4dbb-8189-d784ebd962e7)
    - note** pastikan nama kolom nya sama seperti contoh diatas. 
 
-3. **Prediksi Real-time:**
+5. **Prediksi Real-time:**
    - Isi form untuk memasukkan data secara manual.
    - Aplikasi akan memprediksi status kelayakan secara langsung dan menampilkan hasilnya di layar.
 
-4. **Unduh Hasil:**
+6. **Unduh Hasil:**
    - Setelah prediksi selesai, Anda dapat mengunduh hasilnya dalam format Excel.
 
 
