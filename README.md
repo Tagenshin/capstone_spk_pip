@@ -11,7 +11,7 @@ Penelitian ini mengembangkan sebuah Sistem Pendukung Keputusan (SPK) berbasis De
 | Muhammad Daffa Rachman     | MC314D5Y0997  | Universitas Singaperbangsa Karawang    | Machine Learning                | [Click Me](#) | [Click Me](#) |
 | Azel Fabian Azmi           | MC314D5Y0547  | Universitas Singaperbangsa Karawang    | Machine Learning                | [Click Me](#) | [Click Me](#) |
 | Paundra Afif Zamroni       | FC525D5Y0009  | Politeknik Negeri Banyuwangi           | Front-End dan Back-End Developer| [Click Me](https://www.linkedin.com/in/paundra-afif-zamroni-8603b4341/) | [Click Me](https://github.com/Pafaz) |
-| Muhammad Fariz Nur Hidayat| FC120D5Y2012  | Telkom University Purwokerto           | Front-End dan Back-End Developer | [Click Me](#) | [Click Me](#) |
+| Muhammad Fariz Nur Hidayat| FC120D5Y2012  | Telkom University Purwokerto           | Front-End dan Back-End Developer | [Click Me](https://www.linkedin.com/in/muhammad-fariz-nur-hidayat-664661351/) | [Click Me](https://github.com/muhammadfariz123) |
 
 # Learning Path Machine Learning
 ## **Dataset**
