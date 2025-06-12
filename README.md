@@ -71,42 +71,96 @@ Berikut ini adalah link [Dataset PIP](https://drive.google.com/drive/folders/1iA
 # Learning Path Front End Back End Developer
 
 ## **Front End**
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎓 SPK PIP Frontend
 
-## Getting Started
+Frontend aplikasi **Sistem Pendukung Keputusan PIP (Program Indonesia Pintar)** yang memungkinkan pengguna untuk mengakses, mengelola, dan menilai data siswa berdasarkan kriteria kelayakan bantuan. Proyek ini dirancang dengan antarmuka pengguna yang **responsif**, **dinamis**, dan **mudah digunakan**.
 
-First, run the development server:
+---
 
+## 📦 Teknologi yang Digunakan
+
+| Teknologi     | Deskripsi                                                                 |
+|---------------|---------------------------------------------------------------------------|
+| **Next.js**   | Framework React dengan kemampuan Server-Side Rendering & Static Generation |
+| **React**     | Library JavaScript untuk membangun antarmuka pengguna                     |
+| **Tailwind CSS** | CSS framework utility-first untuk desain cepat dan responsif           |
+| **Axios**     | Library HTTP client untuk komunikasi dengan backend API                   |
+| **React Router** | Library navigasi antar halaman pada aplikasi React SPA                |
+
+---
+
+## 🚀 Fitur Utama
+
+- ✅ Akses dan manajemen data siswa
+- ✅ Penilaian kelayakan bantuan PIP berdasarkan kriteria tertentu
+- ✅ Desain antarmuka yang responsif dan mobile-friendly
+- ✅ Navigasi antar halaman tanpa reload
+- ✅ Komunikasi real-time dengan backend API
+
+---
+
+## 🛠️ Instalasi dan Menjalankan Proyek
+
+
+# 1. Clone repositori ini
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/username/spk-pip-frontend.git
+cd spk-pip-frontend
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+# 2. Instal dependensi
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+# 3. Setup Environment Variable
+Buat file `.env` dan isi:  
+```env  
+JWT_SECRET="secretmu"  
+ ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# 4. Jalankan aplikasi
+```bash
+npm run dev
+```
 
-## Learn More
+Aplikasi akan berjalan di http://localhost:3000
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🧩 Struktur Proyek
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+frontend/                   
+├── .next/                 # Folder otomatis yang dibuat oleh Next.js saat build
+├── node_modules/          # Folder untuk dependensi Node.js yang diinstall
+├── public/                # Folder untuk aset statis (gambar, favicon, dll)
+├── src/                   # Sumber kode aplikasi
+│   ├── app/               # Folder utama untuk aplikasi yang dikelola oleh Next.js
+│   │   ├── admin/         # Halaman dan komponen terkait admin
+│   │   ├── components/    # Komponen UI yang digunakan ulang
+│   │   ├── login/         # Halaman login pengguna
+│   │   ├── register/      # Halaman registrasi pengguna
+│   │   ├── super-admin/   # Halaman dan komponen khusus untuk super admin
+│   │   ├── favicon.ico    # Favicon untuk aplikasi
+│   │   ├── layout.js      # Layout umum untuk aplikasi
+│   │   ├── page.js        # Halaman utama untuk routing di setiap direktori
+│   │   └── middleware.js  # Middleware untuk penanganan request
+│   └── styles/            # File CSS dan styling aplikasi
+├── .env                   # File untuk environment variables
+├── .gitignore             # Daftar file atau folder yang diabaikan oleh Git
+├── eslint.config.mjs      # Konfigurasi ESLint untuk linting kode JavaScript
+├── jsonconfig.json        # File konfigurasi JSON (kemungkinan untuk linting atau build)
+├── next-env.d.ts          # Definisi TypeScript untuk Next.js
+├── next.config.mjs        # Konfigurasi Next.js
+├── package-lock.json      # Kunci versi dari dependensi npm
+├── package.json           # Daftar dependensi dan skrip proyek
+├── postcss.config.mjs     # Konfigurasi PostCSS untuk styling
+└── tsconfig.json          # Konfigurasi TypeScript untuk proyek Next.js
+```
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
 ## **Back End**
 # 🎓 SPK PIP API – Hapi.js + Prisma + PostgreSQL  
